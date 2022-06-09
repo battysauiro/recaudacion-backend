@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.recaudacionMunicipio_beta_jar_0.0.1-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.recaudacionMunicipio.modelo.Multaebriedad</class>
+    <class>com.recaudacionMunicipio.modelo.Otrosproductos</class>
+    <class>com.recaudacionMunicipio.modelo.TipoAprovechamiento</class>
+    <class>com.recaudacionMunicipio.modelo.Derechoslicencias</class>
+    <class>com.recaudacionMunicipio.modelo.Palaciomunicipal</class>
+    <class>com.recaudacionMunicipio.modelo.Multavehicular</class>
+    <class>com.recaudacionMunicipio.modelo.Usuario</class>
+    <class>com.recaudacionMunicipio.modelo.Contribuyente</class>
+    <class>com.recaudacionMunicipio.modelo.Municipios</class>
+    <class>com.recaudacionMunicipio.modelo.TipoImpuesto</class>
+    <class>com.recaudacionMunicipio.modelo.TipoOtrosproductos</class>
+    <class>com.recaudacionMunicipio.modelo.Aprovechamiento</class>
+    <class>com.recaudacionMunicipio.modelo.Empleado</class>
+    <class>com.recaudacionMunicipio.modelo.Tipovehiculo</class>
+    <class>com.recaudacionMunicipio.modelo.Impuesto</class>
+    <class>com.recaudacionMunicipio.modelo.Derechogeneral</class>
+    <class>com.recaudacionMunicipio.modelo.Periodicidad</class>
+    <class>com.recaudacionMunicipio.modelo.TipoDerecho</class>
+    <class>com.recaudacionMunicipio.modelo.Aprovechamientomulta</class>
+    <class>com.recaudacionMunicipio.modelo.Contribucion</class>
+    <class>com.recaudacionMunicipio.modelo.Roles</class>
+    <class>com.recaudacionMunicipio.ContribuyenteMoral</class>
+    <class>com.recaudacionMunicipio.modelo.ContribuyenteFisica</class>
+    <class>com.recaudacionMunicipio.modelo.Descripcion_1</class>
+    <class>com.recaudacionMunicipio.modelo.TipoImpuesto_1</class>
+    <class>com.recaudacionMunicipio.Descripcion</class>
+    <class>com.recaudacionMunicipio.TipoDerecho</class>
+    <class>com.recaudacionMunicipio.modelo.Contribucion_1</class>
+    <class>com.recaudacionMunicipio.modelo.TipoDerecho_1</class>
+    <class>com.recaudacionMunicipio.Derechos</class>
+    <class>com.recaudacionMunicipio.modelo.Descripcion</class>
+    <class>com.recaudacionMunicipio.modelo.Palaciomunicipal_1</class>
+    <class>com.recaudacionMunicipio.modelo.Municipios_1</class>
+    <class>com.recaudacionMunicipio.modelo.ContribuyenteMoral</class>
+    <class>com.recaudacionMunicipio.modelo.CatalogoDescripcion</class>
+    <class>com.recaudacionMunicipio.modelo.CatalogoImpuesto</class>
+    <class>com.recaudacionMunicipio.modelo.CatalogoDerecho</class>
+    <class>com.recaudacionMunicipio.modelo.Derechos</class>
+    <class>com.recaudacionMunicipio.modelo.Derechos_1</class>
+    <class>com.recaudacionMunicipio.modelo.CatalogoOtrosProductos</class>
+    <class>com.recaudacionMunicipio.modelo.CatalogoAprovechamiento</class>
+    <class>com.recaudacionMunicipio.modelo.Aprovechamiento_1</class>
+    <class>com.recaudacionMunicipio.modelo.TipoPago</class>
+    <class>com.recaudacionMunicipio.modelo.TipoPago_1</class>
+    <class>com.recaudacionMunicipio.modelo.CatalogoAprovechamiento_1</class>
+    <class>com.recaudacionMunicipio.modelo.CatalogoDescripcion_1</class>
+    <class>com.recaudacionMunicipio.modelo.DetalleCobro</class>
+    <class>com.recaudacionMunicipio.modelo.Contribuyente_1</class>
+    <class>com.recaudacionMunicipio.modelo.ContribuyenteFisica_1</class>
+    <class>com.recaudacionMunicipio.modelo.ContribuyenteMoral_1</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3308/municipiosrecaudacion?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.user" value="AdministradorG"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="IDadministracionG"/>
+    </properties>
+  </persistence-unit>
+</persistence>
