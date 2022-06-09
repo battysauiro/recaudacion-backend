@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h2>Recuperar Contraseña</h2>
+        <h3><span>Hola </span><span th:text="$userName"></span></h3>
+        <h4>Haz click en el siguiente enlace para acceder a tu cuenta</h4>
+        <a th:href="@{${url}}"><button>Ir a mi cuenta</button></a>
+    </body>
+</html>
