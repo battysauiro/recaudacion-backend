@@ -75,11 +75,25 @@ public class AprovechamientoMultaEbriedadControlador {
     public ResponseEntity<AprovechamientoMultaEbriedadCompletaDTO> obtenerAprovechamientoMultaEbriedadCompleta(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(aprovechamientoMultaEbriedadSer.findByIdCompleto(id));
     }
-    
+     /**
     @Secured({"ROLE_ADMIN"})
     @PostMapping
     public ResponseEntity<AprovechamientoMultaEbriedadDTO> guardarAprovechamientoMultaEbriedad(@RequestBody AprovechamientoMultaEbriedadDTO aprovechamientoMultaEbriedadDTO) {
         return new ResponseEntity<>(aprovechamientoMultaEbriedadSer.save(aprovechamientoMultaEbriedadDTO), HttpStatus.CREATED);
+    }*/
+    
+    @Secured({"ROLE_ADMIN"})
+    @PostMapping()    
+    public ResponseEntity<AprovechamientoMultaEbriedadDTO> crearAprovechamientoMultaEbriedad(@RequestBody AprovechamientoMultaEbriedadDTO aprovechamientoMultaEbriedadDTO) {
+        Object obj=aprovechamientoMultaEbriedadSer.crear(aprovechamientoMultaEbriedadDTO);
+        System.out.println((obj instanceof AprovechamientoMultaEbriedadDTO)+" es instancia ");
+        if(!(obj instanceof AprovechamientoMultaEbriedadDTO)){
+            if((int)obj ==0){
+                System.out.println("la contribucion ya existe");
+                return new ResponseEntity<>(null, HttpStatus.FOUND);}
+        }
+            return new ResponseEntity<>((AprovechamientoMultaEbriedadDTO)obj, HttpStatus.CREATED);
+        
     }
     
     @Secured({"ROLE_ADMIN"})

@@ -73,11 +73,25 @@ public class AprovechamientoMultaVehicularControlador {
     public ResponseEntity<AprovechamientoMultaVehicularCompletaDTO> obtenerAprovechamientoMultaVehicularCompleta(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(aprovechamientoMultaVehicularSer.findByIdCompleto(id));
     }
-    
+    /**
     @Secured({"ROLE_ADMIN"})
     @PostMapping
     public ResponseEntity<AprovechamientoMultaVehicularDTO> guardarAprovechamientoMultaVehicular(@RequestBody AprovechamientoMultaVehicularDTO aprovechamientoMultaVehicularDTO) {
         return new ResponseEntity<>(aprovechamientoMultaVehicularSer.save(aprovechamientoMultaVehicularDTO), HttpStatus.CREATED);
+    }*/
+    
+    @Secured({"ROLE_ADMIN"})
+    @PostMapping()    
+    public ResponseEntity<AprovechamientoMultaVehicularDTO> crearAprovechamientoMultaVehicular(@RequestBody AprovechamientoMultaVehicularDTO aprovechamientoMultaVehicularDTO) {
+        Object obj=aprovechamientoMultaVehicularSer.crear(aprovechamientoMultaVehicularDTO);
+        System.out.println((obj instanceof AprovechamientoMultaVehicularDTO)+" es instancia ");
+        if(!(obj instanceof AprovechamientoMultaVehicularDTO)){
+            if((int)obj ==0){
+                System.out.println("la contribucion ya existe");
+                return new ResponseEntity<>(null, HttpStatus.FOUND);}
+        }
+            return new ResponseEntity<>((AprovechamientoMultaVehicularDTO)obj, HttpStatus.CREATED);
+        
     }
     
     @Secured({"ROLE_ADMIN"})

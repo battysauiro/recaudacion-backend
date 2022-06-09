@@ -74,11 +74,24 @@ public class DerechoLicenciasControlador {
     public ResponseEntity<DerechosLicenciaCompletoDTO> obtenerDerechoLicenciaCompleto(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(DerechoLicenciasImplSer.findByIdCompleto(id));
     }
-    
+    /**
     @Secured({"ROLE_ADMIN"})
     @PostMapping
     public ResponseEntity<DerechosLicenciaDTO> guardarDerechoLicencia(@RequestBody DerechosLicenciaDTO derechosLicenciaDTO) {
         return new ResponseEntity<>(DerechoLicenciasImplSer.save(derechosLicenciaDTO), HttpStatus.CREATED);
+    }*/
+    @Secured({"ROLE_ADMIN"})
+    @PostMapping()    
+    public ResponseEntity<DerechosLicenciaDTO> crearDerechoLicencia(@RequestBody DerechosLicenciaDTO derechosLicenciaDTO) {
+        Object obj=DerechoLicenciasImplSer.crear(derechosLicenciaDTO);
+        System.out.println((obj instanceof DerechosLicenciaDTO)+" es instancia ");
+        if(!(obj instanceof DerechosLicenciaDTO)){
+            if((int)obj ==0){
+                System.out.println("la contribucion ya existe");
+                return new ResponseEntity<>(null, HttpStatus.FOUND);}
+        }
+            return new ResponseEntity<>((DerechosLicenciaDTO)obj, HttpStatus.CREATED);
+        
     }
     
     @Secured({"ROLE_ADMIN"})

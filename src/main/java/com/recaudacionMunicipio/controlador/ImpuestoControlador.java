@@ -74,11 +74,24 @@ public class ImpuestoControlador {
     public ResponseEntity<ImpuestoCompletoDTO> obtenerImpuestoCompleto(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(impuestoSer.findByIdCompleto(id));
     }
-    
+    /**
     @Secured({"ROLE_ADMIN"})
     @PostMapping
     public ResponseEntity<ImpuestoDTO> guardarImpuesto(@RequestBody ImpuestoDTO impuestoDTO) {
         return new ResponseEntity<>(impuestoSer.save(impuestoDTO), HttpStatus.CREATED);
+    }*/
+    @Secured({"ROLE_ADMIN"})
+    @PostMapping()    
+    public ResponseEntity<ImpuestoDTO> crearImpuesto(@RequestBody ImpuestoDTO impuestoDTO) {
+        Object obj=impuestoSer.crear(impuestoDTO);
+        System.out.println((obj instanceof ImpuestoDTO)+" es instancia ");
+        if(!(obj instanceof ImpuestoDTO)){
+            if((int)obj ==0){
+                System.out.println("la contribucion ya existe");
+                return new ResponseEntity<>(null, HttpStatus.FOUND);}
+        }
+            return new ResponseEntity<>((ImpuestoDTO)obj, HttpStatus.CREATED);
+        
     }
     
     @Secured({"ROLE_ADMIN"})

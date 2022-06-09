@@ -74,11 +74,24 @@ public class DerechoGeneralControlador {
     public ResponseEntity<DerechosGeneralCompletoDTO> obtenerDerechoGeneralCompleto(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(DerechoGeneralImplSer.findByIdCompleto(id));
     }
-    
+    /**
     @Secured({"ROLE_ADMIN"})
     @PostMapping
     public ResponseEntity<DerechosGeneralDTO> guardarDerechoGeneral(@RequestBody DerechosGeneralDTO derechosGeneralDTO) {
         return new ResponseEntity<>(DerechoGeneralImplSer.save(derechosGeneralDTO), HttpStatus.CREATED);
+    }*/
+    @Secured({"ROLE_ADMIN"})
+    @PostMapping()    
+    public ResponseEntity<DerechosGeneralDTO> crearDerechoGeneral(@RequestBody DerechosGeneralDTO derechosGeneralDTO) {
+        Object obj=DerechoGeneralImplSer.crear(derechosGeneralDTO);
+        System.out.println((obj instanceof DerechosGeneralDTO)+" es instancia ");
+        if(!(obj instanceof DerechosGeneralDTO)){
+            if((int)obj ==0){
+                System.out.println("la contribucion ya existe");
+                return new ResponseEntity<>(null, HttpStatus.FOUND);}
+        }
+            return new ResponseEntity<>((DerechosGeneralDTO)obj, HttpStatus.CREATED);
+        
     }
     
     @Secured({"ROLE_ADMIN"})

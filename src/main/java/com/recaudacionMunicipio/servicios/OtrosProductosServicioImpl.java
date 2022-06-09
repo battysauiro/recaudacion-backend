@@ -86,6 +86,21 @@ public class OtrosProductosServicioImpl implements Servicios<OtrosProductosDTO>{
   
         return otrosProductosRespuesta;
     }
+    
+    public Object crear(OtrosProductosDTO otrosProductosDTO) {
+        System.out.println(otrosProductosDao.existsById(otrosProductosDTO.getCodigo_contribucion())+"existeeeeeeeeeeeeee ");
+        if((otrosProductosDao.existsById(otrosProductosDTO.getCodigo_contribucion())))
+            return 0;// significa que usuario ya existe
+        if((!otrosProductosDao.existsById(otrosProductosDTO.getCodigo_contribucion()))){
+            Otrosproductos otrosProductos= mapearEntidad(otrosProductosDTO);
+        
+            Otrosproductos otrosProductosNueva=otrosProductosDao.save(otrosProductos);
+            OtrosProductosDTO aprovechamientoRespuesta= mapearDTO(otrosProductosNueva);
+            return aprovechamientoRespuesta;
+        }
+        return null;
+      
+    }
 
     @Override
     public entidadRespuesta<OtrosProductosDTO> findAll(int numeroDePagina,int MedidaDePagina) {

@@ -92,6 +92,21 @@ public class DerechosLicenciasServicioImpl implements Servicios<DerechosLicencia
   
         return derechoLicenciaRespuesta;
     }
+    
+    public Object crear(DerechosLicenciaDTO derechosLicenciaDTO) {
+        System.out.println(derechosLicenciasDAO.existsById(derechosLicenciaDTO.getCodigo_contribucion())+"existeeeeeeeeeeeeee ");
+        if((derechosLicenciasDAO.existsById(derechosLicenciaDTO.getCodigo_contribucion())))
+            return 0;// significa que usuario ya existe
+        if((!derechosLicenciasDAO.existsById(derechosLicenciaDTO.getCodigo_contribucion()))){
+            Derechoslicencias aprovechamientoDerechosLicencia= mapearEntidad(derechosLicenciaDTO);
+        
+            Derechoslicencias aprovechamientoDerechosLicenciaNueva=derechosLicenciasDAO.save(aprovechamientoDerechosLicencia);
+            DerechosLicenciaDTO aprovechamientoRespuesta= mapearDTO(aprovechamientoDerechosLicenciaNueva);
+            return aprovechamientoRespuesta;
+        }
+        return null;
+      
+    }
 
     @Override
     public entidadRespuesta<DerechosLicenciaDTO> findAll(int numeroDePagina,int MedidaDePagina) {

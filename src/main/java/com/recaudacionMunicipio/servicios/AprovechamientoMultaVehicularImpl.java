@@ -98,6 +98,21 @@ public class AprovechamientoMultaVehicularImpl implements Servicios<Aprovechamie
   
         return aprovechamientoMultaVehicularRespuesta;
     }
+    
+    public Object crear(AprovechamientoMultaVehicularDTO aprovechamientoMultaVehicularDTO) {
+        System.out.println(aprovechamientoMultaVehicularDao.existsById(aprovechamientoMultaVehicularDTO.getCodigo_contribucion())+"existeeeeeeeeeeeeee ");
+        if((aprovechamientoMultaVehicularDao.existsById(aprovechamientoMultaVehicularDTO.getCodigo_contribucion())))
+            return 0;// significa que usuario ya existe
+        if((!aprovechamientoMultaVehicularDao.existsById(aprovechamientoMultaVehicularDTO.getCodigo_contribucion()))){
+            Multavehicular aprovechamientoMultaVehicular= mapearEntidad(aprovechamientoMultaVehicularDTO);
+        
+            Multavehicular aprovechamientoMultaEbriedadNueva=aprovechamientoMultaVehicularDao.save(aprovechamientoMultaVehicular);
+            AprovechamientoMultaVehicularDTO aprovechamientoRespuesta= mapearDTO(aprovechamientoMultaEbriedadNueva);
+            return aprovechamientoRespuesta;
+        }
+        return null;
+      
+    }
 
     @Override
     public entidadRespuesta<AprovechamientoMultaVehicularDTO> findAll(int numeroDePagina,int MedidaDePagina) {
