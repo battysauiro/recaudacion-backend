@@ -85,6 +85,21 @@ public class ImpuestoServicioImpl implements Servicios<ImpuestoDTO>{
   
         return impuestoRespuesta;
     }
+    
+    public Object crear(ImpuestoDTO impuestoDTO) {
+        System.out.println(impuestoDao.existsById(impuestoDTO.getCodigo_contribucion())+"existeeeeeeeeeeeeee ");
+        if((impuestoDao.existsById(impuestoDTO.getCodigo_contribucion())))
+            return 0;// significa que usuario ya existe
+        if((!impuestoDao.existsById(impuestoDTO.getCodigo_contribucion()))){
+            Impuesto impuesto= mapearEntidad(impuestoDTO);
+        
+            Impuesto impuestoNueva=impuestoDao.save(impuesto);
+            ImpuestoDTO aprovechamientoRespuesta= mapearDTO(impuestoNueva);
+            return aprovechamientoRespuesta;
+        }
+        return null;
+      
+    }
 
     @Override
     public entidadRespuesta<ImpuestoDTO> findAll(int numeroDePagina,int MedidaDePagina) {

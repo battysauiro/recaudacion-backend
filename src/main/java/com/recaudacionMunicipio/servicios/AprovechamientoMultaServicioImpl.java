@@ -106,6 +106,21 @@ public class AprovechamientoMultaServicioImpl implements Servicios<Aprovechamien
   
         return aprovechamientoMultaRespuesta;
     }
+    
+    public Object crear(AprovechamientoMultaDTO aprovechamientoMultServicioDTO) {
+        System.out.println(aprovechamientoMultaDao.existsById(aprovechamientoMultServicioDTO.getCodigo_contribucion())+"existeeeeeeeeeeeeee ");
+        if((aprovechamientoMultaDao.existsById(aprovechamientoMultServicioDTO.getCodigo_contribucion())))
+            return 0;// significa que usuario ya existe
+        if((!aprovechamientoMultaDao.existsById(aprovechamientoMultServicioDTO.getCodigo_contribucion()))){
+            Aprovechamientomulta aprovechamientoMultaServicio= mapearEntidad(aprovechamientoMultServicioDTO);
+        
+            Aprovechamientomulta aprovechamientoMultaEbriedadNueva=aprovechamientoMultaDao.save(aprovechamientoMultaServicio);
+            AprovechamientoMultaDTO aprovechamientoRespuesta= mapearDTO(aprovechamientoMultaEbriedadNueva);
+            return aprovechamientoRespuesta;
+        }
+        return null;
+      
+    }
 
     @Override
     public entidadRespuesta<AprovechamientoMultaDTO> findAll(int numeroDePagina,int MedidaDePagina) {

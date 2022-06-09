@@ -98,6 +98,21 @@ public class DerechoGeneralServicioImpl implements Servicios<DerechosGeneralDTO>
   
         return derechoGeneralRespuesta;
     }
+    
+    public Object crear(DerechosGeneralDTO derechosGeneralDTO) {
+        System.out.println(derechoGeneralDAO.existsById(derechosGeneralDTO.getCodigo_contribucion())+"existeeeeeeeeeeeeee ");
+        if((derechoGeneralDAO.existsById(derechosGeneralDTO.getCodigo_contribucion())))
+            return 0;// significa que usuario ya existe
+        if((!derechoGeneralDAO.existsById(derechosGeneralDTO.getCodigo_contribucion()))){
+            Derechogeneral aprovechamientoDerechoGeneral= mapearEntidad(derechosGeneralDTO);
+        
+            Derechogeneral aprovechamientoDerechoGeneralNueva=derechoGeneralDAO.save(aprovechamientoDerechoGeneral);
+            DerechosGeneralDTO aprovechamientoRespuesta= mapearDTO(aprovechamientoDerechoGeneralNueva);
+            return aprovechamientoRespuesta;
+        }
+        return null;
+      
+    }
 
     @Override
     public entidadRespuesta<DerechosGeneralDTO> findAll(int numeroDePagina,int MedidaDePagina) {

@@ -74,11 +74,25 @@ public class AprovechamientoMultaControlador {
     public ResponseEntity<AprovechamientoMultaCompletaDTO> obtenerAprovechamientoMultaCompleta(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(aprovechamientoMultaSer.findByIdCompleto(id));
     }
-    
+    /**
     @Secured({"ROLE_ADMIN"})
     @PostMapping
     public ResponseEntity<AprovechamientoMultaDTO> guardarAprovechamientoMulta(@RequestBody AprovechamientoMultaDTO aprovechamientoMultaDTO) {
         return new ResponseEntity<>(aprovechamientoMultaSer.save(aprovechamientoMultaDTO), HttpStatus.CREATED);
+    }*/
+    
+    @Secured({"ROLE_ADMIN"})
+    @PostMapping()    
+    public ResponseEntity<AprovechamientoMultaDTO> crearAprovechamientoMulta(@RequestBody AprovechamientoMultaDTO aprovechamientoMultaDTO) {
+        Object obj=aprovechamientoMultaSer.crear(aprovechamientoMultaDTO);
+        System.out.println((obj instanceof AprovechamientoMultaDTO)+" es instancia ");
+        if(!(obj instanceof AprovechamientoMultaDTO)){
+            if((int)obj ==0){
+                System.out.println("la contribucion ya existe");
+                return new ResponseEntity<>(null, HttpStatus.FOUND);}
+        }
+            return new ResponseEntity<>((AprovechamientoMultaDTO)obj, HttpStatus.CREATED);
+        
     }
     
     @Secured({"ROLE_ADMIN"})

@@ -74,11 +74,24 @@ public class OtrosProductosControlador {
     public ResponseEntity<OtrosProductosCompletoDTO> obtenerOtrosProductosCompleto(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(otrosProductosImplSer.findByIdCompleto(id));
     }
-    
+    /**
     @Secured({"ROLE_ADMIN"})
     @PostMapping
     public ResponseEntity<OtrosProductosDTO> guardarOtrosProductos(@RequestBody OtrosProductosDTO otrosProductosDTO) {
         return new ResponseEntity<>(otrosProductosImplSer.save(otrosProductosDTO), HttpStatus.CREATED);
+    }*/
+    @Secured({"ROLE_ADMIN"})
+    @PostMapping()    
+    public ResponseEntity<OtrosProductosDTO> crearOtrosProductos(@RequestBody OtrosProductosDTO otrosProductosDTO) {
+        Object obj=otrosProductosImplSer.crear(otrosProductosDTO);
+        System.out.println((obj instanceof OtrosProductosDTO)+" es instancia ");
+        if(!(obj instanceof OtrosProductosDTO)){
+            if((int)obj ==0){
+                System.out.println("la contribucion ya existe");
+                return new ResponseEntity<>(null, HttpStatus.FOUND);}
+        }
+            return new ResponseEntity<>((OtrosProductosDTO)obj, HttpStatus.CREATED);
+        
     }
     
     @Secured({"ROLE_ADMIN"})
