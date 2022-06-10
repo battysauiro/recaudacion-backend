@@ -73,6 +73,11 @@ public class UsuarioServicio implements UsuarioServicioImpl,UserDetailsService,S
         return usuarioDao.findByUsername(username);
     }
 
+    public Usuario findByTokenPassword(String token) {
+        System.out.println("este es mi token: "+token);
+        return usuarioDao.findByTokenPassword(token);
+    }
+    
     @Override
     public UsuarioDTO findById(String id) {
         Usuario usuario=usuarioDao.findById(id).orElse(null);
@@ -100,6 +105,13 @@ public class UsuarioServicio implements UsuarioServicioImpl,UserDetailsService,S
         UsuarioDTO usuarioRespuesta= mapearDTO(newUsuario);
                             
         return usuarioRespuesta;
+    }
+    
+    public Usuario saveCorreo(Usuario user) {
+        Usuario newUsuario=usuarioDao.save(user);
+        
+                            
+        return newUsuario;
     }
     
     public Object crear(UsuarioDTO usuarioDTO) {

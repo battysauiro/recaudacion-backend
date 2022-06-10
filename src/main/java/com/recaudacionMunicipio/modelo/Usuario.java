@@ -39,7 +39,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Usuario.findByUsername", query = "SELECT u FROM Usuario u WHERE u.username = :username"),
     @NamedQuery(name = "Usuario.findByPuestoUsuario", query = "SELECT u FROM Usuario u WHERE u.puestoUsuario = :puestoUsuario"),
     @NamedQuery(name = "Usuario.findByEstadoUsuario", query = "SELECT u FROM Usuario u WHERE u.estadoUsuario = :estadoUsuario"),
-    @NamedQuery(name = "Usuario.findByUrlImagenUsuario", query = "SELECT u FROM Usuario u WHERE u.urlImagenUsuario = :urlImagenUsuario")})
+    @NamedQuery(name = "Usuario.findByUrlImagenUsuario", query = "SELECT u FROM Usuario u WHERE u.urlImagenUsuario = :urlImagenUsuario"),
+    @NamedQuery(name = "Usuario.findByTokenPassword", query = "SELECT u FROM Usuario u WHERE u.tokenPassword = :tokenPassword")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,6 +57,8 @@ public class Usuario implements Serializable {
     private Boolean estadoUsuario;
     @Column(name = "url_imagen_usuario")
     private String urlImagenUsuario;
+    @Column(name = "token_password")
+    private String tokenPassword; 
    
     @ManyToMany()
     private List<Roles> rolesList;
@@ -166,6 +169,24 @@ public class Usuario implements Serializable {
         }
         return true;
     }
+
+    public String getTokenPassword() {
+        return tokenPassword;
+    }
+
+    public void setTokenPassword(String tokenPassword) {
+        this.tokenPassword = tokenPassword;
+    }
+
+    public List<Roles> getRolesList() {
+        return rolesList;
+    }
+
+    public void setRolesList(List<Roles> rolesList) {
+        this.rolesList = rolesList;
+    }
+    
+    
 
     @Override
     public String toString() {

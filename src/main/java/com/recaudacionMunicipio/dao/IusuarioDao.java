@@ -17,4 +17,5 @@ import org.springframework.stereotype.Repository;
 public interface IusuarioDao extends JpaRepository<Usuario, String>{
     
     public Usuario findByUsername(String username);
+    public Usuario findByTokenPassword(String tokenPassword);
 }
