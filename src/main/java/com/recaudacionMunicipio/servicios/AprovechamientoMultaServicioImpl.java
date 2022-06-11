@@ -107,16 +107,34 @@ public class AprovechamientoMultaServicioImpl implements Servicios<Aprovechamien
         return aprovechamientoMultaRespuesta;
     }
     
-    public Object crear(AprovechamientoMultaDTO aprovechamientoMultServicioDTO) {
-        System.out.println(aprovechamientoMultaDao.existsById(aprovechamientoMultServicioDTO.getCodigo_contribucion())+"existeeeeeeeeeeeeee ");
-        if((aprovechamientoMultaDao.existsById(aprovechamientoMultServicioDTO.getCodigo_contribucion())))
+    public Object crear(AprovechamientoMultaDTO aprovechamientoMultaDTO) {
+        System.out.println(aprovechamientoMultaDao.existsById(aprovechamientoMultaDTO.getCodigo_contribucion())+"existeeeeeeeeeeeeee ");
+        if((aprovechamientoMultaDao.existsById(aprovechamientoMultaDTO.getCodigo_contribucion())))
             return 0;// significa que usuario ya existe
-        if((!aprovechamientoMultaDao.existsById(aprovechamientoMultServicioDTO.getCodigo_contribucion()))){
-            Aprovechamientomulta aprovechamientoMultaServicio= mapearEntidad(aprovechamientoMultServicioDTO);
+        if((!aprovechamientoMultaDao.existsById(aprovechamientoMultaDTO.getCodigo_contribucion()))){
+            Contribucion contribucion= new Contribucion();
+        contribucion.setCodigoContribucion(aprovechamientoMultaDTO.getCodigo_contribucion());
+        contribucion.setConceptoContribucion(aprovechamientoMultaDTO.getConcepto_contribucion());
+        TipoPago tipoPago=tipoPagoDao.findById(aprovechamientoMultaDTO.getId_tipo_pago()).orElse(null);
+        contribucion.setIdTipoPago(tipoPago);
+        CatalogoDescripcion catalogoDescripcion= catalogoDescripcionDao.findById(aprovechamientoMultaDTO.getId_descripcion()).orElse(null);
+        contribucion.setIdDescripcion(catalogoDescripcion);
+        contribucionDao.save(contribucion);
+        //Contribucion newContribucion=contribucionDao.findById(aprovechamientoMultaDTO.getCodigo_contribucion()).orElse(null);
+        Aprovechamiento aprovechamiento= new Aprovechamiento();
+        aprovechamiento.setIdContribucionAprovechamiento(aprovechamientoMultaDTO.getCodigo_contribucion());
+        CatalogoAprovechamiento catalogo= catalogoAprovechamientoDao.findById(aprovechamientoMultaDTO.getId_catalogo()).orElse(null);
+        aprovechamiento.setIdTipoAprovechamiento(catalogo);
+        aprovechamiento.setContribucion(contribucion);
         
-            Aprovechamientomulta aprovechamientoMultaEbriedadNueva=aprovechamientoMultaDao.save(aprovechamientoMultaServicio);
-            AprovechamientoMultaDTO aprovechamientoRespuesta= mapearDTO(aprovechamientoMultaEbriedadNueva);
-            return aprovechamientoRespuesta;
+         
+        Aprovechamiento newAprovechamiento=aprovechamientoDao.save(aprovechamiento);
+        Aprovechamientomulta aprovechamientoMulta= mapearEntidad(aprovechamientoMultaDTO);
+        aprovechamientoMulta.setAprovechamiento(newAprovechamiento);
+        Aprovechamientomulta newAprovechamientoMulta=aprovechamientoMultaDao.save(aprovechamientoMulta);
+        AprovechamientoMultaDTO aprovechamientoMultaRespuesta= mapearDTO(newAprovechamientoMulta);
+  
+        return aprovechamientoMultaRespuesta;
         }
         return null;
       

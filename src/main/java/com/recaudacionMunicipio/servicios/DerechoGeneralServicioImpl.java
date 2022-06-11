@@ -104,11 +104,27 @@ public class DerechoGeneralServicioImpl implements Servicios<DerechosGeneralDTO>
         if((derechoGeneralDAO.existsById(derechosGeneralDTO.getCodigo_contribucion())))
             return 0;// significa que usuario ya existe
         if((!derechoGeneralDAO.existsById(derechosGeneralDTO.getCodigo_contribucion()))){
-            Derechogeneral aprovechamientoDerechoGeneral= mapearEntidad(derechosGeneralDTO);
+            Contribucion contribucion= new Contribucion();
+        contribucion.setCodigoContribucion(derechosGeneralDTO.getCodigo_contribucion());
+        contribucion.setConceptoContribucion(derechosGeneralDTO.getConcepto_contribucion());
+        TipoPago tipoPago=tipoPagoDao.findById(derechosGeneralDTO.getId_tipo_pago()).orElse(null);
+        contribucion.setIdTipoPago(tipoPago);
+        CatalogoDescripcion catalogoDescripcion= catalogoDescripcionDao.findById(derechosGeneralDTO.getId_descripcion()).orElse(null);
+        contribucion.setIdDescripcion(catalogoDescripcion);
+        contribucionDao.save(contribucion);
+        Derechos derecho= new Derechos();
+        derecho.setIdContribucionDerechos(derechosGeneralDTO.getCodigo_contribucion());
+        CatalogoDerecho catalogo= catalogoDao.findById(derechosGeneralDTO.getCatalogo_derechos()).orElse(null);
+        derecho.setIdTipoDerecho(catalogo);
+        derecho.setContribucion(contribucion);
+        derechosDAO.save(derecho);
         
-            Derechogeneral aprovechamientoDerechoGeneralNueva=derechoGeneralDAO.save(aprovechamientoDerechoGeneral);
-            DerechosGeneralDTO aprovechamientoRespuesta= mapearDTO(aprovechamientoDerechoGeneralNueva);
-            return aprovechamientoRespuesta;
+        Derechogeneral derechoGeneral= mapearEntidad(derechosGeneralDTO);
+        derechoGeneral.setDerechos(derecho);
+        Derechogeneral newDerechoGeneral=derechoGeneralDAO.save(derechoGeneral);
+        DerechosGeneralDTO derechoGeneralRespuesta= mapearDTO(newDerechoGeneral);
+  
+        return derechoGeneralRespuesta;
         }
         return null;
       
