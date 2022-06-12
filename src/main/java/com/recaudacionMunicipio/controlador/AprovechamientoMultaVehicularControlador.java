@@ -39,36 +39,37 @@ public class AprovechamientoMultaVehicularControlador {
     @Autowired
     private AprovechamientoMultaVehicularImpl aprovechamientoMultaVehicularSer;
 
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/page/{page}")
     public entidadRespuesta<AprovechamientoMultaVehicularDTO> listarMultasVehicular(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "6",required = false)int cantidadPagina){
         return aprovechamientoMultaVehicularSer.findAll(page,cantidadPagina);
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full")
     public entidadRespuesta<AprovechamientoMultaVehicularCompletaDTO> listarMultaVehicularCompleta(@RequestParam(value="pageNo",defaultValue = "0",required = false)int numeroDePagina,@RequestParam(value = "pageSize",defaultValue = "10",required = false)int cantidadPagina){
         return aprovechamientoMultaVehicularSer.findAllC(numeroDePagina,cantidadPagina);
     }
     
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("i/page/{page}")
     public Page<AprovechamientoMultaVehicularDTO> listarMultasVehicular(@PathVariable Integer page){
         return aprovechamientoMultaVehicularSer.findAll(PageRequest.of(page,10));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full/page/{page}")
     public Page<AprovechamientoMultaVehicularCompletaDTO> listarMultaVehicularCompleta(@PathVariable Integer page){
         return aprovechamientoMultaVehicularSer.findAllC(PageRequest.of(page,10));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/{id}")
     public ResponseEntity<AprovechamientoMultaVehicularDTO> obtenerMultaVehicular(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(aprovechamientoMultaVehicularSer.findById(id));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full/{id}")
     public ResponseEntity<AprovechamientoMultaVehicularCompletaDTO> obtenerAprovechamientoMultaVehicularCompleta(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(aprovechamientoMultaVehicularSer.findByIdCompleto(id));

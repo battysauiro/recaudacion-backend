@@ -39,37 +39,37 @@ public class DerechoLicenciasControlador {
     @Autowired
     private DerechosLicenciasServicioImpl DerechoLicenciasImplSer;
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/page/{page}")
     public entidadRespuesta<DerechosLicenciaDTO> listarDerechosLicencias(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "6",required = false)int cantidadPagina){
         return DerechoLicenciasImplSer.findAll(page,cantidadPagina);
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("i/page/{page}")
     public entidadRespuesta<DerechosLicenciaCompletoDTO> listarDerechosLicenciaCompleto(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "6",required = false)int cantidadPagina){
         return DerechoLicenciasImplSer.findAllC(page,cantidadPagina);
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("inicio/page/{page}")
     public Page<DerechosLicenciaDTO> listarDerechosLicencias(@PathVariable Integer page){
         return DerechoLicenciasImplSer.findAll(PageRequest.of(page,10));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full/page/{page}")
     public Page<DerechosLicenciaCompletoDTO> listarDerechosLicenciaCompleto(@PathVariable Integer page){
         return DerechoLicenciasImplSer.findAllC(PageRequest.of(page,10));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/{id}")
     public ResponseEntity<DerechosLicenciaDTO> obtenerDerechoLicencia(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(DerechoLicenciasImplSer.findById(id));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full/{id}")
     public ResponseEntity<DerechosLicenciaCompletoDTO> obtenerDerechoLicenciaCompleto(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(DerechoLicenciasImplSer.findByIdCompleto(id));

@@ -39,37 +39,37 @@ public class AprovechamientoMultaControlador {
     @Autowired
     private AprovechamientoMultaServicioImpl aprovechamientoMultaSer;
 
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/page/{page}")
     public entidadRespuesta<AprovechamientoMultaDTO> listarAprovechamientoMulta(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "6",required = false)int cantidadPagina){
         return aprovechamientoMultaSer.findAll(page,cantidadPagina);
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full")
     public entidadRespuesta<AprovechamientoMultaCompletaDTO> listarMultaCompleta(@RequestParam(value="pageNo",defaultValue = "0",required = false)int numeroDePagina,@RequestParam(value = "pageSize",defaultValue = "10",required = false)int cantidadPagina){
         return aprovechamientoMultaSer.findAllC(numeroDePagina,cantidadPagina);
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/filtrar/{idContribucionMulta}")
     public List<AprovechamientoMultaDTO> AprovechamientoMultaById(@PathVariable String idContribucionMulta){
         return aprovechamientoMultaSer.findByIdContribucion(idContribucionMulta);
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full/page/{page}")
     public Page<AprovechamientoMultaCompletaDTO> listarMultaCompleta(@PathVariable Integer page){
         return aprovechamientoMultaSer.findAllC(PageRequest.of(page,10));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/{id}")
     public ResponseEntity<AprovechamientoMultaDTO> obtenerAprovechamientoMulta(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(aprovechamientoMultaSer.findById(id));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full/{id}")
     public ResponseEntity<AprovechamientoMultaCompletaDTO> obtenerAprovechamientoMultaCompleta(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(aprovechamientoMultaSer.findByIdCompleto(id));
@@ -81,7 +81,7 @@ public class AprovechamientoMultaControlador {
         return new ResponseEntity<>(aprovechamientoMultaSer.save(aprovechamientoMultaDTO), HttpStatus.CREATED);
     }*/
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
     @PostMapping()    
     public ResponseEntity<AprovechamientoMultaDTO> crearAprovechamientoMulta(@RequestBody AprovechamientoMultaDTO aprovechamientoMultaDTO) {
         Object obj=aprovechamientoMultaSer.crear(aprovechamientoMultaDTO);
@@ -95,14 +95,14 @@ public class AprovechamientoMultaControlador {
         
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
     @PutMapping("/{id}")
     public ResponseEntity<AprovechamientoMultaDTO> actualizarAprovechamientoMulta(@RequestBody AprovechamientoMultaDTO aprovechamientoMultaDTO, @PathVariable(name = "id") String id) {
         AprovechamientoMultaDTO aprovechamientoMultaRespuesta = aprovechamientoMultaSer.update(aprovechamientoMultaDTO, id);
         return new ResponseEntity<>(aprovechamientoMultaRespuesta, HttpStatus.OK);
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
     @DeleteMapping("/{id}")
 	public ResponseEntity<Map<String,Boolean>> eliminarAprovechamientoMulta(@PathVariable String id){
         aprovechamientoMultaSer.delete(id);

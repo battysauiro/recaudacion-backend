@@ -39,37 +39,37 @@ public class ImpuestoControlador {
     @Autowired
     private ImpuestoServicioImpl impuestoSer;
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/page/{page}")
     public entidadRespuesta<ImpuestoDTO> listarImpuesto(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "6",required = false)int cantidadPagina){
         return impuestoSer.findAll(page,cantidadPagina);
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full/page/{page}")
     public entidadRespuesta<ImpuestoCompletoDTO> listarImpuestoCompleto(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "6",required = false)int cantidadPagina){
         return impuestoSer.findAllC(page,cantidadPagina);
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("i/page/{page}")
     public Page<ImpuestoDTO> listarImpuesto(@PathVariable Integer page){
         return impuestoSer.findAll(PageRequest.of(page,10));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full/page/test/{page}")
     public Page<ImpuestoCompletoDTO> listarImpuestoCompleto(@PathVariable Integer page){
         return impuestoSer.findAllC(PageRequest.of(page,10));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/{id}")
     public ResponseEntity<ImpuestoDTO> obtenerImpuesto(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(impuestoSer.findById(id));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full/{id}")
     public ResponseEntity<ImpuestoCompletoDTO> obtenerImpuestoCompleto(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(impuestoSer.findByIdCompleto(id));

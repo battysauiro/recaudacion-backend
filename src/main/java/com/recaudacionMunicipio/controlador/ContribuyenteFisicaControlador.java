@@ -38,31 +38,31 @@ public class ContribuyenteFisicaControlador {
     @Autowired
     private ContribuyenteFisicaServicioImpl contribuyenteFisicaImplSer;
     
-    @Secured({"ROLE_ADMIN","ROLE_USER"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/page/{page}")
     public entidadRespuesta<ContribuyenteFisicaDTO> listarContribuyentesFisica(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "6",required = false)int cantidadPagina){
         return contribuyenteFisicaImplSer.findAll(page,cantidadPagina);
 }
     
-    @Secured({"ROLE_ADMIN","ROLE_USER"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/page/test/{page}")
     public Page<ContribuyenteFisicaDTO> listarContribuyentesFisica(@PathVariable Integer page){
         return contribuyenteFisicaImplSer.findAll(PageRequest.of(page,10));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/{id}")
     public ResponseEntity<ContribuyenteFisicaDTO> obtenerContribuyenteFisica(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(contribuyenteFisicaImplSer.findById(id));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/filtrar/{term}")
     public List<ContribuyenteFisicaDTO> contribuyenteByCurp(@PathVariable String term){
         return contribuyenteFisicaImplSer.findByCurp(term);
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO"})
     @PostMapping()    
     public ResponseEntity<ContribuyenteFisicaDTO> guardarContribuyenteFisica(@RequestBody ContribuyenteFisicaDTO contribuyenteFisicaDTO) {
         Object obj=contribuyenteFisicaImplSer.crear(contribuyenteFisicaDTO);
@@ -81,7 +81,7 @@ public class ContribuyenteFisicaControlador {
         
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO"})
     @PutMapping("/{id}")
     public ResponseEntity<ContribuyenteFisicaDTO> actualizarContribuyenteFisica(@RequestBody ContribuyenteFisicaDTO contribuyenteFisicaDTO, @PathVariable(name = "id") String id) {
         ContribuyenteFisicaDTO contribuyenteFisicaRespuesta = contribuyenteFisicaImplSer.update(contribuyenteFisicaDTO, id);

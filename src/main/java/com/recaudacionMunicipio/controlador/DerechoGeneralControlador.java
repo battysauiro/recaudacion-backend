@@ -39,37 +39,37 @@ public class DerechoGeneralControlador {
     @Autowired
     private DerechoGeneralServicioImpl DerechoGeneralImplSer;
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/page/{page}")
     public entidadRespuesta<DerechosGeneralDTO> listarDerechosGeneral(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "6",required = false)int cantidadPagina){
         return DerechoGeneralImplSer.findAll(page,cantidadPagina);
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full")
     public entidadRespuesta<DerechosGeneralCompletoDTO> listarDerechosGeneralCompleto(@RequestParam(value="pageNo",defaultValue = "0",required = false)int numeroDePagina,@RequestParam(value = "pageSize",defaultValue = "10",required = false)int cantidadPagina){
         return DerechoGeneralImplSer.findAllC(numeroDePagina,cantidadPagina);
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("i/page/{page}")
     public Page<DerechosGeneralDTO> listarDerechosGeneral(@PathVariable Integer page){
         return DerechoGeneralImplSer.findAll(PageRequest.of(page,10));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full/page/{page}")
     public Page<DerechosGeneralCompletoDTO> listarDerechosGeneralCompleto(@PathVariable Integer page){
         return DerechoGeneralImplSer.findAllC(PageRequest.of(page,10));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/{id}")
     public ResponseEntity<DerechosGeneralDTO> obtenerDerechoGeneral(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(DerechoGeneralImplSer.findById(id));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full/{id}")
     public ResponseEntity<DerechosGeneralCompletoDTO> obtenerDerechoGeneralCompleto(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(DerechoGeneralImplSer.findByIdCompleto(id));

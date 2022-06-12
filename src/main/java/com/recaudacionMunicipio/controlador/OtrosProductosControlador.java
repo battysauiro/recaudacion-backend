@@ -39,37 +39,37 @@ public class OtrosProductosControlador {
     @Autowired
     private OtrosProductosServicioImpl otrosProductosImplSer;
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/page/{page}")
     public entidadRespuesta<OtrosProductosDTO> listarOtrosProductos(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "6",required = false)int cantidadPagina){
         return otrosProductosImplSer.findAll(page,cantidadPagina);
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full")
     public entidadRespuesta<OtrosProductosCompletoDTO> listarOtrosProductosCompleto(@RequestParam(value="pageNo",defaultValue = "0",required = false)int numeroDePagina,@RequestParam(value = "pageSize",defaultValue = "10",required = false)int cantidadPagina){
         return otrosProductosImplSer.findAllC(numeroDePagina,cantidadPagina);
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("i/page/{page}")
     public Page<OtrosProductosDTO> listarOtrosProductos(@PathVariable Integer page){
         return otrosProductosImplSer.findAll(PageRequest.of(page,10));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full/page/{page}")
     public Page<OtrosProductosCompletoDTO> listarOtrosProductosCompleto(@PathVariable Integer page){
         return otrosProductosImplSer.findAllC(PageRequest.of(page,10));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/{id}")
     public ResponseEntity<OtrosProductosDTO> obtenerOtrosProductos(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(otrosProductosImplSer.findById(id));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full/{id}")
     public ResponseEntity<OtrosProductosCompletoDTO> obtenerOtrosProductosCompleto(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(otrosProductosImplSer.findByIdCompleto(id));

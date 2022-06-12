@@ -40,19 +40,19 @@ public class AprovechamientoMultaEbriedadControlador {
     @Autowired
     private AprovechamientoMultaEbriedadServicioImpl aprovechamientoMultaEbriedadSer;
 
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/page/{page}")
     public entidadRespuesta listarMultasEbriedad(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "6",required = false)int cantidadPagina){
         return aprovechamientoMultaEbriedadSer.findAll(page,cantidadPagina);
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("i/page/{page}")   
     public Page<AprovechamientoMultaEbriedadDTO> listarMultasEbriedad(@PathVariable Integer page){
         return aprovechamientoMultaEbriedadSer.findAll(PageRequest.of(page,10));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full")
     public entidadRespuesta<AprovechamientoMultaEbriedadCompletaDTO> listarMultaEbriedadCompleta(@RequestParam(value="pageNo",defaultValue = "0",required = false)int numeroDePagina,@RequestParam(value = "pageSize",defaultValue = "10",required = false)int cantidadPagina){
         return aprovechamientoMultaEbriedadSer.findAllC(numeroDePagina,cantidadPagina);   
@@ -64,13 +64,13 @@ public class AprovechamientoMultaEbriedadControlador {
      //   return aprovechamientoMultaEbriedadSer.findAllCc(PageRequest.of(page,10));
     //}
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/{id}")
     public ResponseEntity<AprovechamientoMultaEbriedadDTO> obtenerMultaEbriedad(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(aprovechamientoMultaEbriedadSer.findById(id));
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/full/{id}")
     public ResponseEntity<AprovechamientoMultaEbriedadCompletaDTO> obtenerAprovechamientoMultaEbriedadCompleta(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(aprovechamientoMultaEbriedadSer.findByIdCompleto(id));

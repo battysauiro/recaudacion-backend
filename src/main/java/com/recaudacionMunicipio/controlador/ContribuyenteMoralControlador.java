@@ -38,7 +38,7 @@ public class ContribuyenteMoralControlador {
     @Autowired
     private ContribuyenteMoralServicioImpl contribuyenteMoralImplSer;
     
-    @Secured({"ROLE_ADMIN","ROLE_USER"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/page/{page}")
     public entidadRespuesta<ContribuyenteMoralDTO> listarContribuyentesMoral(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "6",required = false)int cantidadPagina){
         return contribuyenteMoralImplSer.findAll(page,cantidadPagina);
@@ -50,7 +50,7 @@ public class ContribuyenteMoralControlador {
      //   return contribuyenteMoralImplSer.findAll(PageRequest.of(page,10));
     //}
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/{id}")
     public ResponseEntity<ContribuyenteMoralDTO> obtenerContribuyenteMoral(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(contribuyenteMoralImplSer.findById(id));
@@ -62,7 +62,7 @@ public class ContribuyenteMoralControlador {
         return new ResponseEntity<>(contribuyenteMoralImplSer.save(contribuyenteMoralDTO), HttpStatus.CREATED);
     }
     */
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO"})
     @PostMapping()    
     public ResponseEntity<ContribuyenteMoralDTO> crearContribuyenteMoral(@RequestBody ContribuyenteMoralDTO contribuyenteMoralDTO) {
         Object obj=contribuyenteMoralImplSer.crear(contribuyenteMoralDTO);
@@ -81,7 +81,7 @@ public class ContribuyenteMoralControlador {
         
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO"})
     @PutMapping("/{id}")
     public ResponseEntity<ContribuyenteMoralDTO> actualizarContribuyenteMoral(@RequestBody ContribuyenteMoralDTO contribuyenteMoralDTO, @PathVariable(name = "id") String id) {
         ContribuyenteMoralDTO contribuyenteMoralRespuesta = contribuyenteMoralImplSer.update(contribuyenteMoralDTO, id);

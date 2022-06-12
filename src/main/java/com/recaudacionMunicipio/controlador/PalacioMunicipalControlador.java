@@ -51,25 +51,25 @@ public class PalacioMunicipalControlador {
     @Autowired
     private PalacioMunicipalServicioImpl palacioMunicipalImplSer;
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
     @GetMapping()
     public List<PalacioMunicipalDTO> listarPalaciosMunicipales() {
         return palacioMunicipalImplSer.findAllC();
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
     @GetMapping("/page/{page}")
     public entidadRespuesta<PalacioMunicipalDTO> listarPalacios(@PathVariable Integer page, @RequestParam(value = "pageSize", defaultValue = "6", required = false) int cantidadPagina) {
         return palacioMunicipalImplSer.findAll(page, cantidadPagina);
     }
 
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
     @GetMapping("/Ppage/{page}")
     public Page<PalacioMunicipalDTO> listarPalaciosMunicipales(@PathVariable Integer page) {
         return palacioMunicipalImplSer.findAll(PageRequest.of(page, 10));
     }
 
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
     @GetMapping("/{id}")
     public ResponseEntity<PalacioMunicipalDTO> obtenerPalacioMunicipal(@PathVariable(name = "id") Integer id) {
         return ResponseEntity.ok(palacioMunicipalImplSer.findById(id));

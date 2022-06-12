@@ -38,13 +38,13 @@ public class EmpleadoControlador {
     @Autowired
     private EmpleadoServicioImpl EmpleadoSer;
 
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
     @GetMapping("/page/{page}")
     public entidadRespuesta<EmpleadoDTO> listarEmpleado(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "6",required = false)int cantidadPagina){
         return EmpleadoSer.findAll(page,cantidadPagina);
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
     @GetMapping()
     public List<EmpleadoDTO> listarEmpleado(){
         return EmpleadoSer.findAllEmpleados();
@@ -56,7 +56,7 @@ public class EmpleadoControlador {
       //  return EmpleadoSer.findAll(PageRequest.of(page,10));
     //}
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
     @GetMapping("/{id}")
     public ResponseEntity<EmpleadoDTO> obtenerEmpleado(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(EmpleadoSer.findById(id));
@@ -68,7 +68,7 @@ public class EmpleadoControlador {
         return new ResponseEntity<>(EmpleadoSer.save(empleadoDTO), HttpStatus.CREATED);
     }*/
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
     @PostMapping()    
     public ResponseEntity<EmpleadoDTO> crearEmpleado(@RequestBody EmpleadoDTO  empleadoDTO) {
         Object obj=EmpleadoSer.crear(empleadoDTO);
@@ -82,7 +82,7 @@ public class EmpleadoControlador {
         
     }
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
     @PutMapping("/{id}")
     public ResponseEntity<EmpleadoDTO> actualizarEmpleado(@RequestBody EmpleadoDTO empleadoDTO, @PathVariable(name = "id") String id) {
         EmpleadoDTO tipoContribucionRespuesta = EmpleadoSer.update(empleadoDTO, id);
