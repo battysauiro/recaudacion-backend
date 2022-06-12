@@ -10,6 +10,8 @@ import com.recaudacionMunicipio.DTO.emailDTO;
 import com.recaudacionMunicipio.modelo.Usuario;
 import com.recaudacionMunicipio.servicios.EmailServicio;
 import com.recaudacionMunicipio.servicios.UsuarioServicio;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +53,10 @@ public class EmailControlador {
     @PostMapping("/api/email/send-html")
     public ResponseEntity<?> sendEmailTemplate(@RequestBody emailDTO emaillDTO){
         Usuario usuario =usuarioServicio.findByUsername(emaillDTO.getMailTo());
+        Map<String, Object> respuesta = new HashMap<>();
         if(usuario==null){
-            return new ResponseEntity("este usuario no existe",HttpStatus.OK);
+            respuesta.put("mensaje", "No existe usuario con esas credenciales ");
+            return new ResponseEntity<Map<String,Object>>(respuesta,HttpStatus.OK);
         }
         emaillDTO.setMailFrom(mailFrom);
         emaillDTO.setMailTo(usuario.getUsername());
@@ -64,25 +68,33 @@ public class EmailControlador {
         usuario.setTokenPassword(tokenPassword);
         usuarioServicio.saveCorreo(usuario);
         emailServicio.sendEmailTemplate(emaillDTO);
-        return new ResponseEntity("correo con plantilla enviado con exito",HttpStatus.OK);
+        respuesta.put("mensaje", "Te hemos enviado un correo");
+        return new ResponseEntity(respuesta,HttpStatus.OK);
     }
     
     @PostMapping("/api/cambiar-password")
     public ResponseEntity<?> cambiarContraseña(@Valid @RequestBody CambiarPasswordDTO cambiarPasswordDTO, BindingResult bindingResult){
-        if(bindingResult.hasErrors())
-            return new ResponseEntity("campos erroneos",HttpStatus.BAD_REQUEST);
-        if(!cambiarPasswordDTO.getPassword().equals(cambiarPasswordDTO.getConfirmarPassword()))
-            return new ResponseEntity("las contraseñas no coinciden",HttpStatus.BAD_REQUEST);
+        Map<String, Object> respuesta = new HashMap<>();
+        if(bindingResult.hasErrors()){
+            respuesta.put("mensaje", "campos erroneos");
+            return new ResponseEntity(respuesta,HttpStatus.BAD_REQUEST);
+        }
+        if(!cambiarPasswordDTO.getPassword().equals(cambiarPasswordDTO.getConfirmarPassword())){
+            respuesta.put("mensaje", "las contraseñas no coinciden");
+            return new ResponseEntity(respuesta,HttpStatus.BAD_REQUEST);
+        }
         Usuario usuario = usuarioServicio.findByTokenPassword(cambiarPasswordDTO.getTokenPassword());
         System.out.println(usuario.getTokenPassword());
         if(usuario==null){ 
-            return new ResponseEntity("este usuario no existe",HttpStatus.OK);
+            respuesta.put("mensaje", "este usuario no existe");
+            return new ResponseEntity(respuesta,HttpStatus.OK);
         }
         String newPassword = passwordEncoder.encode(cambiarPasswordDTO.getPassword());
         usuario.setPassword(newPassword);
         usuario.setTokenPassword(null);
         usuarioServicio.saveCorreo(usuario);
-        return new ResponseEntity("contraseña actualizada",HttpStatus.OK);
+        respuesta.put("mensaje", "contraseña actualizada");
+        return new ResponseEntity(respuesta,HttpStatus.OK);
     }
     
 }
