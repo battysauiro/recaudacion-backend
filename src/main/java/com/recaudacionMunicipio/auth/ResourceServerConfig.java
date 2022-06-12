@@ -30,7 +30,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/**/uploads/img/{nombreFoto:.+}","/static/**/no_usuario.png").permitAll()//.authenticated()
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/**/uploads/img/{nombreFoto:.+}","/static/**/no_usuario.png").permitAll()
+            .antMatchers(HttpMethod.POST,"/api/email/send-html","/api/cambiar-password").permitAll()//.authenticated() 
             .anyRequest().authenticated()
             .and().cors().configurationSource(corsConfigurationSource()); 
     }        
