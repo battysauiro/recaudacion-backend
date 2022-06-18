@@ -6,6 +6,7 @@
 package com.recaudacionMunicipio.dao;
 
 import com.recaudacionMunicipio.modelo.ContribuyenteMoral;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -18,4 +19,7 @@ import org.springframework.stereotype.Repository;
 public interface IcontribuyenteMoralDao extends JpaRepository<ContribuyenteMoral, String>{
     
     public ContribuyenteMoral findByIdContribuyenteMoral(@Param("idContribuyenteMoral")String idContribuyenteMoral);
+    
+    public List<ContribuyenteMoral> findByIdContribuyenteMoralStartingWithIgnoreCaseOrRazonSocialContribuyenteMoralStartingWithIgnoreCase(@Param("idContribuyenteMoral")String idContribuyenteMoral,
+            @Param("razonSocialContribuyenteMoral")String razonSocialContribuyenteMoral);
 }

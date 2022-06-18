@@ -58,8 +58,8 @@ public class ContribuyenteFisicaControlador {
     
     @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
     @GetMapping("/filtrar/{term}")
-    public List<ContribuyenteFisicaDTO> contribuyenteByCurp(@PathVariable String term){
-        return contribuyenteFisicaImplSer.findByCurp(term);
+    public List<ContribuyenteFisicaDTO> contribuyenteByTermino(@PathVariable String term){
+        return contribuyenteFisicaImplSer.findByTermino(term);
     }
     
     @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO"})
