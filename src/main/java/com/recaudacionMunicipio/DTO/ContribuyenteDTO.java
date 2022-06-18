@@ -5,6 +5,8 @@
  */
 package com.recaudacionMunicipio.DTO;
 
+import java.util.List;
+
 /**
  *
  * @author Oscar
@@ -17,18 +19,20 @@ public class ContribuyenteDTO {
     private String numero;
     private String colonia;
     private String codigo_postal;
-
+    private List<FacturaDTO> facturas;
     public ContribuyenteDTO() {
 }
 
-    public ContribuyenteDTO(String rfc_contribuyente, String calle, String numero, String colonia, String codigo_postal) {
-        //this.id_contribuyente=id_contribuyente;
+    public ContribuyenteDTO(String rfc_contribuyente, String calle, String numero, String colonia, String codigo_postal, List<FacturaDTO> facturas) {
         this.rfc_contribuyente = rfc_contribuyente;
         this.calle = calle;
         this.numero = numero;
         this.colonia = colonia;
         this.codigo_postal = codigo_postal;
+        this.facturas = facturas;
     }
+
+   
 
     /** public int getId_contribuyente() {
         return id_contribuyente;
@@ -76,6 +80,14 @@ public class ContribuyenteDTO {
 
     public void setCodigo_postal(String codigo_postal) {
         this.codigo_postal = codigo_postal;
+    }
+
+    public List<FacturaDTO> getFacturas() {
+        return facturas;
+    }
+
+    public void setFacturas(List<FacturaDTO> facturas) {
+        this.facturas = facturas;
     }
     
     

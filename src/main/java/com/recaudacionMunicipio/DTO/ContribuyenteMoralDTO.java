@@ -5,6 +5,8 @@
  */
 package com.recaudacionMunicipio.DTO;
 
+import java.util.List;
+
 /**
  *
  * @author Oscar
@@ -17,11 +19,13 @@ public class ContribuyenteMoralDTO extends ContribuyenteDTO{
     public ContribuyenteMoralDTO() {
 }
 
-    public ContribuyenteMoralDTO(String id_contribuyente_moral, String razon_social, String rfc_contribuyente, String calle, String numero, String colonia, String codigo_postal) {
-        super( rfc_contribuyente, calle, numero, colonia, codigo_postal);
+    public ContribuyenteMoralDTO(String id_contribuyente_moral, String razon_social, String rfc_contribuyente, String calle, String numero, String colonia, String codigo_postal, List<FacturaDTO> facturas) {
+        super(rfc_contribuyente, calle, numero, colonia, codigo_postal, facturas);
         this.id_contribuyente_moral = id_contribuyente_moral;
         this.razon_social = razon_social;
     }
+
+   
 
     
 

@@ -42,6 +42,12 @@ public class ContribucionControlador {
     @GetMapping()
     public entidadRespuesta<ContribucionDTO> listarContribucion(@RequestParam(value="pageNo",defaultValue = "0",required = false)int numeroDePagina,@RequestParam(value = "pageSize",defaultValue = "10",required = false)int cantidadPagina){
         return contribucionImplSer.findAll(numeroDePagina,cantidadPagina);
+    } 
+    
+    @Secured({"ROLE_ADMIN"})
+    @GetMapping("filtrar/{term}")
+    public List<ContribucionDTO> findByCodigoOrConcepto(@PathVariable String term){
+        return contribucionImplSer.findByCodigoOrConcepto(term,term);
     }
     
     @Secured({"ROLE_ADMIN"})

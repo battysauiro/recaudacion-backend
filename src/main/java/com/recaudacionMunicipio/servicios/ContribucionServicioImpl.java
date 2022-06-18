@@ -83,6 +83,14 @@ public class ContribucionServicioImpl implements Servicios<ContribucionDTO>{
         return contribucionDTO;
     }
     
+    public List<ContribucionDTO> findByCodigoOrConcepto(String codigo,String concepto){
+        List<Contribucion> contribuciones=contribucionDao.findByCodigoContribucionStartingWithIgnoreCaseOrConceptoContribucionContainingIgnoreCase(codigo, concepto);
+        List<ContribucionDTO> contribucionesDTO= new ArrayList<>();
+        for(Contribucion contribucion:contribuciones)
+            contribucionesDTO.add(new ContribucionDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(), contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(), contribucion.getIdDescripcion().getDescripcion()));
+        return contribucionesDTO;
+    }
+    
     public ContribucionCompletaDTO findByIdCompleto(String id) {
         Contribucion contribucion=contribucionDao.findById(id).orElse(null);
         ContribucionCompletaDTO contribucionCompletaDTO = new ContribucionCompletaDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getNombrePago(),contribucion.getIdDescripcion().getDescripcion());

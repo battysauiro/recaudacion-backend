@@ -9,6 +9,7 @@ package com.recaudacionMunicipio.DTO;
 
 
 import java.util.Date;
+import java.util.List;
 
 
 
@@ -30,8 +31,8 @@ public class ContribuyenteFisicaDTO extends ContribuyenteDTO{
     public ContribuyenteFisicaDTO() {
 }
 
-    public ContribuyenteFisicaDTO(String id_contribuyente_fisica, String curp, String nombre, String apellido_p, String apellido_m, Date fecha, String rfc_contribuyente, String calle, String numero, String colonia, String codigo_postal) {
-        super( rfc_contribuyente, calle, numero, colonia, codigo_postal);
+    public ContribuyenteFisicaDTO(String id_contribuyente_fisica, String curp, String nombre, String apellido_p, String apellido_m, Date fecha, String rfc_contribuyente, String calle, String numero, String colonia, String codigo_postal, List<FacturaDTO> facturas) {
+        super(rfc_contribuyente, calle, numero, colonia, codigo_postal, facturas);
         this.id_contribuyente_fisica = id_contribuyente_fisica;
         this.curp = curp;
         this.nombre = nombre;
@@ -39,6 +40,8 @@ public class ContribuyenteFisicaDTO extends ContribuyenteDTO{
         this.apellido_m = apellido_m;
         this.fecha = fecha;
     }
+
+   
 
     
 

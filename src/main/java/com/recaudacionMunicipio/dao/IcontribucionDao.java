@@ -5,8 +5,11 @@
  */
 package com.recaudacionMunicipio.dao;
 
+import com.recaudacionMunicipio.DTO.ContribucionDTO;
 import com.recaudacionMunicipio.modelo.Contribucion;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,4 +19,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IcontribucionDao extends JpaRepository<Contribucion, String>{
     
+    public List<Contribucion> findByCodigoContribucionStartingWithIgnoreCaseOrConceptoContribucionContainingIgnoreCase(@Param("codigoContribucion")String codigoContribucion,@Param("conceptoContribucion")String conceptoContribucion);
 }

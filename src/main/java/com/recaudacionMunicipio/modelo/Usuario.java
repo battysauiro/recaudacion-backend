@@ -6,6 +6,7 @@
 package com.recaudacionMunicipio.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -43,6 +44,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Usuario.findByTokenPassword", query = "SELECT u FROM Usuario u WHERE u.tokenPassword = :tokenPassword")})
 public class Usuario implements Serializable {
 
+    
+
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @Column(name = "password")
@@ -62,13 +65,14 @@ public class Usuario implements Serializable {
    
     @ManyToMany()
     private List<Roles> rolesList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioIdUsuario")
-    private List<DetalleCobro> detalleCobroList;
     @JoinColumn(name = "id_empleado", referencedColumnName = "curp")
     @ManyToOne(optional = false)
     private Empleado idEmpleado;
-
+    @OneToMany(mappedBy = "usuarioId")
+    private List<Factura> facturaList;
+    
     public Usuario() {
+       
     }
 
     public Usuario(String username) {
@@ -79,6 +83,8 @@ public class Usuario implements Serializable {
         this.username = username;
         this.password = password;
     }
+    
+  
 
     public String getPassword() {
         return password;
@@ -132,22 +138,22 @@ public class Usuario implements Serializable {
         this.rolesList = rolesList1;
     }
 
-    @XmlTransient
-    @JsonIgnore
-    public List<DetalleCobro> getDetalleCobroList() {
-        return detalleCobroList;
-    }
-
-    public void setDetalleCobroList(List<DetalleCobro> detalleCobroList) {
-        this.detalleCobroList = detalleCobroList;
-    }
-
     public Empleado getIdEmpleado() {
         return idEmpleado;
     }
 
     public void setIdEmpleado(Empleado idEmpleado) {
         this.idEmpleado = idEmpleado;
+    }
+    
+    @XmlTransient
+    @JsonIgnore
+    public List<Factura> getFacturaList() {
+        return facturaList;
+    }
+
+    public void setFacturaList(List<Factura> facturaList) {
+        this.facturaList = facturaList;
     }
 
     @Override
@@ -192,5 +198,7 @@ public class Usuario implements Serializable {
     public String toString() {
         return "com.recaudacionMunicipio.modelo.Usuario[ username=" + username + " ]";
     }
+    
+    
     
 }
