@@ -18,8 +18,8 @@ public class DerechosLicenciaDTO extends DerechosDTO{
     public DerechosLicenciaDTO() {
     }
 
-    public DerechosLicenciaDTO(String id_derecho_licencia, float expedicion, float refrendo, String id_derecho, int catalogo_derechos,String scatalogo_derechos, String codigo_contribucion, String concepto_contribucion, int id_tipo_pago,String tipo_pago, int id_descripcion,String descripcion) {
-        super(id_derecho, catalogo_derechos,scatalogo_derechos, codigo_contribucion, concepto_contribucion, id_tipo_pago,tipo_pago, id_descripcion,descripcion);
+    public DerechosLicenciaDTO(String id_derecho_licencia, float expedicion, float refrendo, String id_derecho, int catalogo_derechos,String scatalogo_derechos, String codigo_contribucion, String concepto_contribucion, int id_tipo_pago,String tipo_pago, int id_descripcion,String descripcion,int nivelContribucion) {
+        super(id_derecho, catalogo_derechos,scatalogo_derechos, codigo_contribucion, concepto_contribucion, id_tipo_pago,tipo_pago, id_descripcion,descripcion,nivelContribucion);
         this.id_derecho_licencia = id_derecho_licencia;
         this.expedicion = expedicion;
         this.refrendo = refrendo;

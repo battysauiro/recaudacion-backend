@@ -44,7 +44,7 @@ public class AprovechamientoServicioImpl implements Servicios<AprovechamientoDTO
     @Override
     public AprovechamientoDTO findById(String id) {
         Aprovechamiento aprovechamiento= aprovechamientoDao.findById(id).orElse(null);
-        AprovechamientoDTO aprovechamientoDTO = new AprovechamientoDTO(aprovechamiento.getIdContribucionAprovechamiento(), aprovechamiento.getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamiento.getIdTipoAprovechamiento().getDescripcion(), aprovechamiento.getContribucion().getCodigoContribucion(), aprovechamiento.getContribucion().getConceptoContribucion(), aprovechamiento.getContribucion().getIdTipoPago().getIdTipoPago(),aprovechamiento.getContribucion().getIdTipoPago().getNombrePago(), aprovechamiento.getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamiento.getContribucion().getIdDescripcion().getDescripcion());
+        AprovechamientoDTO aprovechamientoDTO = new AprovechamientoDTO(aprovechamiento.getIdContribucionAprovechamiento(), aprovechamiento.getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamiento.getIdTipoAprovechamiento().getDescripcion(), aprovechamiento.getContribucion().getCodigoContribucion(), aprovechamiento.getContribucion().getConceptoContribucion(), aprovechamiento.getContribucion().getIdTipoPago().getIdTipoPago(),aprovechamiento.getContribucion().getIdTipoPago().getNombrePago(), aprovechamiento.getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamiento.getContribucion().getIdDescripcion().getDescripcion(),aprovechamiento.getContribucion().getNivelContribucion());
         return aprovechamientoDTO;  
     }
 
@@ -70,7 +70,7 @@ public class AprovechamientoServicioImpl implements Servicios<AprovechamientoDTO
         List<Aprovechamiento> listaAprovechamiento =listaAprovechamientoP.getContent();
         List<AprovechamientoDTO> lista= new ArrayList<>();
         for(Aprovechamiento aprovechamiento:listaAprovechamiento ){
-            lista.add(new AprovechamientoDTO(aprovechamiento.getIdContribucionAprovechamiento(), aprovechamiento.getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamiento.getIdTipoAprovechamiento().getDescripcion(), aprovechamiento.getContribucion().getCodigoContribucion(), aprovechamiento.getContribucion().getConceptoContribucion(), aprovechamiento.getContribucion().getIdTipoPago().getIdTipoPago(),aprovechamiento.getContribucion().getIdTipoPago().getNombrePago(), aprovechamiento.getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamiento.getContribucion().getIdDescripcion().getDescripcion()));
+            lista.add(new AprovechamientoDTO(aprovechamiento.getIdContribucionAprovechamiento(), aprovechamiento.getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamiento.getIdTipoAprovechamiento().getDescripcion(), aprovechamiento.getContribucion().getCodigoContribucion(), aprovechamiento.getContribucion().getConceptoContribucion(), aprovechamiento.getContribucion().getIdTipoPago().getIdTipoPago(),aprovechamiento.getContribucion().getIdTipoPago().getNombrePago(), aprovechamiento.getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamiento.getContribucion().getIdDescripcion().getDescripcion(),aprovechamiento.getContribucion().getNivelContribucion()));
         }
         entidadRespuesta entidadrespuesta=new entidadRespuesta();
         entidadrespuesta.setContenido(lista);
@@ -157,7 +157,7 @@ public class AprovechamientoServicioImpl implements Servicios<AprovechamientoDTO
         Page<Aprovechamiento> listaAprovechamiento =aprovechamientoDao.findAll(pageable);
         List<AprovechamientoDTO> lista= new ArrayList<>();
         for(Aprovechamiento aprovechamiento:listaAprovechamiento ){
-            lista.add(new AprovechamientoDTO(aprovechamiento.getIdContribucionAprovechamiento(), aprovechamiento.getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamiento.getIdTipoAprovechamiento().getDescripcion(), aprovechamiento.getContribucion().getCodigoContribucion(), aprovechamiento.getContribucion().getConceptoContribucion(), aprovechamiento.getContribucion().getIdTipoPago().getIdTipoPago(),aprovechamiento.getContribucion().getIdTipoPago().getNombrePago(), aprovechamiento.getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamiento.getContribucion().getIdDescripcion().getDescripcion()));
+            lista.add(new AprovechamientoDTO(aprovechamiento.getIdContribucionAprovechamiento(), aprovechamiento.getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamiento.getIdTipoAprovechamiento().getDescripcion(), aprovechamiento.getContribucion().getCodigoContribucion(), aprovechamiento.getContribucion().getConceptoContribucion(), aprovechamiento.getContribucion().getIdTipoPago().getIdTipoPago(),aprovechamiento.getContribucion().getIdTipoPago().getNombrePago(), aprovechamiento.getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamiento.getContribucion().getIdDescripcion().getDescripcion(),aprovechamiento.getContribucion().getNivelContribucion()));
 }
         return (Page<AprovechamientoDTO>) lista;
     }

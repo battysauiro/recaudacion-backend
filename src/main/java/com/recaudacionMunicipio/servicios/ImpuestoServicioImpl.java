@@ -52,7 +52,7 @@ public class ImpuestoServicioImpl implements Servicios<ImpuestoDTO> {
     public ImpuestoDTO findById(String id) {
         Impuesto impuestos = impuestoDao.findById(id).orElse(null);
         ImpuestoDTO impuestoDTO = new ImpuestoDTO(impuestos.getIdContribucionImpuesto(), impuestos.getIdTipoImpuesto().getIdTipoImpuesto(), impuestos.getIdTipoImpuesto().getDescripcion(), impuestos.getCantidad(), impuestos.getContribucion().getCodigoContribucion(), impuestos.getContribucion().getConceptoContribucion(), impuestos.getContribucion().getIdTipoPago().getIdTipoPago(), impuestos.getContribucion().getIdTipoPago().getNombrePago(), impuestos.getContribucion().getIdDescripcion().getIdDescripcion(),
-                impuestos.getContribucion().getIdDescripcion().getDescripcion());
+                impuestos.getContribucion().getIdDescripcion().getDescripcion(),impuestos.getContribucion().getNivelContribucion());
         return impuestoDTO;
     }
 
@@ -122,7 +122,7 @@ public class ImpuestoServicioImpl implements Servicios<ImpuestoDTO> {
         List<ImpuestoDTO> lista = new ArrayList<>();
         for (Impuesto impuestos : listaImpuestos) {
             lista.add(new ImpuestoDTO(impuestos.getIdContribucionImpuesto(), impuestos.getIdTipoImpuesto().getIdTipoImpuesto(), impuestos.getIdTipoImpuesto().getDescripcion(), impuestos.getCantidad(), impuestos.getContribucion().getCodigoContribucion(), impuestos.getContribucion().getConceptoContribucion(), impuestos.getContribucion().getIdTipoPago().getIdTipoPago(), impuestos.getContribucion().getIdTipoPago().getNombrePago(), impuestos.getContribucion().getIdDescripcion().getIdDescripcion(),
-                    impuestos.getContribucion().getIdDescripcion().getDescripcion()));
+                    impuestos.getContribucion().getIdDescripcion().getDescripcion(),impuestos.getContribucion().getNivelContribucion()));
         }
         entidadRespuesta entidadrespuesta = new entidadRespuesta();
         entidadrespuesta.setContenido(lista);
@@ -221,7 +221,7 @@ public class ImpuestoServicioImpl implements Servicios<ImpuestoDTO> {
         List<ImpuestoDTO> lista = new ArrayList<>();
         for (Impuesto impuestos : listaImpuestos) {
             lista.add(new ImpuestoDTO(impuestos.getIdContribucionImpuesto(), impuestos.getIdTipoImpuesto().getIdTipoImpuesto(), impuestos.getIdTipoImpuesto().getDescripcion(), impuestos.getCantidad(), impuestos.getContribucion().getCodigoContribucion(), impuestos.getContribucion().getConceptoContribucion(), impuestos.getContribucion().getIdTipoPago().getIdTipoPago(), impuestos.getContribucion().getIdTipoPago().getNombrePago(), impuestos.getContribucion().getIdDescripcion().getIdDescripcion(),
-                    impuestos.getContribucion().getIdDescripcion().getDescripcion()));
+                    impuestos.getContribucion().getIdDescripcion().getDescripcion(),impuestos.getContribucion().getNivelContribucion()));
         }
         return (Page<ImpuestoDTO>) lista;
     }

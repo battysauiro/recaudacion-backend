@@ -21,8 +21,8 @@ public class AprovechamientoMultaVehicularDTO extends AprovechamientoDTO{
     public AprovechamientoMultaVehicularDTO() {
     }
 
-    public AprovechamientoMultaVehicularDTO(String id_multa_vehicular, String descripcion_articulo, float uma_min, float uma_max, int tipo_vehiculo,String svehiculo, String id_contribucion, int id_catalogo,String scatalogo, String codigo_contribucion, String concepto_contribucion, int id_tipo_pago,String tipo_pago, int id_descripcion,String descripcion) {
-        super(id_contribucion, id_catalogo,scatalogo, codigo_contribucion, concepto_contribucion, id_tipo_pago,tipo_pago, id_descripcion,descripcion);
+    public AprovechamientoMultaVehicularDTO(String id_multa_vehicular, String descripcion_articulo, float uma_min, float uma_max, int tipo_vehiculo,String svehiculo, String id_contribucion, int id_catalogo,String scatalogo, String codigo_contribucion, String concepto_contribucion, int id_tipo_pago,String tipo_pago, int id_descripcion,String descripcion,int nivelContribucion) {
+        super(id_contribucion, id_catalogo,scatalogo, codigo_contribucion, concepto_contribucion, id_tipo_pago,tipo_pago, id_descripcion,descripcion,nivelContribucion);
         this.id_multa_vehicular = id_multa_vehicular;
         this.descripcion_articulo = descripcion_articulo;
         this.uma_min = uma_min;

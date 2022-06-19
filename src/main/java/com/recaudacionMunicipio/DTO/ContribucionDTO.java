@@ -18,17 +18,19 @@ public class ContribucionDTO {
     private String tipo_pago;
     private int id_descripcion;
     private String descripcion;
+    private int nivelContribucion;
 
     public ContribucionDTO() {
     }
 
-    public ContribucionDTO(String codigo_contribucion, String concepto_contribucion, int id_tipo_pago, String tipo_pago, int id_descripcion,String descripcion) {
+    public ContribucionDTO(String codigo_contribucion, String concepto_contribucion, int id_tipo_pago, String tipo_pago, int id_descripcion,String descripcion,int nivelContribucion) {
         this.codigo_contribucion = codigo_contribucion;
         this.concepto_contribucion = concepto_contribucion;
         this.id_tipo_pago = id_tipo_pago;
         this.tipo_pago=tipo_pago;
         this.id_descripcion = id_descripcion;
         this.descripcion=descripcion;
+        this.nivelContribucion=nivelContribucion;
     }
 
     /**public int getId_contribucion() {
@@ -85,6 +87,14 @@ public class ContribucionDTO {
     
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public int getNivelContribucion() {
+        return nivelContribucion;
+    }
+
+    public void setNivelContribucion(int nivelContribucion) {
+        this.nivelContribucion = nivelContribucion;
     }
     
 

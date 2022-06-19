@@ -19,8 +19,8 @@ public class AprovechamientoMultaEbriedadDTO extends AprovechamientoDTO{
     public AprovechamientoMultaEbriedadDTO() {
     }
 
-    public AprovechamientoMultaEbriedadDTO(String id_apro_ebriedad, float uma_min, float uma_max, float cantidad_alcohol, String id_contribucion, int id_catalogo,String scatalogo, String codigo_contribucion, String concepto_contribucion, int id_tipo_pago,String tipo_pago, int id_descripcion, String descripcion) {
-        super(id_contribucion, id_catalogo,scatalogo, codigo_contribucion, concepto_contribucion, id_tipo_pago,tipo_pago, id_descripcion,descripcion);
+    public AprovechamientoMultaEbriedadDTO(String id_apro_ebriedad, float uma_min, float uma_max, float cantidad_alcohol, String id_contribucion, int id_catalogo,String scatalogo, String codigo_contribucion, String concepto_contribucion, int id_tipo_pago,String tipo_pago, int id_descripcion, String descripcion,int nivelContribucion) {
+        super(id_contribucion, id_catalogo,scatalogo, codigo_contribucion, concepto_contribucion, id_tipo_pago,tipo_pago, id_descripcion,descripcion,nivelContribucion);
         this.id_apro_ebriedad = id_apro_ebriedad;
         this.uma_min = uma_min;
         this.uma_max = uma_max;
