@@ -60,7 +60,7 @@ public class UsuarioControlador {
     } */
    
    
-   @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
+   @Secured({"ROLE_ADMIN"})
    @GetMapping("/page/{page}")
     public entidadRespuesta<UsuarioDTO> listarUsuario(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "10",required = false)int cantidadPagina){
         return usuarioImplSer.findAll(page,cantidadPagina);
@@ -71,7 +71,7 @@ public class UsuarioControlador {
       //  return usuarioImplSer.findAll(PageRequest.of(page,10));
     //}
     
-    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
+    @Secured({"ROLE_ADMIN"})
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDTO> obtenerUsuario(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(usuarioImplSer.findById(id));
@@ -82,7 +82,7 @@ public class UsuarioControlador {
         return new ResponseEntity<>(usuarioImplSer.save(usuarioDTO), HttpStatus.CREATED);
     }*/
     
-    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
+    @Secured({"ROLE_ADMIN"})
     @PostMapping()    
     public ResponseEntity<UsuarioDTO> crearUsuario(@RequestBody UsuarioDTO  usuarioDTO) {
         Object obj=usuarioImplSer.crear(usuarioDTO);
@@ -148,7 +148,7 @@ public class UsuarioControlador {
         return new ResponseEntity<Resource>(recurso,cabecera,HttpStatus.OK);
     }
     
-    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
+    @Secured({"ROLE_ADMIN"})
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioDTO> actualizarUsuario(@RequestBody UsuarioDTO usuarioDTO, @PathVariable(name = "id") String id) {
         UsuarioDTO usuarioRespuesta = usuarioImplSer.update(usuarioDTO, id);
