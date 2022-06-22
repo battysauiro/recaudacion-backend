@@ -49,7 +49,7 @@ public class ContribuyenteFisicaServicioImpl implements Servicios<ContribuyenteF
             for (Contribucionfactura contribucionf : contribucionfactura) {
                 CfacturaDTO.add(new ContribucionFacturaDTO(contribucionf.getIdcontribucionFactura(), contribucionf.getContribucionId().getCodigoContribucion(), contribucionf.getFacturaId().getFolio(), contribucionf.getCantidad()));
             }
-            facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotales(), CfacturaDTO, factura.getEstadoPago()));
+            facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO, factura.getEstadoPago()));
         }
         ContribuyenteFisicaDTO contribuyenteFisicaDTO = new ContribuyenteFisicaDTO(contribuyenteFisica.getIdContribuyenteFisica(), contribuyenteFisica.getCurpContribuyenteFisica(), contribuyenteFisica.getNombreContribuyenteFisica(), contribuyenteFisica.getApellidoPContribuyenteFisica(), contribuyenteFisica.getApellidoMContribuyenteFisica(), contribuyenteFisica.getFechaNacimiento(), contribuyenteFisica.getContribuyente().getRfcContribuyente(), contribuyenteFisica.getContribuyente().getCalle(), contribuyenteFisica.getContribuyente().getNumero(), contribuyenteFisica.getContribuyente().getColonia(), contribuyenteFisica.getContribuyente().getCp(), facturaDTO);
         return contribuyenteFisicaDTO;
@@ -125,7 +125,7 @@ public class ContribuyenteFisicaServicioImpl implements Servicios<ContribuyenteF
                 for (Contribucionfactura contribucionf : contribucionfactura) {
                     CfacturaDTO.add(new ContribucionFacturaDTO(contribucionf.getIdcontribucionFactura(), contribucionf.getContribucionId().getCodigoContribucion(), contribucionf.getFacturaId().getFolio(), contribucionf.getCantidad()));
                 }
-                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotales(), CfacturaDTO, factura.getEstadoPago()));
+                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO, factura.getEstadoPago()));
             }
             lista.add(new ContribuyenteFisicaDTO(contribuyenteFisica.getIdContribuyenteFisica(), contribuyenteFisica.getCurpContribuyenteFisica(), contribuyenteFisica.getNombreContribuyenteFisica(), contribuyenteFisica.getApellidoPContribuyenteFisica(), contribuyenteFisica.getApellidoMContribuyenteFisica(), contribuyenteFisica.getFechaNacimiento(), contribuyenteFisica.getContribuyente().getRfcContribuyente(), contribuyenteFisica.getContribuyente().getCalle(), contribuyenteFisica.getContribuyente().getNumero(), contribuyenteFisica.getContribuyente().getColonia(), contribuyenteFisica.getContribuyente().getCp(), facturaDTO));
         }
@@ -189,7 +189,7 @@ public class ContribuyenteFisicaServicioImpl implements Servicios<ContribuyenteF
                 for (Contribucionfactura contribucionf : contribucionfactura) {
                     CfacturaDTO.add(new ContribucionFacturaDTO(contribucionf.getIdcontribucionFactura(), contribucionf.getContribucionId().getCodigoContribucion(), contribucionf.getFacturaId().getFolio(), contribucionf.getCantidad()));
                 }
-                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotales(), CfacturaDTO, factura.getEstadoPago()));
+                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO, factura.getEstadoPago()));
             }
             lista.add(new ContribuyenteFisicaDTO(contribuyente.getIdContribuyenteFisica(), contribuyente.getCurpContribuyenteFisica(), contribuyente.getNombreContribuyenteFisica(), contribuyente.getApellidoPContribuyenteFisica(), contribuyente.getApellidoMContribuyenteFisica(), contribuyente.getFechaNacimiento(), contribuyente.getContribuyente().getRfcContribuyente(), contribuyente.getContribuyente().getCalle(), contribuyente.getContribuyente().getNumero(), contribuyente.getContribuyente().getColonia(), contribuyente.getContribuyente().getCp(), facturaDTO));
         }
@@ -235,7 +235,7 @@ public class ContribuyenteFisicaServicioImpl implements Servicios<ContribuyenteF
                 for (Contribucionfactura contribucionf : contribucionfactura) {
                     CfacturaDTO.add(new ContribucionFacturaDTO(contribucionf.getIdcontribucionFactura(), contribucionf.getContribucionId().getCodigoContribucion(), contribucionf.getFacturaId().getFolio(), contribucionf.getCantidad()));
                 }
-                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotales(), CfacturaDTO, factura.getEstadoPago()));
+                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO, factura.getEstadoPago()));
             }
             lista.add(new ContribuyenteFisicaDTO(contribuyenteFisica.getIdContribuyenteFisica(), contribuyenteFisica.getCurpContribuyenteFisica(), contribuyenteFisica.getNombreContribuyenteFisica(), contribuyenteFisica.getApellidoPContribuyenteFisica(), contribuyenteFisica.getApellidoMContribuyenteFisica(), new Date(), contribuyenteFisica.getContribuyente().getRfcContribuyente(), contribuyenteFisica.getContribuyente().getCalle(), contribuyenteFisica.getContribuyente().getNumero(), contribuyenteFisica.getContribuyente().getColonia(), contribuyenteFisica.getContribuyente().getCp(), facturaDTO));
         }

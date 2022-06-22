@@ -42,9 +42,10 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Factura.findByFolio", query = "SELECT f FROM Factura f WHERE f.folio = :folio"),
     @NamedQuery(name = "Factura.findByFecha", query = "SELECT f FROM Factura f WHERE f.fecha = :fecha"),
     @NamedQuery(name = "Factura.findByDescuento", query = "SELECT f FROM Factura f WHERE f.descuento = :descuento"),
-    @NamedQuery(name = "Factura.findByTotal", query = "SELECT f FROM Factura f WHERE f.total = :total")})
+    @NamedQuery(name = "Factura.findByTotal", query = "SELECT f FROM Factura f WHERE f.total = :total"),
+    @NamedQuery(name = "Factura.findByContribuyenteId", query = "SELECT f FROM Factura f WHERE f.contribuyenteId = :contribuyenteId")})
 public class Factura implements Serializable {
-
+ 
     private static final long serialVersionUID = 1L; 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,7 +66,7 @@ public class Factura implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Contribuyente contribuyenteId;
     @JoinColumn(name = "usuario_id", referencedColumnName = "username")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Usuario usuarioId;
     @OneToMany(mappedBy = "facturaId",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Contribucionfactura> contribucionfacturaList;
@@ -107,12 +108,12 @@ public class Factura implements Serializable {
         this.descuento = descuento;
     }
 
-    public Double getTotales() {
+    public Double getTotal() {
         Double totales=0.0;
         for(Contribucionfactura item: contribucionfacturaList){
             totales+=item.getImporte(null);
         }
-        return totales;
+        return total;
     }
 
     public void setTotal(Double total) {

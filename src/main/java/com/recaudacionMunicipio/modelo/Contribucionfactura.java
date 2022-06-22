@@ -90,7 +90,7 @@ public class Contribucionfactura implements Serializable {
     }
     
     public Double getImporte(Map<String, Double> respuesta){
-        double precio=0;
+        /**double precio=0;
         System.out.println(contribucionId.getNivelContribucion());
         if(contribucionId.getNivelContribucion()==4){
             if(contribucionId.getIdTipoPago().getIdTipoPago()==1)
@@ -142,9 +142,11 @@ public class Contribucionfactura implements Serializable {
         }
         
         return cantidad.doubleValue(); 
+        * 
+    }*/
+        double precio=0;
+     return precio;
     }
-    
-    
 
     @Override
     public int hashCode() {
