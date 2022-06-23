@@ -41,7 +41,7 @@ public class DerechosServicioImpl implements Servicios<DerechosDTO>{
     @Override
     public DerechosDTO findById(String id) {
         Derechos derechos=derechosDAO.findById(id).orElse(null);
-        DerechosDTO derechosDTO = new DerechosDTO(derechos.getIdContribucionDerechos(), derechos.getIdTipoDerecho().getIdTipoDerecho(), derechos.getIdTipoDerecho().getDescripcion(),derechos.getContribucion().getCodigoContribucion(), derechos.getContribucion().getConceptoContribucion(), derechos.getContribucion().getIdTipoPago().getIdTipoPago(), derechos.getContribucion().getIdTipoPago().getNombrePago(),derechos.getContribucion().getIdDescripcion().getIdDescripcion(),derechos.getContribucion().getIdDescripcion().getDescripcion());
+        DerechosDTO derechosDTO = new DerechosDTO(derechos.getIdContribucionDerechos(), derechos.getIdTipoDerecho().getIdTipoDerecho(), derechos.getIdTipoDerecho().getDescripcion(),derechos.getContribucion().getCodigoContribucion(), derechos.getContribucion().getConceptoContribucion(), derechos.getContribucion().getIdTipoPago().getIdTipoPago(), derechos.getContribucion().getIdTipoPago().getNombrePago(),derechos.getContribucion().getIdDescripcion().getIdDescripcion(),derechos.getContribucion().getIdDescripcion().getDescripcion(),derechos.getContribucion().getNivelContribucion());
         return derechosDTO;
     }
 
@@ -67,7 +67,7 @@ public class DerechosServicioImpl implements Servicios<DerechosDTO>{
         List<Derechos> listaDerechos =derechosP.getContent();
         List<DerechosDTO> lista= new ArrayList<>();
         for(Derechos derechos:listaDerechos){
-            lista.add(new DerechosDTO(derechos.getIdContribucionDerechos(), derechos.getIdTipoDerecho().getIdTipoDerecho(), derechos.getIdTipoDerecho().getDescripcion(),derechos.getContribucion().getCodigoContribucion(), derechos.getContribucion().getConceptoContribucion(), derechos.getContribucion().getIdTipoPago().getIdTipoPago(), derechos.getContribucion().getIdTipoPago().getNombrePago(),derechos.getContribucion().getIdDescripcion().getIdDescripcion(),derechos.getContribucion().getIdDescripcion().getDescripcion()));
+            lista.add(new DerechosDTO(derechos.getIdContribucionDerechos(), derechos.getIdTipoDerecho().getIdTipoDerecho(), derechos.getIdTipoDerecho().getDescripcion(),derechos.getContribucion().getCodigoContribucion(), derechos.getContribucion().getConceptoContribucion(), derechos.getContribucion().getIdTipoPago().getIdTipoPago(), derechos.getContribucion().getIdTipoPago().getNombrePago(),derechos.getContribucion().getIdDescripcion().getIdDescripcion(),derechos.getContribucion().getIdDescripcion().getDescripcion(),derechos.getContribucion().getNivelContribucion()));
         }
         entidadRespuesta entidadrespuesta=new entidadRespuesta();
         entidadrespuesta.setContenido(lista);
@@ -151,7 +151,7 @@ public class DerechosServicioImpl implements Servicios<DerechosDTO>{
         Page<Derechos> listaDerechos =derechosDAO.findAll(pageable);
         List<DerechosDTO> lista= new ArrayList<>();
         for(Derechos derechos:listaDerechos){
-            lista.add(new DerechosDTO(derechos.getIdContribucionDerechos(), derechos.getIdTipoDerecho().getIdTipoDerecho(), derechos.getIdTipoDerecho().getDescripcion(),derechos.getContribucion().getCodigoContribucion(), derechos.getContribucion().getConceptoContribucion(), derechos.getContribucion().getIdTipoPago().getIdTipoPago(), derechos.getContribucion().getIdTipoPago().getNombrePago(),derechos.getContribucion().getIdDescripcion().getIdDescripcion(),derechos.getContribucion().getIdDescripcion().getDescripcion()));
+            lista.add(new DerechosDTO(derechos.getIdContribucionDerechos(), derechos.getIdTipoDerecho().getIdTipoDerecho(), derechos.getIdTipoDerecho().getDescripcion(),derechos.getContribucion().getCodigoContribucion(), derechos.getContribucion().getConceptoContribucion(), derechos.getContribucion().getIdTipoPago().getIdTipoPago(), derechos.getContribucion().getIdTipoPago().getNombrePago(),derechos.getContribucion().getIdDescripcion().getIdDescripcion(),derechos.getContribucion().getIdDescripcion().getDescripcion(),derechos.getContribucion().getNivelContribucion()));
 }
         return (Page<DerechosDTO>) lista;
     }

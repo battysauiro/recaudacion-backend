@@ -38,6 +38,10 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Contribucion.findByConceptoContribucion", query = "SELECT c FROM Contribucion c WHERE c.conceptoContribucion = :conceptoContribucion")})
 public class Contribucion implements Serializable {
 
+    
+ 
+    
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -45,8 +49,8 @@ public class Contribucion implements Serializable {
     private String codigoContribucion;
     @Column(name = "concepto_contribucion")
     private String conceptoContribucion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contribucionIdContribucion")
-    private List<DetalleCobro> detalleCobroList;
+    @Column(name = "nivel_contribucion")
+    private int nivelContribucion;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "contribucion")
     private Derechos derechos;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "contribucion")
@@ -61,6 +65,8 @@ public class Contribucion implements Serializable {
     @JoinColumn(name = "id_tipo_pago", referencedColumnName = "id_tipo_pago")
     @ManyToOne(optional = false)
     private TipoPago idTipoPago;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contribucionId")
+    private List<Contribucionfactura> contribucionfacturaList;
 
     public Contribucion() {
     }
@@ -85,15 +91,6 @@ public class Contribucion implements Serializable {
         this.conceptoContribucion = conceptoContribucion;
     }
 
-    @XmlTransient
-    @JsonIgnore
-    public List<DetalleCobro> getDetalleCobroList() {
-        return detalleCobroList;
-    }
-
-    public void setDetalleCobroList(List<DetalleCobro> detalleCobroList) {
-        this.detalleCobroList = detalleCobroList;
-    }
 
     public Derechos getDerechos() {
         return derechos;
@@ -102,6 +99,8 @@ public class Contribucion implements Serializable {
     public void setDerechos(Derechos derechos) {
         this.derechos = derechos;
     }
+    
+ 
 
     public Impuesto getImpuesto() {
         return impuesto;
@@ -143,6 +142,26 @@ public class Contribucion implements Serializable {
         this.idTipoPago = idTipoPago;
     }
 
+    public int getNivelContribucion() {
+        return nivelContribucion;
+    }
+
+    public void setNivelContribucion(int nivelContribucion) {
+        this.nivelContribucion = nivelContribucion;
+    }
+    
+    
+     @XmlTransient
+    @JsonIgnore
+    public List<Contribucionfactura> getContribucionfacturaList() {
+        return contribucionfacturaList;
+    }
+
+    public void setContribucionfacturaList(List<Contribucionfactura> contribucionfacturaList) {
+        this.contribucionfacturaList = contribucionfacturaList;
+    }
+
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -167,5 +186,8 @@ public class Contribucion implements Serializable {
     public String toString() {
         return "com.recaudacionMunicipio.modelo.Contribucion[ codigoContribucion=" + codigoContribucion + " ]";
     }
+
+   
+    
     
 }

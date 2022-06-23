@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 public interface IcontribuyenteFisicaDao extends JpaRepository<ContribuyenteFisica, String>{
     
     public ContribuyenteFisica findByCurpContribuyenteFisica(@Param("curpContribuyenteFisica")String curpContribuyenteFisica);
-    public List<ContribuyenteFisica> findByCurpContribuyenteFisicaStartingWithOrIdContribuyenteFisicaStartingWithOrNombreContribuyenteFisicaStartingWithOrApellidoPContribuyenteFisicaStartingWithOrApellidoMContribuyenteFisicaStartingWith(@Param("curpContribuyenteFisica")String curpContribuyenteFisica,@Param("id_contribuyente_fisica")String id_contribuyente_fisica,
+    public List<ContribuyenteFisica> findByCurpContribuyenteFisicaStartingWithIgnoreCaseOrIdContribuyenteFisicaStartingWithIgnoreCaseOrNombreContribuyenteFisicaStartingWithIgnoreCaseOrApellidoPContribuyenteFisicaStartingWithIgnoreCaseOrApellidoMContribuyenteFisicaStartingWithIgnoreCase(@Param("curpContribuyenteFisica")String curpContribuyenteFisica,@Param("id_contribuyente_fisica")String id_contribuyente_fisica,
             @Param("nombreContribuyenteFisica")String nombreContribuyenteFisica,
             @Param("apellidoPContribuyenteFisica")String apellidoPContribuyenteFisica,
             @Param("apellidoMContribuyenteFisica")String apellidoMContribuyenteFisica);

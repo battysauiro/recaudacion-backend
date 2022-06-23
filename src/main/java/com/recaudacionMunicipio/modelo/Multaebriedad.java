@@ -32,11 +32,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Multaebriedad.findByIdContribucionMultaEbriedad", query = "SELECT m FROM Multaebriedad m WHERE m.idContribucionMultaEbriedad = :idContribucionMultaEbriedad"),
     @NamedQuery(name = "Multaebriedad.findByUmaMin", query = "SELECT m FROM Multaebriedad m WHERE m.umaMin = :umaMin"),
     @NamedQuery(name = "Multaebriedad.findByUmaMax", query = "SELECT m FROM Multaebriedad m WHERE m.umaMax = :umaMax"),
-    @NamedQuery(name = "Multaebriedad.findByCantidadAlcohol", query = "SELECT m FROM Multaebriedad m WHERE m.cantidadAlcohol = :cantidadAlcohol")})
+    @NamedQuery(name = "Multaebriedad.findByCantidadAlcohol", query = "SELECT m FROM Multaebriedad m WHERE m.cantidadAlcohol = :cantidadAlcohol"),
+    })
 public class Multaebriedad implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
+    @Id 
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_contribucion_multa_ebriedad")
@@ -48,6 +49,7 @@ public class Multaebriedad implements Serializable {
     private Float umaMax;
     @Column(name = "cantidad_alcohol")
     private Float cantidadAlcohol;
+    
     @JoinColumn(name = "id_contribucion_multa_ebriedad", referencedColumnName = "id_contribucion_aprovechamiento", insertable = false, updatable = false)
     @OneToOne(optional = false,cascade = CascadeType.ALL)
     private Aprovechamiento aprovechamiento;
@@ -98,6 +100,10 @@ public class Multaebriedad implements Serializable {
     public void setAprovechamiento(Aprovechamiento aprovechamiento) {
         this.aprovechamiento = aprovechamiento;
     }
+
+  
+    
+    
 
     @Override
     public int hashCode() {

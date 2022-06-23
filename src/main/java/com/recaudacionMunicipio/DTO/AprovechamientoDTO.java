@@ -19,8 +19,8 @@ public class AprovechamientoDTO extends ContribucionDTO{
     }
 
 
-    public AprovechamientoDTO(String id_contribucion, int id_catalogo,String scatalogo, String codigo_contribucion, String concepto_contribucion, int id_tipo_pago,String tipo_pago, int id_descripcion,String descripcion) {
-        super(codigo_contribucion, concepto_contribucion, id_tipo_pago,tipo_pago, id_descripcion,descripcion);
+    public AprovechamientoDTO(String id_contribucion, int id_catalogo,String scatalogo, String codigo_contribucion, String concepto_contribucion, int id_tipo_pago,String tipo_pago, int id_descripcion,String descripcion,int nivelContribucion) {
+        super(codigo_contribucion, concepto_contribucion, id_tipo_pago,tipo_pago, id_descripcion,descripcion,nivelContribucion);
         this.id_contribucion = id_contribucion;
         this.id_catalogo = id_catalogo;
         this.scatalogo=scatalogo;

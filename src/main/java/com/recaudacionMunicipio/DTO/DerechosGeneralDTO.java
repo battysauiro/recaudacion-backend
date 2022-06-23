@@ -19,8 +19,8 @@ public class DerechosGeneralDTO extends DerechosDTO{
     public DerechosGeneralDTO() {
     }
 
-    public DerechosGeneralDTO(String id_derecho_general, float cantidad, int id_periodicidad, String periodicidad, String id_derecho, int catalogo_derechos,String scatalogo_derechos, String codigo_contribucion, String concepto_contribucion, int id_tipo_pago,String tipo_pago, int id_descripcion,String descripcion) {
-        super(id_derecho, catalogo_derechos,scatalogo_derechos, codigo_contribucion, concepto_contribucion, id_tipo_pago,tipo_pago, id_descripcion,descripcion);
+    public DerechosGeneralDTO(String id_derecho_general, float cantidad, int id_periodicidad, String periodicidad, String id_derecho, int catalogo_derechos,String scatalogo_derechos, String codigo_contribucion, String concepto_contribucion, int id_tipo_pago,String tipo_pago, int id_descripcion,String descripcion,int nivelContribucion) {
+        super(id_derecho, catalogo_derechos,scatalogo_derechos, codigo_contribucion, concepto_contribucion, id_tipo_pago,tipo_pago, id_descripcion,descripcion,nivelContribucion);
         this.id_derecho_general = id_derecho_general;
         this.cantidad = cantidad;
         this.id_periodicidad = id_periodicidad;

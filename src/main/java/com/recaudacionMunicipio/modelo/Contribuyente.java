@@ -5,12 +5,15 @@
  */
 package com.recaudacionMunicipio.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,6 +44,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Contribuyente.findByCp", query = "SELECT c FROM Contribuyente c WHERE c.cp = :cp")})
 public class Contribuyente implements Serializable {
 
+    
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -54,14 +59,16 @@ public class Contribuyente implements Serializable {
     private String colonia;
     @Column(name = "cp")
     private String cp;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contribuyenteIdContribuyente")
-    private List<DetalleCobro> detalleCobroList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "contribuyente")
     private ContribuyenteFisica contribuyenteFisica;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "contribuyente")
     private ContribuyenteMoral contribuyenteMoral;
+    @JsonIgnoreProperties({"contribuyenteId"})
+    @OneToMany(mappedBy = "contribuyenteId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Factura> facturaList;
 
     public Contribuyente() {
+        this.facturaList = new ArrayList<>();
     }
 
     public Contribuyente(String rfcContribuyente) {
@@ -107,15 +114,15 @@ public class Contribuyente implements Serializable {
     public void setCp(String cp) {
         this.cp = cp;
     }
-
+    
     @XmlTransient
     @JsonIgnore
-    public List<DetalleCobro> getDetalleCobroList() {
-        return detalleCobroList;
+    public List<Factura> getFacturaList() {
+        return facturaList;
     }
 
-    public void setDetalleCobroList(List<DetalleCobro> detalleCobroList) {
-        this.detalleCobroList = detalleCobroList;
+    public void setFacturaList(List<Factura> facturaList) {
+        this.facturaList = facturaList;
     }
 
     public ContribuyenteFisica getContribuyenteFisica() {
@@ -158,5 +165,8 @@ public class Contribuyente implements Serializable {
     public String toString() {
         return "com.recaudacionMunicipio.modelo.Contribuyente[ rfcContribuyente=" + rfcContribuyente + " ]";
     }
+
+    
+    
     
 }

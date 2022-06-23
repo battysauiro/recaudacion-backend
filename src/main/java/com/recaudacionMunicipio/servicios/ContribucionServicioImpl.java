@@ -79,8 +79,16 @@ public class ContribucionServicioImpl implements Servicios<ContribucionDTO>{
     @Override
     public ContribucionDTO findById(String id) {
         Contribucion contribucion=contribucionDao.findById(id).orElse(null);
-        ContribucionDTO contribucionDTO= new ContribucionDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(),contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(),contribucion.getIdDescripcion().getDescripcion());
+        ContribucionDTO contribucionDTO= new ContribucionDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(),contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(),contribucion.getIdDescripcion().getDescripcion(),contribucion.getNivelContribucion());
         return contribucionDTO;
+    }
+    
+    public List<ContribucionDTO> findByCodigoOrConcepto(String codigo,String concepto){
+        List<Contribucion> contribuciones=contribucionDao.findByCodigoContribucionStartingWithIgnoreCaseOrConceptoContribucionContainingIgnoreCase(codigo, concepto);
+        List<ContribucionDTO> contribucionesDTO= new ArrayList<>();
+        for(Contribucion contribucion:contribuciones)
+            contribucionesDTO.add(new ContribucionDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(), contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(), contribucion.getIdDescripcion().getDescripcion(),contribucion.getNivelContribucion()));
+        return contribucionesDTO;
     }
     
     public ContribucionCompletaDTO findByIdCompleto(String id) {
@@ -105,7 +113,7 @@ public class ContribucionServicioImpl implements Servicios<ContribucionDTO>{
         List<Contribucion> listaContribuciones =contribucionesP.getContent();
         List<ContribucionDTO> lista= new ArrayList<>();
         for(Contribucion contribucion:listaContribuciones){
-            lista.add(new ContribucionDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(),contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(),contribucion.getIdDescripcion().getDescripcion()));
+            lista.add(new ContribucionDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(),contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(),contribucion.getIdDescripcion().getDescripcion(),contribucion.getNivelContribucion()));
         }
         entidadRespuesta entidadrespuesta=new entidadRespuesta();
         entidadrespuesta.setContenido(lista);
@@ -304,7 +312,7 @@ public class ContribucionServicioImpl implements Servicios<ContribucionDTO>{
         Page<Contribucion> listaContribuciones =contribucionDao.findAll(pageable);
         List<ContribucionDTO> lista= new ArrayList<>();
         for(Contribucion contribucion:listaContribuciones){
-            lista.add(new ContribucionDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(),contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(),contribucion.getIdDescripcion().getDescripcion()));
+            lista.add(new ContribucionDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(),contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(),contribucion.getIdDescripcion().getDescripcion(),contribucion.getNivelContribucion()));
 }
         return (Page<ContribucionDTO>) lista;
     }

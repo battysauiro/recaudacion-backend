@@ -18,8 +18,8 @@ public class DerechosDTO extends ContribucionDTO{
     public DerechosDTO() {
     }
 
-    public DerechosDTO(String id_derecho, int catalogo_derechos,String scatalogo_derechos, String codigo_contribucion, String concepto_contribucion, int id_tipo_pago,String tipo_pago,  int id_descripcion,String descripcion) {
-        super(codigo_contribucion, concepto_contribucion, id_tipo_pago,tipo_pago, id_descripcion,descripcion);
+    public DerechosDTO(String id_derecho, int catalogo_derechos,String scatalogo_derechos, String codigo_contribucion, String concepto_contribucion, int id_tipo_pago,String tipo_pago,  int id_descripcion,String descripcion,int nivelContribucion) {
+        super(codigo_contribucion, concepto_contribucion, id_tipo_pago,tipo_pago, id_descripcion,descripcion,nivelContribucion);
         this.id_derecho = id_derecho;
         this.catalogo_derechos = catalogo_derechos;
         this.scatalogo_derechos=scatalogo_derechos;
