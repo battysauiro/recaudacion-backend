@@ -234,6 +234,15 @@ public class DerechosLicenciasServicioImpl implements Servicios<DerechosLicencia
         }
         return (Page<DerechosLicenciaDTO>) lista;
     }
+    
+    public List<DerechosLicenciaDTO> listarContribucionesDLicencias() {
+        List<Derechoslicencias> listaDerechosLicencias = derechosLicenciasDAO.findAll();
+        List<DerechosLicenciaDTO> lista = new ArrayList<>();
+        for (Derechoslicencias derechosLicencias : listaDerechosLicencias) {
+            lista.add(new DerechosLicenciaDTO(derechosLicencias.getIdContribucionDerechosLicencias(), derechosLicencias.getExpedicion(), derechosLicencias.getRefrendo(), derechosLicencias.getDerechos().getIdContribucionDerechos(), derechosLicencias.getDerechos().getIdTipoDerecho().getIdTipoDerecho(), derechosLicencias.getDerechos().getIdTipoDerecho().getDescripcion(), derechosLicencias.getDerechos().getContribucion().getCodigoContribucion(), derechosLicencias.getDerechos().getContribucion().getConceptoContribucion(), derechosLicencias.getDerechos().getContribucion().getIdTipoPago().getIdTipoPago(), derechosLicencias.getDerechos().getContribucion().getIdTipoPago().getNombrePago(), derechosLicencias.getDerechos().getContribucion().getIdDescripcion().getIdDescripcion(), derechosLicencias.getDerechos().getContribucion().getIdDescripcion().getDescripcion(),derechosLicencias.getDerechos().getContribucion().getNivelContribucion()));
+        }
+        return lista;
+    }
 
     public Page<DerechosLicenciaCompletoDTO> findAllC(Pageable pageable) {
         Page<Derechoslicencias> listaDerechosLicencias = derechosLicenciasDAO.findAll(pageable);

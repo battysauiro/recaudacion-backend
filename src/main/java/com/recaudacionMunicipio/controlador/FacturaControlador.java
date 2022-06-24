@@ -66,9 +66,15 @@ public class FacturaControlador {
     @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO"})
     @PostMapping("/facturas")    
     public ResponseEntity<FacturaDTO> crearFactura(@RequestBody FacturaDTO facturaDTO ) {
-        Factura factura=contribuyenteImplSer.saveFactura(facturaDTO);
+        FacturaDTO factura=contribuyenteImplSer.saveFactura(facturaDTO);
         
-        return new ResponseEntity<>(new FacturaDTO(), HttpStatus.CREATED); 
+        return new ResponseEntity<>(factura, HttpStatus.CREATED); 
+    }
+    
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO"})
+    @PostMapping
+    public ResponseEntity<FacturaDTO> guardarPeriodicidad(@RequestBody FacturaDTO  periodicidadDTO) {
+        return new ResponseEntity<>(contribuyenteImplSer.saveFactura(periodicidadDTO), HttpStatus.CREATED);
     }
     
     @GetMapping("/facturas/img/idsadministracion")

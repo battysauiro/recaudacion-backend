@@ -52,6 +52,7 @@
     <class>com.recaudacionMunicipio.modelo.Contribuyente_1</class>
     <class>com.recaudacionMunicipio.modelo.ContribuyenteFisica_1</class>
     <class>com.recaudacionMunicipio.modelo.ContribuyenteMoral_1</class>
+    <class>com.recaudacionMunicipio.util.reportes.ContribucionOtrosProductosExporterPDF</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3308/municipiosrecaudacion?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="AdministradorG"/>

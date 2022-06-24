@@ -226,6 +226,15 @@ public class OtrosProductosServicioImpl implements Servicios<OtrosProductosDTO> 
         }
         return (Page<OtrosProductosDTO>) lista;
     }
+    
+    public List<OtrosProductosDTO> listarOtrosProductos() {
+        List<Otrosproductos> listaOtrosProductos = otrosProductosDao.findAll();
+        List<OtrosProductosDTO> lista = new ArrayList<>();
+        for (Otrosproductos otrosProductos : listaOtrosProductos) {
+            lista.add(new OtrosProductosDTO(otrosProductos.getIdContribucionProductos(), otrosProductos.getCantidad(), otrosProductos.getPeriodicidad().getIdPeriodicidad(), otrosProductos.getPeriodicidad().getNombrePeriodicidad(), otrosProductos.getIdOtrosProductos().getIdOtrosProductos(), otrosProductos.getIdOtrosProductos().getDescripcion(), otrosProductos.getContribucion().getCodigoContribucion(), otrosProductos.getContribucion().getConceptoContribucion(), otrosProductos.getContribucion().getIdTipoPago().getIdTipoPago(), otrosProductos.getContribucion().getIdTipoPago().getNombrePago(), otrosProductos.getContribucion().getIdDescripcion().getIdDescripcion(), otrosProductos.getContribucion().getIdDescripcion().getDescripcion(),otrosProductos.getContribucion().getNivelContribucion()));
+        }
+        return lista;
+    }
 
     public Page<OtrosProductosCompletoDTO> findAllC(Pageable pageable) {
         Page<Otrosproductos> listaOtrosProductos = otrosProductosDao.findAll(pageable);

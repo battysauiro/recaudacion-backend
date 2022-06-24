@@ -244,6 +244,15 @@ public class DerechoGeneralServicioImpl implements Servicios<DerechosGeneralDTO>
         return (Page<DerechosGeneralDTO>) lista;
     }
     
+        public List<DerechosGeneralDTO> listaCDerechosGeneral() {
+        List<Derechogeneral> listaDerechoGeneral =derechoGeneralDAO.findAll();
+        List<DerechosGeneralDTO> lista= new ArrayList<>();
+        for(Derechogeneral derechoGeneral:listaDerechoGeneral){
+            lista.add(new DerechosGeneralDTO(derechoGeneral.getIdContribucionDerechosLicencias(), derechoGeneral.getCantidad(), derechoGeneral.getIdPeriodicidad().getIdPeriodicidad(),derechoGeneral.getIdPeriodicidad().getNombrePeriodicidad(), derechoGeneral.getDerechos().getIdContribucionDerechos(), derechoGeneral.getDerechos().getIdTipoDerecho().getIdTipoDerecho(),derechoGeneral.getDerechos().getIdTipoDerecho().getDescripcion(), derechoGeneral.getDerechos().getContribucion().getCodigoContribucion(), derechoGeneral.getDerechos().getContribucion().getConceptoContribucion(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getIdTipoPago(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getNombrePago(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getIdDescripcion(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getDescripcion(),derechoGeneral.getDerechos().getContribucion().getNivelContribucion()));
+        }
+        return lista;
+    }
+    
     public Page<DerechosGeneralCompletoDTO> findAllC(Pageable pageable) {
         Page<Derechogeneral> listaDerechoGeneral =derechoGeneralDAO.findAll(pageable);
         List<DerechosGeneralCompletoDTO> lista= new ArrayList<>();

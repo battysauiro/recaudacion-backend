@@ -56,7 +56,7 @@ public class Contribucion implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "contribucion")
     private Impuesto impuesto;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "contribucion")
-    private Aprovechamiento aprovechamiento;
+    private Aprovechamiento aprovechamiento; 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "contribucion")
     private Otrosproductos otrosproductos;
     @JoinColumn(name = "id_descripcion", referencedColumnName = "id_descripcion")
