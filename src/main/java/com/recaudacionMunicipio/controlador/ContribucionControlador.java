@@ -44,7 +44,7 @@ public class ContribucionControlador {
         return contribucionImplSer.findAll(numeroDePagina,cantidadPagina);
     } 
     
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_TESORERO","ROLE_PRESIDENTE"})
     @GetMapping("filtrar/{term}")
     public List<ContribucionDTO> findByCodigoOrConcepto(@PathVariable String term){
         return contribucionImplSer.findByCodigoOrConcepto(term,term);
