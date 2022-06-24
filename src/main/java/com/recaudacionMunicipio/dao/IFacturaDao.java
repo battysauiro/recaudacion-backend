@@ -17,4 +17,5 @@ import org.springframework.data.repository.query.Param;
  */
 public interface IFacturaDao extends JpaRepository<Factura, Integer> {
     public List<Factura> findByContribuyenteId(@Param("contribuyenteId")Contribuyente contribuyenteId);
+    public List<Factura> findByEstadoPago(@Param("estadoPago")Boolean estadoPago);
 }
