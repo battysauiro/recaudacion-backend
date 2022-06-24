@@ -6,12 +6,15 @@
 package com.recaudacionMunicipio.controlador;
 
 import com.recaudacionMunicipio.DTO.FacturaDTO;
+import com.recaudacionMunicipio.DTO.FacturasNoPagadasDTO;
 import com.recaudacionMunicipio.modelo.Factura;
 import com.recaudacionMunicipio.servicios.ContribuyenteServicioImpl;
+import com.recaudacionMunicipio.servicios.FacturaServicioImpl;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,10 +45,19 @@ public class FacturaControlador {
     @Autowired
     private ContribuyenteServicioImpl contribuyenteImplSer;
     
+    @Autowired
+    private FacturaServicioImpl facturaImplSer;
+    
     @GetMapping("/facturas/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public FacturaDTO show(@PathVariable int id){
         return contribuyenteImplSer.findFacturaById(id);
+    }
+    
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
+    @GetMapping("facturas/no-pagadas")
+    public List<FacturasNoPagadasDTO> listarEmpleado(){
+        return facturaImplSer.facturasNoPagadas(false);
     }
     
     @GetMapping("/facturas-contribuyente/{id}/{contribucion}")

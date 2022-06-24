@@ -12,6 +12,7 @@ import com.recaudacionMunicipio.DTO.ContribuyenteFisicaDTO;
 import com.recaudacionMunicipio.DTO.ContribuyenteMoralDTO;
 import com.recaudacionMunicipio.DTO.DerechosGeneralDTO;
 import com.recaudacionMunicipio.DTO.DerechosLicenciaDTO;
+import com.recaudacionMunicipio.DTO.FacturasNoPagadasDTO;
 import com.recaudacionMunicipio.DTO.ImpuestoDTO;
 import com.recaudacionMunicipio.DTO.OtrosProductosDTO;
 import com.recaudacionMunicipio.dao.IcontribuyenteMoralDao;
@@ -22,6 +23,7 @@ import com.recaudacionMunicipio.servicios.ContribuyenteFisicaServicioImpl;
 import com.recaudacionMunicipio.servicios.ContribuyenteMoralServicioImpl;
 import com.recaudacionMunicipio.servicios.DerechoGeneralServicioImpl;
 import com.recaudacionMunicipio.servicios.DerechosLicenciasServicioImpl;
+import com.recaudacionMunicipio.servicios.FacturaServicioImpl;
 import com.recaudacionMunicipio.servicios.ImpuestoServicioImpl;
 import com.recaudacionMunicipio.servicios.OtrosProductosServicioImpl;
 import com.recaudacionMunicipio.util.reportes.ContribucionAMultaEbriedadExporterPDF;
@@ -33,6 +35,7 @@ import com.recaudacionMunicipio.util.reportes.ContribucionImpuestoExporterPDF;
 import com.recaudacionMunicipio.util.reportes.ContribucionOtrosProductosExporterPDF;
 import com.recaudacionMunicipio.util.reportes.ContribuyenteFisicaExporterPDF;
 import com.recaudacionMunicipio.util.reportes.ContribuyenteMoralExporterPDF;
+import com.recaudacionMunicipio.util.reportes.lineasCapturasNoPagadasExporterPDF;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -41,6 +44,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -78,6 +82,9 @@ public class ReportesControlador {
     
     @Autowired
     private OtrosProductosServicioImpl otrosProductosImplSer;
+    
+    @Autowired
+    private FacturaServicioImpl facturasImplSer;
     
     @GetMapping("/listaContribuyenteFisica/exportarPDF")
     public void exportarListadoContribuyentesFisicasPDF(HttpServletResponse response) throws IOException{
@@ -211,8 +218,27 @@ public class ReportesControlador {
     }
     
     //lista reportes de contribucion Aprovechamiento multa vehicular
-    @GetMapping("/listaContribucionOtrosProductos/exportarPDF")
+    @GetMapping("/listaContribucionMVehicular/exportarPDF")
     public void exportarListadoContribucionesAMultasVehicularPDF(HttpServletResponse response) throws IOException{
+        response.setContentType("application/pdf");
+        
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaActual = dateFormatter.format(new Date());
+        
+        String cabecera="Content-Disposition";
+        String valor ="attachment; filename=contribucionesMVehicular_"+fechaActual+".pdf";
+        
+        response.setHeader(cabecera, valor);
+        
+        List<AprovechamientoMultaVehicularDTO> aprovechamientoMultaVehicularDTO =aprovechamientoMultaVehicularSer.listarContribucionesMVehicuar();
+        
+        ContribucionAMultaVehicularExporterPDF export = new ContribucionAMultaVehicularExporterPDF(aprovechamientoMultaVehicularDTO);
+        export.exportar(response);
+    }
+    
+    //lista reportes de contribucion otros productos
+    @GetMapping("/listaContribucionOtrosProductos/exportarPDF")
+    public void exportarListadoContribucionesOtrosProductosPDF(HttpServletResponse response) throws IOException{
         response.setContentType("application/pdf");
         
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -229,6 +255,23 @@ public class ReportesControlador {
         export.exportar(response);
     }
     
-    
+    //lista reportes de contribucion Aprovechamiento multa vehicular
+    @GetMapping("/listaContribucionesNoPagadas/exportarPDF/{estado}")
+    public void exportarListadoContribucionesNoPagadasPDF(HttpServletResponse response,@PathVariable Boolean estado) throws IOException{
+        response.setContentType("application/pdf");
+        
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaActual = dateFormatter.format(new Date());
+        
+        String cabecera="Content-Disposition";
+        String valor ="attachment; filename=contribucionesNoPagadas_"+fechaActual+".pdf";
+        
+        response.setHeader(cabecera, valor);
+        
+        List<FacturasNoPagadasDTO> facturasNoPagadasDTO =facturasImplSer.facturasNoPagadas(estado);
+        
+        lineasCapturasNoPagadasExporterPDF export = new lineasCapturasNoPagadasExporterPDF(facturasNoPagadasDTO);
+        export.exportar(response);
+    }
     
 }
