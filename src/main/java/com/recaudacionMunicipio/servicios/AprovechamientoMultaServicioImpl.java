@@ -247,6 +247,15 @@ public class AprovechamientoMultaServicioImpl implements Servicios<Aprovechamien
         return (Page<AprovechamientoMultaDTO>) lista;
     }
     
+    public List<AprovechamientoMultaDTO> listaAprovechamientoMultas() {
+        List<Aprovechamientomulta> listaContribuciones =aprovechamientoMultaDao.findAll();
+        List<AprovechamientoMultaDTO> lista= new ArrayList<>();
+        for(Aprovechamientomulta aprovechamientoMulta:listaContribuciones ){
+          lista.add(new AprovechamientoMultaDTO(aprovechamientoMulta.getIdContribucionMulta(),aprovechamientoMulta.getCantidad() , aprovechamientoMulta.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getConceptoContribucion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago() ,aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getNivelContribucion()));
+}
+        return lista;
+    }
+    
     public Page<AprovechamientoMultaCompletaDTO> findAllC(Pageable pageable) {
         Page<Aprovechamientomulta> listaAprovechamientoMulta =aprovechamientoMultaDao.findAll(pageable);
         List<AprovechamientoMultaCompletaDTO> lista= new ArrayList<>();

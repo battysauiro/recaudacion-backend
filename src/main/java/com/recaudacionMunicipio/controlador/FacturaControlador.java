@@ -6,12 +6,15 @@
 package com.recaudacionMunicipio.controlador;
 
 import com.recaudacionMunicipio.DTO.FacturaDTO;
+import com.recaudacionMunicipio.DTO.FacturasNoPagadasDTO;
 import com.recaudacionMunicipio.modelo.Factura;
 import com.recaudacionMunicipio.servicios.ContribuyenteServicioImpl;
+import com.recaudacionMunicipio.servicios.FacturaServicioImpl;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,10 +45,19 @@ public class FacturaControlador {
     @Autowired
     private ContribuyenteServicioImpl contribuyenteImplSer;
     
+    @Autowired
+    private FacturaServicioImpl facturaImplSer;
+    
     @GetMapping("/facturas/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public FacturaDTO show(@PathVariable int id){
         return contribuyenteImplSer.findFacturaById(id);
+    }
+    
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
+    @GetMapping("facturas/no-pagadas")
+    public List<FacturasNoPagadasDTO> listarEmpleado(){
+        return facturaImplSer.facturasNoPagadas(false);
     }
     
     @GetMapping("/facturas-contribuyente/{id}/{contribucion}")
@@ -66,9 +78,15 @@ public class FacturaControlador {
     @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO"})
     @PostMapping("/facturas")    
     public ResponseEntity<FacturaDTO> crearFactura(@RequestBody FacturaDTO facturaDTO ) {
-        Factura factura=contribuyenteImplSer.saveFactura(facturaDTO);
+        FacturaDTO factura=contribuyenteImplSer.saveFactura(facturaDTO);
         
-        return new ResponseEntity<>(new FacturaDTO(), HttpStatus.CREATED); 
+        return new ResponseEntity<>(factura, HttpStatus.CREATED); 
+    }
+    
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO"})
+    @PostMapping
+    public ResponseEntity<FacturaDTO> guardarFactura(@RequestBody FacturaDTO  periodicidadDTO) {
+        return new ResponseEntity<>(contribuyenteImplSer.saveFactura(periodicidadDTO), HttpStatus.CREATED);
     }
     
     @GetMapping("/facturas/img/idsadministracion")

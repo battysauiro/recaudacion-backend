@@ -71,6 +71,25 @@ public class ContribuyenteMoralServicioImpl implements Servicios<ContribuyenteMo
         }
         return lista;
     }
+    
+    public List<ContribuyenteMoralDTO> listarContribuentesMorales() {
+        List<ContribuyenteMoral> listaContribuyente = contribuyenteMoralDao.findAll();
+        List<ContribuyenteMoralDTO> lista = new ArrayList<>();
+        for (ContribuyenteMoral contribuyente : listaContribuyente) {
+            List<Factura> f = contribuyente.getContribuyente().getFacturaList();
+            List<FacturaDTO> facturaDTO = new ArrayList<>();
+            List<ContribucionFacturaDTO> CfacturaDTO = new ArrayList<>();
+            for (Factura factura : f) {
+                List<Contribucionfactura> contribucionfactura = factura.getContribucionfacturaList();
+                for (Contribucionfactura contribucionf : contribucionfactura) {
+                    CfacturaDTO.add(new ContribucionFacturaDTO(contribucionf.getIdcontribucionFactura(), contribucionf.getContribucionId().getCodigoContribucion(), contribucionf.getFacturaId().getFolio(), contribucionf.getCantidad()));
+                }
+                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO, factura.getEstadoPago()));
+            }
+            lista.add(new ContribuyenteMoralDTO(contribuyente.getIdContribuyenteMoral(), contribuyente.getRazonSocialContribuyenteMoral(), contribuyente.getContribuyente().getRfcContribuyente(), contribuyente.getContribuyente().getCalle(), contribuyente.getContribuyente().getNumero(), contribuyente.getContribuyente().getColonia(), contribuyente.getContribuyente().getCp(), facturaDTO));
+        }
+        return lista;
+    }
 
     @Override
     public ContribuyenteMoralDTO save(ContribuyenteMoralDTO contribuyenteMoralDTO) {

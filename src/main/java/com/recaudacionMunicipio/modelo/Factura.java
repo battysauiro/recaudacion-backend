@@ -43,7 +43,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Factura.findByFecha", query = "SELECT f FROM Factura f WHERE f.fecha = :fecha"),
     @NamedQuery(name = "Factura.findByDescuento", query = "SELECT f FROM Factura f WHERE f.descuento = :descuento"),
     @NamedQuery(name = "Factura.findByTotal", query = "SELECT f FROM Factura f WHERE f.total = :total"),
-    @NamedQuery(name = "Factura.findByContribuyenteId", query = "SELECT f FROM Factura f WHERE f.contribuyenteId = :contribuyenteId")})
+    @NamedQuery(name = "Factura.findByContribuyenteId", query = "SELECT f FROM Factura f WHERE f.contribuyenteId = :contribuyenteId"),
+    @NamedQuery(name = "Factura.findByEstadoPago", query = "SELECT f FROM Factura f WHERE f.estadoPago = :estadoPago")})
 public class Factura implements Serializable {
  
     private static final long serialVersionUID = 1L; 

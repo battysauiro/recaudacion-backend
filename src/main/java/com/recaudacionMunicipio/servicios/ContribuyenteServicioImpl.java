@@ -91,7 +91,7 @@ public class ContribuyenteServicioImpl {
          
     }
     
-    public Factura saveFactura(FacturaDTO facturaDTO){
+    public FacturaDTO saveFactura(FacturaDTO facturaDTO){
         Factura factura= new Factura();
         //factura.setFolio(facturaDTO.getFolio());
         Usuario usuario = usuarioDao.findById(facturaDTO.getUsuario_id()).orElse(null);
@@ -117,9 +117,15 @@ public class ContribuyenteServicioImpl {
                 contribucionfactura.add(contribucionFacturanew);
                 System.out.println("esta es mi contribucion factura: "+contribucionDao.findById(cfacturaDTO.getIdContribucion()).orElse(null));
         }
-        System.out.println("-------------: "+contribucionfactura);
         facturaNew.setContribucionfacturaList(contribucionfactura);
-        return factura;
+        
+        List<ContribucionFacturaDTO> CfacturaDTO=new ArrayList<>();
+        List<Contribucionfactura> contribucionfacturas=facturaNew.getContribucionfacturaList();
+        for(Contribucionfactura contribucionf:contribucionfacturas){
+                CfacturaDTO.add(new ContribucionFacturaDTO(contribucionf.getIdcontribucionFactura(), contribucionf.getContribucionId().getCodigoContribucion(), contribucionf.getFacturaId().getFolio(),contribucionf.getCantidad()));
+        }
+        FacturaDTO facturasDTO = new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO,factura.getEstadoPago());
+        return facturasDTO;
     }
     
     public void deleteFacturaById(int id){

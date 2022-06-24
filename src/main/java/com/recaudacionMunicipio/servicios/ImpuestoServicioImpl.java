@@ -225,6 +225,16 @@ public class ImpuestoServicioImpl implements Servicios<ImpuestoDTO> {
         }
         return (Page<ImpuestoDTO>) lista;
     }
+    
+    public List<ImpuestoDTO> listarImpuestos() {
+        List<Impuesto> listaImpuestos = impuestoDao.findAll();
+        List<ImpuestoDTO> lista = new ArrayList<>();
+        for (Impuesto impuestos : listaImpuestos) {
+            lista.add(new ImpuestoDTO(impuestos.getIdContribucionImpuesto(), impuestos.getIdTipoImpuesto().getIdTipoImpuesto(), impuestos.getIdTipoImpuesto().getDescripcion(), impuestos.getCantidad(), impuestos.getContribucion().getCodigoContribucion(), impuestos.getContribucion().getConceptoContribucion(), impuestos.getContribucion().getIdTipoPago().getIdTipoPago(), impuestos.getContribucion().getIdTipoPago().getNombrePago(), impuestos.getContribucion().getIdDescripcion().getIdDescripcion(),
+                    impuestos.getContribucion().getIdDescripcion().getDescripcion(),impuestos.getContribucion().getNivelContribucion()));
+        }
+        return lista;
+    }
 
     public Page<ImpuestoCompletoDTO> findAllC(Pageable pageable) {
         Page<Impuesto> listaImpuestos = impuestoDao.findAll(pageable);
