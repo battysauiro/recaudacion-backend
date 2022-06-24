@@ -195,6 +195,26 @@ public class ContribuyenteFisicaServicioImpl implements Servicios<ContribuyenteF
         }
         return lista;
     }
+    
+    //lista los contribuyentes
+    public List<ContribuyenteFisicaDTO> listarContribuentesFisicas() {
+        List<ContribuyenteFisica> listaContribuyente = contribuyenteFisicaDao.findAll();
+        List<ContribuyenteFisicaDTO> lista = new ArrayList<>();
+        for (ContribuyenteFisica contribuyente : listaContribuyente) {
+            List<Factura> f = contribuyente.getContribuyente().getFacturaList();
+            List<FacturaDTO> facturaDTO = new ArrayList<>();
+            List<ContribucionFacturaDTO> CfacturaDTO = new ArrayList<>();
+            for (Factura factura : f) {
+                List<Contribucionfactura> contribucionfactura = factura.getContribucionfacturaList();
+                for (Contribucionfactura contribucionf : contribucionfactura) {
+                    CfacturaDTO.add(new ContribucionFacturaDTO(contribucionf.getIdcontribucionFactura(), contribucionf.getContribucionId().getCodigoContribucion(), contribucionf.getFacturaId().getFolio(), contribucionf.getCantidad()));
+                }
+                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO, factura.getEstadoPago()));
+            }
+            lista.add(new ContribuyenteFisicaDTO(contribuyente.getIdContribuyenteFisica(), contribuyente.getCurpContribuyenteFisica(), contribuyente.getNombreContribuyenteFisica(), contribuyente.getApellidoPContribuyenteFisica(), contribuyente.getApellidoMContribuyenteFisica(), contribuyente.getFechaNacimiento(), contribuyente.getContribuyente().getRfcContribuyente(), contribuyente.getContribuyente().getCalle(), contribuyente.getContribuyente().getNumero(), contribuyente.getContribuyente().getColonia(), contribuyente.getContribuyente().getCp(), facturaDTO));
+        }
+        return lista;
+    }
 
     private ContribuyenteFisicaDTO mapearDTO(ContribuyenteFisica contribuyenteFisica) {
         ContribuyenteFisicaDTO contribuyenteFisicaDTO = new ContribuyenteFisicaDTO();

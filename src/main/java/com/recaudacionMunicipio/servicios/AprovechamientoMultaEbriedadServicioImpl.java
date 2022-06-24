@@ -233,6 +233,15 @@ public class AprovechamientoMultaEbriedadServicioImpl implements Servicios<Aprov
         }
         return (Page<AprovechamientoMultaEbriedadDTO>) lista;
     }
+    
+    public List<AprovechamientoMultaEbriedadDTO> listaAEbriedad() {
+        List<Multaebriedad> listaMultaEbriedad = aprovechamientoMultaEbriedadDao.findAll();
+        List<AprovechamientoMultaEbriedadDTO> lista = new ArrayList<>();
+        for (Multaebriedad aprovechamientoMultaEbriedad : listaMultaEbriedad) {
+            lista.add(new AprovechamientoMultaEbriedadDTO(aprovechamientoMultaEbriedad.getIdContribucionMultaEbriedad(), aprovechamientoMultaEbriedad.getUmaMin(), aprovechamientoMultaEbriedad.getUmaMax(), aprovechamientoMultaEbriedad.getCantidadAlcohol(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getNivelContribucion()));
+        }
+        return lista;
+    }
 
     // public Page<AprovechamientoMultaEbriedadDTO> findAllCc(Pageable pageable) {
     //    Page<Multaebriedad> listaMultaEbriedad =aprovechamientoMultaEbriedadDao.findAll(pageable);
