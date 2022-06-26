@@ -52,7 +52,7 @@ public class ContribucionAMultasExporterPDF {
        celda.setPhrase(new Phrase("Concepto",fuente));
        tabla.addCell(celda);
        
-       celda.setPhrase(new Phrase("Tipo Impuesto",fuente));
+       celda.setPhrase(new Phrase("Tipo",fuente));
        tabla.addCell(celda);
        
        celda.setPhrase(new Phrase("Tipo pago",fuente));

@@ -255,7 +255,7 @@ public class ReportesControlador {
         export.exportar(response);
     }
     
-    //lista reportes de contribucion Aprovechamiento multa vehicular
+    //lista reportes de contribuciones no pagadas
     @GetMapping("/listaContribucionesNoPagadas/exportarPDF/{estado}")
     public void exportarListadoContribucionesNoPagadasPDF(HttpServletResponse response,@PathVariable Boolean estado) throws IOException{
         response.setContentType("application/pdf");
@@ -270,8 +270,234 @@ public class ReportesControlador {
         
         List<FacturasNoPagadasDTO> facturasNoPagadasDTO =facturasImplSer.facturasNoPagadas(estado);
         
-        lineasCapturasNoPagadasExporterPDF export = new lineasCapturasNoPagadasExporterPDF(facturasNoPagadasDTO);
+        lineasCapturasNoPagadasExporterPDF export = new lineasCapturasNoPagadasExporterPDF(facturasNoPagadasDTO,"Lineas de Capturas no Pagadas");
         export.exportar(response);
     }
     
+    //lista reportes de contribuciones pagadas
+    @GetMapping("/listaContribucionesPagadas/exportarPDF/{estado}")
+    public void exportarListadoContribucionesPagadasPDF(HttpServletResponse response,@PathVariable Boolean estado) throws IOException{
+        response.setContentType("application/pdf");
+        
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaActual = dateFormatter.format(new Date());
+        
+        String cabecera="Content-Disposition";
+        String valor ="attachment; filename=contribucionesPagadas_"+fechaActual+".pdf";
+        
+        response.setHeader(cabecera, valor);
+        
+        List<FacturasNoPagadasDTO> facturasNoPagadasDTO =facturasImplSer.facturasNoPagadas(estado);
+        
+        lineasCapturasNoPagadasExporterPDF export = new lineasCapturasNoPagadasExporterPDF(facturasNoPagadasDTO,"Lineas de Capturas no Pagadas");
+        export.exportar(response);
+    }
+    
+    //lista reportes por tipo de contribuciones no pagadas y pagadas
+    @GetMapping("/listaContribucionesTipoNoPagadas/exportarPDF/{estado}/{tipo}")
+    public void exportarListadoContribucionesTipoNoPagadasPDF(HttpServletResponse response,@PathVariable Boolean estado,@PathVariable int tipo) throws IOException{
+        response.setContentType("application/pdf");
+        String valor="";
+        String tituloTipo="";
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaActual = dateFormatter.format(new Date());
+        
+        String cabecera="Content-Disposition";
+        if(tipo==1){
+            valor ="attachment; filename=contribucionesNoPagadasImpuestos_"+fechaActual+".pdf";
+            tituloTipo="Impuestos";
+        }
+        if(tipo==2){
+            valor ="attachment; filename=contribucionesNoPagadasDerechosGeneral_"+fechaActual+".pdf";
+            tituloTipo="Derechos Generales";
+        }
+        if(tipo==3){
+            valor ="attachment; filename=contribucionesNoPagadasDerechosLicencia_"+fechaActual+".pdf";
+            tituloTipo="Derechos Licencias";
+        }
+        if(tipo==4){
+            valor ="attachment; filename=contribucionesNoPagadasMulta_"+fechaActual+".pdf";
+            tituloTipo="Multas Generales";
+        }
+        if(tipo==5){
+            valor ="attachment; filename=contribucionesNoPagadasMultaEbriedad_"+fechaActual+".pdf";
+            tituloTipo="Multas Ebriedades";
+        }
+        if(tipo==6){
+            valor ="attachment; filename=contribucionesNoPagadasMultaVehicular_"+fechaActual+".pdf";
+            tituloTipo="Multas Vehiculares";
+        }
+        if(tipo==7){
+            valor ="attachment; filename=contribucionesNoPagadasOtrosProductos_"+fechaActual+".pdf";
+            tituloTipo="Otros Productos";
+        }
+        
+        response.setHeader(cabecera, valor);
+        
+        List<FacturasNoPagadasDTO> facturasNoPagadasDTO =facturasImplSer.facturasNoPagadasPorTipoContribucionPersonasFisicas(estado,tipo);
+        String sEstado="";
+        if(estado==false)
+             sEstado="No";
+        else
+            sEstado="";
+        
+        lineasCapturasNoPagadasExporterPDF export = new lineasCapturasNoPagadasExporterPDF(facturasNoPagadasDTO,"Contribuciones "+tituloTipo+ " "+sEstado+" Pagadas (Personas Fisicas)");
+        export.exportar(response);
+    }
+    
+    //lista reportes por tipo de contribuciones no pagadas y pagadas personas morales
+    @GetMapping("/listaContribucionesTipoNoPagadasM/exportarPDF/{estado}/{tipo}")
+    public void exportarListadoContribucionesTipoNoPagadasMPDF(HttpServletResponse response,@PathVariable Boolean estado,@PathVariable int tipo) throws IOException{
+        response.setContentType("application/pdf");
+        String valor="";
+        String tituloTipo="";
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaActual = dateFormatter.format(new Date());
+        
+        String cabecera="Content-Disposition";
+        if(tipo==1){
+            valor ="attachment; filename=contribucionesNoPagadasImpuestos_"+fechaActual+".pdf";
+            tituloTipo="Impuestos";
+        }
+        if(tipo==2){
+            valor ="attachment; filename=contribucionesNoPagadasDerechosGeneral_"+fechaActual+".pdf";
+            tituloTipo="Derechos Generales";
+        }
+        if(tipo==3){
+            valor ="attachment; filename=contribucionesNoPagadasDerechosLicencia_"+fechaActual+".pdf";
+            tituloTipo="Derechos Licencias";
+        }
+        if(tipo==4){
+            valor ="attachment; filename=contribucionesNoPagadasMulta_"+fechaActual+".pdf";
+            tituloTipo="Multas Generales";
+        }
+        if(tipo==5){
+            valor ="attachment; filename=contribucionesNoPagadasMultaEbriedad_"+fechaActual+".pdf";
+            tituloTipo="Multas Ebriedades";
+        }
+        if(tipo==6){
+            valor ="attachment; filename=contribucionesNoPagadasMultaVehicular_"+fechaActual+".pdf";
+            tituloTipo="Multas Vehiculares";
+        }
+        if(tipo==7){
+            valor ="attachment; filename=contribucionesNoPagadasOtrosProductos_"+fechaActual+".pdf";
+            tituloTipo="Otros Productos";
+        }
+        
+        response.setHeader(cabecera, valor);
+        
+        List<FacturasNoPagadasDTO> facturasNoPagadasDTO =facturasImplSer.facturasNoPagadasPorTipoContribucionPersonasMorales(estado,tipo);
+        String sEstado="";
+        if(estado==false)
+             sEstado="No";
+        else
+            sEstado="";
+        
+        lineasCapturasNoPagadasExporterPDF export = new lineasCapturasNoPagadasExporterPDF(facturasNoPagadasDTO,"Contribuciones "+tituloTipo+ " "+sEstado+" Pagadas (Personas Fisicas)");
+        export.exportar(response);
+    }
+    
+    //lista reportes por concepto de contribuciones no pagadas y pagadas fisicas
+    @GetMapping("/listaContribucionesConceptoNoPagadas/exportarPDF/{estado}/{concepto}")
+    public void exportarListadoContribucionesConceptoNoPagadasPDF(HttpServletResponse response,@PathVariable Boolean estado,@PathVariable String concepto) throws IOException{
+        response.setContentType("application/pdf");
+        String valor="";
+        String tituloTipo="";
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaActual = dateFormatter.format(new Date());
+        
+        valor ="attachment; filename=contribucion"+concepto+"NoPagadas_"+fechaActual+".pdf";
+           
+        String cabecera="Content-Disposition";
+        
+        response.setHeader(cabecera, valor);
+        
+        List<FacturasNoPagadasDTO> facturasNoPagadasDTO =facturasImplSer.facturasNoPagadasPorConceptoContribucionPersonasFisicas(estado,concepto);
+        String sEstado="";
+        if(estado==false)
+             sEstado="No";
+        else
+            sEstado="";
+        
+        lineasCapturasNoPagadasExporterPDF export = new lineasCapturasNoPagadasExporterPDF(facturasNoPagadasDTO,"Contribuciones "+concepto+ " "+sEstado+" Pagadas (Personas Fisicas)");
+        export.exportar(response);
+    }
+    
+    //lista reportes por concepto de contribuciones no pagadas y pagadas personas morales
+    @GetMapping("/listaContribucionesConceptoNoPagadasM/exportarPDF/{estado}/{concepto}")
+    public void exportarListadoContribucionesConceptoNoPagadasMPDF(HttpServletResponse response,@PathVariable Boolean estado,@PathVariable String concepto) throws IOException{
+        response.setContentType("application/pdf");
+        String valor="";
+        String tituloTipo="";
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaActual = dateFormatter.format(new Date());
+        
+        String cabecera="Content-Disposition";
+        
+        valor ="attachment; filename=contribucionesNoPagadas"+concepto+"_"+fechaActual+".pdf";
+        
+        response.setHeader(cabecera, valor);
+        
+        List<FacturasNoPagadasDTO> facturasNoPagadasDTO =facturasImplSer.facturasNoPagadasPorConceptoContribucionPersonasMorales(estado,concepto);
+        String sEstado="";
+        if(estado==false)
+             sEstado="No";
+        else
+            sEstado="";
+        
+        lineasCapturasNoPagadasExporterPDF export = new lineasCapturasNoPagadasExporterPDF(facturasNoPagadasDTO,"Contribuciones "+concepto+ " "+sEstado+" Pagadas (Personas Fisicas)");
+        export.exportar(response);
+    }
+    
+    //lista reportes por concepto de contribuciones no pagadas y pagadas fisicas
+    @GetMapping("/listaContribuyentesFisicasNoPagadas/exportarPDF/{rfc}/{estado}")
+    public void exportarListadoContribuyenteMoralNoPagadasPDF(HttpServletResponse response,@PathVariable String rfc,@PathVariable Boolean estado) throws IOException{
+        response.setContentType("application/pdf");
+        String valor="";
+        String tituloTipo="";
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaActual = dateFormatter.format(new Date());
+        
+        valor ="attachment; filename=contribucion"+rfc+"NoPagadas_"+fechaActual+".pdf";
+           
+        String cabecera="Content-Disposition";
+        
+        response.setHeader(cabecera, valor);
+        
+        List<FacturasNoPagadasDTO> facturasNoPagadasDTO =facturasImplSer.facturasNoPagadasPorContribuyenteFisica(rfc,estado);
+        String sEstado="";
+        if(estado==false)
+             sEstado="No";
+        else
+            sEstado="";
+        
+        lineasCapturasNoPagadasExporterPDF export = new lineasCapturasNoPagadasExporterPDF(facturasNoPagadasDTO,"Contribuciones "+rfc+ " "+sEstado+" Pagadas (Personas Fisicas)");
+        export.exportar(response);
+    }
+    
+    //lista reportes por concepto de contribuciones no pagadas y pagadas personas morales
+    @GetMapping("/listaContribucionesContribuyenteMNoPagadasM/exportarPDF/{rfc}/{estado}")
+    public void exportarListadoContribuyenteMoralNoPagadasMDF(HttpServletResponse response,@PathVariable Boolean estado,@PathVariable String rfc) throws IOException{
+        response.setContentType("application/pdf");
+        String valor="";
+        String tituloTipo="";
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaActual = dateFormatter.format(new Date());
+        
+        String cabecera="Content-Disposition";
+        
+        valor ="attachment; filename=contribucionesNoPagadas"+rfc+"_"+fechaActual+".pdf";
+        
+        response.setHeader(cabecera, valor);
+        
+        List<FacturasNoPagadasDTO> facturasNoPagadasDTO =facturasImplSer.facturasNoPagadasPorPersonasMorales(rfc,estado);
+        String sEstado="";
+        if(estado==false)
+             sEstado="No";
+        else
+            sEstado="";
+        
+        lineasCapturasNoPagadasExporterPDF export = new lineasCapturasNoPagadasExporterPDF(facturasNoPagadasDTO,"Contribuciones "+rfc+ " "+sEstado+" Pagadas (Personas Morales)");
+        export.exportar(response);
+    }
 }

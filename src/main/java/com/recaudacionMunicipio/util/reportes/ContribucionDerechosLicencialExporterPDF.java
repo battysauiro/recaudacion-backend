@@ -52,7 +52,7 @@ public class ContribucionDerechosLicencialExporterPDF {
        celda.setPhrase(new Phrase("Concepto",fuente));
        tabla.addCell(celda);
        
-       celda.setPhrase(new Phrase("Tipo Impuesto",fuente));
+       celda.setPhrase(new Phrase("Tipo Licencia",fuente));
        tabla.addCell(celda);
        
        celda.setPhrase(new Phrase("Precio Expedición",fuente));

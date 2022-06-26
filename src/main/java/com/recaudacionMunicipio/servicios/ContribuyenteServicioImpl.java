@@ -52,9 +52,10 @@ public class ContribuyenteServicioImpl {
         for(Factura factura:f){
             List<Contribucionfactura> contribucionfactura=factura.getContribucionfacturaList();
             for(Contribucionfactura contribucionf:contribucionfactura){
+                
                 CfacturaDTO.add(new ContribucionFacturaDTO(contribucionf.getIdcontribucionFactura(), contribucionf.getContribucionId().getCodigoContribucion(), contribucionf.getFacturaId().getFolio(),contribucionf.getCantidad()));
             }
-            facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO,factura.getEstadoPago()));
+            facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(),"", factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO,factura.getEstadoPago()));
         }
         ContribuyenteDTO contribuyenteDTO= new ContribuyenteDTO(c.getRfcContribuyente(),c.getCalle() , c.getNumero(), c.getColonia(), c.getCp(), facturaDTO);
         return contribuyenteDTO;
@@ -86,13 +87,14 @@ public class ContribuyenteServicioImpl {
         for(Contribucionfactura contribucionf:contribucionfactura){
                 CfacturaDTO.add(new ContribucionFacturaDTO(contribucionf.getIdcontribucionFactura(), contribucionf.getContribucionId().getCodigoContribucion(), contribucionf.getFacturaId().getFolio(),contribucionf.getCantidad()));
         }
-        FacturaDTO facturaDTO = new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO,factura.getEstadoPago());
+        FacturaDTO facturaDTO = new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(),"", factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO,factura.getEstadoPago());
         return facturaDTO;
          
     }
     
     public FacturaDTO saveFactura(FacturaDTO facturaDTO){
         Factura factura= new Factura();
+        String nombreContribuyente="";
         //factura.setFolio(facturaDTO.getFolio());
         Usuario usuario = usuarioDao.findById(facturaDTO.getUsuario_id()).orElse(null);
         factura.setUsuarioId(usuario);
@@ -124,7 +126,16 @@ public class ContribuyenteServicioImpl {
         for(Contribucionfactura contribucionf:contribucionfacturas){
                 CfacturaDTO.add(new ContribucionFacturaDTO(contribucionf.getIdcontribucionFactura(), contribucionf.getContribucionId().getCodigoContribucion(), contribucionf.getFacturaId().getFolio(),contribucionf.getCantidad()));
         }
-        FacturaDTO facturasDTO = new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO,factura.getEstadoPago());
+        
+        if(factura.getContribuyenteId().getContribuyenteFisica()!=null){
+             nombreContribuyente=factura.getContribuyenteId().getContribuyenteFisica().getNombreContribuyenteFisica()+" "+factura.getContribuyenteId().getContribuyenteFisica().getApellidoPContribuyenteFisica()+" "+factura.getContribuyenteId().getContribuyenteFisica().getApellidoMContribuyenteFisica();
+        }
+        else{
+             nombreContribuyente=factura.getContribuyenteId().getContribuyenteMoral().getRazonSocialContribuyenteMoral();
+        }
+                
+        FacturaDTO facturasDTO = new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getIdEmpleado().getNombre()+" "+factura.getUsuarioId().getIdEmpleado().getApellidoP()+" "+factura.getUsuarioId().getIdEmpleado().getApellidoM()
+                , nombreContribuyente,factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO,factura.getEstadoPago());
         return facturasDTO;
     }
     

@@ -29,9 +29,11 @@ import javax.servlet.http.HttpServletResponse;
 public class lineasCapturasNoPagadasExporterPDF {
     
     private List<FacturasNoPagadasDTO> listaFacturasNoPagadas;
+    private String titulo;
 
-    public lineasCapturasNoPagadasExporterPDF(List<FacturasNoPagadasDTO> listaFacturasNoPagadas) {
+    public lineasCapturasNoPagadasExporterPDF(List<FacturasNoPagadasDTO> listaFacturasNoPagadas,String titulo) {
         this.listaFacturasNoPagadas = listaFacturasNoPagadas;
+        this.titulo=titulo;
     }
     
     
@@ -95,7 +97,7 @@ public class lineasCapturasNoPagadasExporterPDF {
        fuente.setColor(Color.BLUE);
        fuente.setSize(18);
        
-       Paragraph titulo = new Paragraph("Lineas de Capturas no Pagadas",fuente);
+       Paragraph titulo = new Paragraph(this.titulo,fuente);
        titulo.setAlignment(Paragraph.ALIGN_CENTER);
        
        documento.add(titulo);

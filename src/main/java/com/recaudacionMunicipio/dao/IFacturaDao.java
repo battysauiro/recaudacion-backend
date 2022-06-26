@@ -6,6 +6,8 @@
 package com.recaudacionMunicipio.dao;
 
 import com.recaudacionMunicipio.modelo.Contribuyente;
+import com.recaudacionMunicipio.modelo.ContribuyenteFisica;
+import com.recaudacionMunicipio.modelo.ContribuyenteMoral;
 import com.recaudacionMunicipio.modelo.Factura;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +20,7 @@ import org.springframework.data.repository.query.Param;
 public interface IFacturaDao extends JpaRepository<Factura, Integer> {
     public List<Factura> findByContribuyenteId(@Param("contribuyenteId")Contribuyente contribuyenteId);
     public List<Factura> findByEstadoPago(@Param("estadoPago")Boolean estadoPago);
+    public List<Factura> findByContribuyenteIdAndEstadoPago(@Param("contribuyenteId")Contribuyente contribuyenteId,@Param("estadoPago")Boolean estadoPago);
+    
+     
 }

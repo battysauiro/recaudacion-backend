@@ -52,7 +52,7 @@ public class ContribucionDerechosGeneralExporterPDF {
        celda.setPhrase(new Phrase("Concepto",fuente));
        tabla.addCell(celda);
        
-       celda.setPhrase(new Phrase("Tipo Impuesto",fuente));
+       celda.setPhrase(new Phrase("Tipo Derecho",fuente));
        tabla.addCell(celda);
        
        celda.setPhrase(new Phrase("Periodicidad",fuente));
@@ -93,7 +93,7 @@ public class ContribucionDerechosGeneralExporterPDF {
        fuente.setColor(Color.BLUE);
        fuente.setSize(18);
        
-       Paragraph titulo = new Paragraph("Lista Contribuciones Impuesto",fuente);
+       Paragraph titulo = new Paragraph("Lista Contribuciones Derechos Generales",fuente);
        titulo.setAlignment(Paragraph.ALIGN_CENTER);
        
        documento.add(titulo);

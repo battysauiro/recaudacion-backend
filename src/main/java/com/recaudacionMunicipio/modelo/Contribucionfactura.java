@@ -31,9 +31,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Contribucionfactura.findAll", query = "SELECT c FROM Contribucionfactura c"),
     @NamedQuery(name = "Contribucionfactura.findByIdcontribucionFactura", query = "SELECT c FROM Contribucionfactura c WHERE c.idcontribucionFactura = :idcontribucionFactura"),
-    @NamedQuery(name = "Contribucionfactura.findByCantidad", query = "SELECT c FROM Contribucionfactura c WHERE c.cantidad = :cantidad")})
+    @NamedQuery(name = "Contribucionfactura.findByCantidad", query = "SELECT c FROM Contribucionfactura c WHERE c.cantidad = :cantidad"),
+    @NamedQuery(name = "Contribucionfactura.find", query = "SELECT c FROM Contribucionfactura c WHERE c.cantidad = :cantidad")})
 public class Contribucionfactura implements Serializable {
- 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 

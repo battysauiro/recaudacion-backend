@@ -37,7 +37,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 @Table(name = "factura")
 @XmlRootElement
-@NamedQueries({
+@NamedQueries({ 
     @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f"),
     @NamedQuery(name = "Factura.findByFolio", query = "SELECT f FROM Factura f WHERE f.folio = :folio"),
     @NamedQuery(name = "Factura.findByFecha", query = "SELECT f FROM Factura f WHERE f.fecha = :fecha"),
@@ -56,6 +56,9 @@ public class Factura implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
+    @Column(name = "fecha_pagado")
+    @Temporal(TemporalType.DATE)
+    private Date fechaPagado;
     @Column(name = "descuento")
     private Integer descuento;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -75,6 +78,7 @@ public class Factura implements Serializable {
     @PrePersist
     public void prePersist(){
         this.fecha= new Date();
+        this.fechaPagado= new Date();
     }
     
     public Factura() {
@@ -144,6 +148,16 @@ public class Factura implements Serializable {
     public void setEstadoPago(Boolean estadoPago) {
         this.estadoPago = estadoPago;
     }
+
+    public Date getFechaPagado() {
+        return fechaPagado;
+    }
+
+    public void setFechaPagado(Date fechaPagado) {
+        this.fechaPagado = fechaPagado;
+    }
+    
+    
 
     @XmlTransient
     @JsonIgnore
