@@ -78,7 +78,7 @@ public class Factura implements Serializable {
     @PrePersist
     public void prePersist(){
         this.fecha= new Date();
-        this.fechaPagado= new Date();
+        //this.fechaPagado= new Date();
     }
     
     public Factura() {

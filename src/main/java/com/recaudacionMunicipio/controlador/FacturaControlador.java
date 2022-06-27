@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -64,6 +65,26 @@ public class FacturaControlador {
     @ResponseStatus(code = HttpStatus.OK)
     public boolean byContribuyente(@PathVariable String id,@PathVariable String contribucion){
         return contribuyenteImplSer.findByContribuyenteId(id,contribucion);
+    }
+    
+    @GetMapping("/facturas-Pendientecontribuyente/{id}/{contribucion}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public boolean byCapturaPendiente(@PathVariable String id,@PathVariable String contribucion){
+        return contribuyenteImplSer.lineaCapturaPendiente(id,contribucion);
+    }
+    
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"}) 
+    @PutMapping("/facturas/actualizarPago/{id}")   
+    public ResponseEntity<FacturaDTO> actualizarPago(@PathVariable(name = "id") int id) {
+            FacturaDTO facturanewDTO= contribuyenteImplSer.actualizarPagoFactura(id);
+            return new ResponseEntity<>(facturanewDTO, HttpStatus.OK);
+        
+    }
+    
+    @GetMapping("/obtenerFactura/{id}/{contribucion}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public FacturaDTO obtenerFactura(@PathVariable String id,@PathVariable String contribucion){
+        return contribuyenteImplSer.obtenerFactura(id,contribucion);
     }
     
     @Secured({"ROLE_ADMIN"})

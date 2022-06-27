@@ -17,6 +17,7 @@ public class FacturaDTO {
     private int folio;
     private String usuario_id;
     private String contribuyente_id;
+    private String domicilio;
     private String rmc;
     private Date fecha;
     private int descuento;
@@ -27,10 +28,11 @@ public class FacturaDTO {
     public FacturaDTO() {
     }
 
-    public FacturaDTO(int folio, String usuario_id, String contribuyente_id, String rmc,Date fecha, int descuento, Double total, List<ContribucionFacturaDTO> items, boolean estado_pago) {
+    public FacturaDTO(int folio, String usuario_id, String contribuyente_id,String domicilio, String rmc,Date fecha, int descuento, Double total, List<ContribucionFacturaDTO> items, boolean estado_pago) {
         this.folio = folio;
         this.usuario_id = usuario_id;
         this.contribuyente_id = contribuyente_id;
+        this.domicilio=domicilio;
         this.rmc=rmc;
         this.fecha = fecha;
         this.descuento = descuento;
@@ -105,6 +107,14 @@ public class FacturaDTO {
 
     public void setRmc(String rmc) {
         this.rmc = rmc;
+    }
+
+    public String getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(String domicilio) {
+        this.domicilio = domicilio;
     }
     
     

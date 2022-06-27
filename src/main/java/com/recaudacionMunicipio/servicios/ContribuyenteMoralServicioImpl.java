@@ -47,7 +47,11 @@ public class ContribuyenteMoralServicioImpl implements Servicios<ContribuyenteMo
             for (Contribucionfactura contribucionf : contribucionfactura) {
                 CfacturaDTO.add(new ContribucionFacturaDTO(contribucionf.getIdcontribucionFactura(), contribucionf.getContribucionId().getCodigoContribucion(), contribucionf.getFacturaId().getFolio(), contribucionf.getCantidad()));
             }
-            facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(),"", factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO,factura.getEstadoPago()));
+            String numero=" S/N ";
+                if(factura.getContribuyenteId().getNumero()!=null)
+                    numero=" #"+factura.getContribuyenteId().getNumero();
+                String domicilio="Calle: "+factura.getContribuyenteId().getCalle()+numero+factura.getContribuyenteId().getColonia()+" C.P: "+factura.getContribuyenteId().getCp();
+            facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(),domicilio,"", factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO,factura.getEstadoPago()));
         }
         ContribuyenteMoralDTO contribuyenteMoralDTO = new ContribuyenteMoralDTO(contribuyenteMoral.getIdContribuyenteMoral(), contribuyenteMoral.getRazonSocialContribuyenteMoral(), contribuyenteMoral.getContribuyente().getRfcContribuyente(), contribuyenteMoral.getContribuyente().getCalle(), contribuyenteMoral.getContribuyente().getNumero(), contribuyenteMoral.getContribuyente().getColonia(), contribuyenteMoral.getContribuyente().getCp(), facturaDTO);
         return contribuyenteMoralDTO;
@@ -65,7 +69,11 @@ public class ContribuyenteMoralServicioImpl implements Servicios<ContribuyenteMo
                 for (Contribucionfactura contribucionf : contribucionfactura) {
                     CfacturaDTO.add(new ContribucionFacturaDTO(contribucionf.getIdcontribucionFactura(), contribucionf.getContribucionId().getCodigoContribucion(), contribucionf.getFacturaId().getFolio(), contribucionf.getCantidad()));
                 }
-                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), "",factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO, factura.getEstadoPago()));
+                String numero=" S/N ";
+                if(factura.getContribuyenteId().getNumero()!=null)
+                    numero=" #"+factura.getContribuyenteId().getNumero();
+                String domicilio="Calle: "+factura.getContribuyenteId().getCalle()+numero+factura.getContribuyenteId().getColonia()+" C.P: "+factura.getContribuyenteId().getCp();
+                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(),domicilio,"",factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO, factura.getEstadoPago()));
             }
             lista.add(new ContribuyenteMoralDTO(contribuyente.getIdContribuyenteMoral(), contribuyente.getRazonSocialContribuyenteMoral(), contribuyente.getContribuyente().getRfcContribuyente(), contribuyente.getContribuyente().getCalle(), contribuyente.getContribuyente().getNumero(), contribuyente.getContribuyente().getColonia(), contribuyente.getContribuyente().getCp(), facturaDTO));
         }
@@ -84,7 +92,11 @@ public class ContribuyenteMoralServicioImpl implements Servicios<ContribuyenteMo
                 for (Contribucionfactura contribucionf : contribucionfactura) {
                     CfacturaDTO.add(new ContribucionFacturaDTO(contribucionf.getIdcontribucionFactura(), contribucionf.getContribucionId().getCodigoContribucion(), contribucionf.getFacturaId().getFolio(), contribucionf.getCantidad()));
                 }
-                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(),"", factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO, factura.getEstadoPago()));
+                String numero=" S/N ";
+                if(factura.getContribuyenteId().getNumero()!=null)
+                    numero=" #"+factura.getContribuyenteId().getNumero();
+                String domicilio="Calle: "+factura.getContribuyenteId().getCalle()+numero+factura.getContribuyenteId().getColonia()+" C.P: "+factura.getContribuyenteId().getCp();
+                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(),domicilio,"", factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO, factura.getEstadoPago()));
             }
             lista.add(new ContribuyenteMoralDTO(contribuyente.getIdContribuyenteMoral(), contribuyente.getRazonSocialContribuyenteMoral(), contribuyente.getContribuyente().getRfcContribuyente(), contribuyente.getContribuyente().getCalle(), contribuyente.getContribuyente().getNumero(), contribuyente.getContribuyente().getColonia(), contribuyente.getContribuyente().getCp(), facturaDTO));
         }
@@ -157,7 +169,11 @@ public class ContribuyenteMoralServicioImpl implements Servicios<ContribuyenteMo
                 for (Contribucionfactura contribucionf : contribucionfactura) {
                     CfacturaDTO.add(new ContribucionFacturaDTO(contribucionf.getIdcontribucionFactura(), contribucionf.getContribucionId().getCodigoContribucion(), contribucionf.getFacturaId().getFolio(), contribucionf.getCantidad()));
                 }
-                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(),"", factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO,factura.getEstadoPago()));
+                String numero=" S/N ";
+                if(factura.getContribuyenteId().getNumero()!=null)
+                    numero=" #"+factura.getContribuyenteId().getNumero();
+                String domicilio="Calle: "+factura.getContribuyenteId().getCalle()+numero+factura.getContribuyenteId().getColonia()+" C.P: "+factura.getContribuyenteId().getCp();
+                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(),domicilio,"", factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO,factura.getEstadoPago()));
             }
             lista.add(new ContribuyenteMoralDTO(contribuyenteMoral.getIdContribuyenteMoral(), contribuyenteMoral.getRazonSocialContribuyenteMoral(), contribuyenteMoral.getContribuyente().getRfcContribuyente(), contribuyenteMoral.getContribuyente().getCalle(), contribuyenteMoral.getContribuyente().getNumero(), contribuyenteMoral.getContribuyente().getColonia(), contribuyenteMoral.getContribuyente().getCp(),facturaDTO));
         }
@@ -236,7 +252,11 @@ public class ContribuyenteMoralServicioImpl implements Servicios<ContribuyenteMo
                 for (Contribucionfactura contribucionf : contribucionfactura) {
                     CfacturaDTO.add(new ContribucionFacturaDTO(contribucionf.getIdcontribucionFactura(), contribucionf.getContribucionId().getCodigoContribucion(), contribucionf.getFacturaId().getFolio(), contribucionf.getCantidad()));
                 }
-                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), "", factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO,factura.getEstadoPago()));
+                String numero=" S/N ";
+                if(factura.getContribuyenteId().getNumero()!=null)
+                    numero=" #"+factura.getContribuyenteId().getNumero();
+                String domicilio="Calle: "+factura.getContribuyenteId().getCalle()+numero+factura.getContribuyenteId().getColonia()+" C.P: "+factura.getContribuyenteId().getCp();
+                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(),domicilio, "", factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO,factura.getEstadoPago()));
             }
             lista.add(new ContribuyenteMoralDTO(contribuyenteMoral.getIdContribuyenteMoral(), contribuyenteMoral.getRazonSocialContribuyenteMoral(), contribuyenteMoral.getContribuyente().getRfcContribuyente(), contribuyenteMoral.getContribuyente().getCalle(), contribuyenteMoral.getContribuyente().getNumero(), contribuyenteMoral.getContribuyente().getColonia(), contribuyenteMoral.getContribuyente().getCp(),facturaDTO));
         }
