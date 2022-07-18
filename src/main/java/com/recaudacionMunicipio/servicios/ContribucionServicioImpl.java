@@ -6,6 +6,7 @@
 package com.recaudacionMunicipio.servicios;
 
 import com.recaudacionMunicipio.DTO.ContribucionDTO;
+import com.recaudacionMunicipio.DTO.ImpuestoDTO;
 import com.recaudacionMunicipio.DTO.entidades.ContribucionCompletaDTO;
 import com.recaudacionMunicipio.DTO.entidades.ContribucionesDTO;
 import com.recaudacionMunicipio.DTO.entidadesRespuesta.entidadRespuesta;
@@ -79,16 +80,50 @@ public class ContribucionServicioImpl implements Servicios<ContribucionDTO>{
     @Override
     public ContribucionDTO findById(String id) {
         Contribucion contribucion=contribucionDao.findById(id).orElse(null);
-        ContribucionDTO contribucionDTO= new ContribucionDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(),contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(),contribucion.getIdDescripcion().getDescripcion(),contribucion.getNivelContribucion());
+        ContribucionDTO contribucionDTO= new ContribucionDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(),contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(),contribucion.getIdDescripcion().getDescripcion(),contribucion.getNivelContribucion(),obtenerTipoContribucion(contribucion.getNivelContribucion()));
         return contribucionDTO;
     }
     
-    public List<ContribucionDTO> findByCodigoOrConcepto(String codigo,String concepto){
-        List<Contribucion> contribuciones=contribucionDao.findByCodigoContribucionStartingWithIgnoreCaseOrConceptoContribucionContainingIgnoreCase(codigo, concepto);
-        List<ContribucionDTO> contribucionesDTO= new ArrayList<>();
-        for(Contribucion contribucion:contribuciones)
-            contribucionesDTO.add(new ContribucionDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(), contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(), contribucion.getIdDescripcion().getDescripcion(),contribucion.getNivelContribucion()));
-        return contribucionesDTO;
+    public entidadRespuesta<ContribucionDTO> findByTermino(int numeroDePagina, int MedidaDePagina,String term){
+        Pageable pageable = PageRequest.of(numeroDePagina, MedidaDePagina); 
+        Page<Contribucion> contribucionesP=contribucionDao.findByCodigoContribucionStartingWithIgnoreCaseOrConceptoContribucionContainingIgnoreCase(pageable,term, term);
+        List<Contribucion> listaContribuciones =contribucionesP.getContent();
+        List<ContribucionDTO> lista= new ArrayList<>();
+        for(Contribucion contribucion:listaContribuciones){
+            lista.add(new ContribucionDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(),contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(),contribucion.getIdDescripcion().getDescripcion(),contribucion.getNivelContribucion(),obtenerTipoContribucion(contribucion.getNivelContribucion())));
+        }
+        entidadRespuesta entidadrespuesta=new entidadRespuesta();
+        entidadrespuesta.setContenido(lista);
+        entidadrespuesta.setNumeroPagina(contribucionesP.getNumber());
+        entidadrespuesta.setMedidaPagina(contribucionesP.getSize());
+        entidadrespuesta.setTotalElementos(contribucionesP.getTotalElements());
+        entidadrespuesta.setTotalPaginas(contribucionesP.getTotalPages());
+        entidadrespuesta.setUltima(contribucionesP.isLast());
+        entidadrespuesta.setPrimera(contribucionesP.isFirst());
+        
+        return entidadrespuesta; 
+    }
+    
+    public entidadRespuesta<ImpuestoDTO> findByTerminoImpuestos(int numeroDePagina, int MedidaDePagina,String term){
+        Pageable pageable = PageRequest.of(numeroDePagina, MedidaDePagina);  
+        Page<Contribucion> contribucionesP=null;//contribucionDao.findByCodigoContribucionStartingWithIgnoreCaseOrConceptoContribucionContainingIgnoreCaseAndNivelContribucionIs(pageable,term,term,1);
+        List<Contribucion> listaContribuciones =contribucionesP.getContent(); 
+        List<ImpuestoDTO> lista= new ArrayList<>();  
+        for(Contribucion contribucion:listaContribuciones){
+            lista.add(new ImpuestoDTO(contribucion.getImpuesto().getIdContribucionImpuesto(), contribucion.getImpuesto().getIdTipoImpuesto().getIdTipoImpuesto(), contribucion.getImpuesto().getIdTipoImpuesto().getDescripcion(), contribucion.getImpuesto().getCantidad(), contribucion.getImpuesto().getContribucion().getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(), contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(),
+                contribucion.getIdDescripcion().getDescripcion(),contribucion.getNivelContribucion(),
+                obtenerTipoContribucion(contribucion.getNivelContribucion())));
+        }//contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(),contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(),contribucion.getIdDescripcion().getDescripcion(),contribucion.getNivelContribucion(),obtenerTipoContribucion(contribucion.getNivelContribucion()
+        entidadRespuesta entidadrespuesta=new entidadRespuesta();
+        entidadrespuesta.setContenido(lista);
+        entidadrespuesta.setNumeroPagina(contribucionesP.getNumber());
+        entidadrespuesta.setMedidaPagina(contribucionesP.getSize());
+        entidadrespuesta.setTotalElementos(contribucionesP.getTotalElements());
+        entidadrespuesta.setTotalPaginas(contribucionesP.getTotalPages());
+        entidadrespuesta.setUltima(contribucionesP.isLast());
+        entidadrespuesta.setPrimera(contribucionesP.isFirst());
+        
+        return entidadrespuesta; 
     }
     
     public ContribucionCompletaDTO findByIdCompleto(String id) {
@@ -113,7 +148,7 @@ public class ContribucionServicioImpl implements Servicios<ContribucionDTO>{
         List<Contribucion> listaContribuciones =contribucionesP.getContent();
         List<ContribucionDTO> lista= new ArrayList<>();
         for(Contribucion contribucion:listaContribuciones){
-            lista.add(new ContribucionDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(),contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(),contribucion.getIdDescripcion().getDescripcion(),contribucion.getNivelContribucion()));
+            lista.add(new ContribucionDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(),contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(),contribucion.getIdDescripcion().getDescripcion(),contribucion.getNivelContribucion(),obtenerTipoContribucion(contribucion.getNivelContribucion())));
         }
         entidadRespuesta entidadrespuesta=new entidadRespuesta();
         entidadrespuesta.setContenido(lista);
@@ -127,6 +162,23 @@ public class ContribucionServicioImpl implements Servicios<ContribucionDTO>{
         return entidadrespuesta;
         //return lista;
         //return listaContribuciones.stream().map(contribucion -> mapearDTO(contribucion)).collect(Collectors.toList());
+    }
+    //regresa el nombre del tipo de contribucion
+    public String obtenerTipoContribucion(int number){
+        if(number==1)
+            return "impuestos" ;
+        if(number==2)
+            return "Derechos Generales";
+        if(number==3)
+            return "Derechos Licencias";
+        if(number==4)
+            return "Multas";
+        if(number==5)
+            return "Multa Ebriedad";
+        if(number==6)
+            return "Multa Vehicular";
+        else
+            return "Otros Productos";
     }
     
     public entidadRespuesta<ContribucionCompletaDTO> findAllC(int numeroDePagina,int MedidaDePagina) {
@@ -312,7 +364,7 @@ public class ContribucionServicioImpl implements Servicios<ContribucionDTO>{
         Page<Contribucion> listaContribuciones =contribucionDao.findAll(pageable);
         List<ContribucionDTO> lista= new ArrayList<>();
         for(Contribucion contribucion:listaContribuciones){
-            lista.add(new ContribucionDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(),contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(),contribucion.getIdDescripcion().getDescripcion(),contribucion.getNivelContribucion()));
+            lista.add(new ContribucionDTO(contribucion.getCodigoContribucion(), contribucion.getConceptoContribucion(), contribucion.getIdTipoPago().getIdTipoPago(),contribucion.getIdTipoPago().getNombrePago(), contribucion.getIdDescripcion().getIdDescripcion(),contribucion.getIdDescripcion().getDescripcion(),contribucion.getNivelContribucion(),obtenerTipoContribucion(contribucion.getNivelContribucion())));
 }
         return (Page<ContribucionDTO>) lista;
     }

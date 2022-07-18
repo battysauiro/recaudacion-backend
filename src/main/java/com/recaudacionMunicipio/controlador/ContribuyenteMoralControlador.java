@@ -45,9 +45,9 @@ public class ContribuyenteMoralControlador {
     }
 
     @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
-    @GetMapping("/filtrar/{term}")
-    public List<ContribuyenteMoralDTO> contribuyenteByTermino(@PathVariable String term){
-        return contribuyenteMoralImplSer.findByTermino(term);
+    @GetMapping("/filtrar/{page}/{term}")
+    public entidadRespuesta<ContribuyenteMoralDTO> contribuyenteByTermino(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "10",required = false)int cantidadPagina,@PathVariable(name = "term") String term){
+        return contribuyenteMoralImplSer.findByTermino(page,cantidadPagina,term);
     }
     //@Secured({"ROLE_ADMIN","ROLE_USER"})
     //@GetMapping("/page/{page}")

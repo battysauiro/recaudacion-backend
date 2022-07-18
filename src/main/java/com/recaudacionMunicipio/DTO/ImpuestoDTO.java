@@ -19,8 +19,8 @@ public class ImpuestoDTO extends ContribucionDTO{
     public ImpuestoDTO() {
     }
 
-    public ImpuestoDTO(String id_impuesto, int catalogo_impuesto,String scatalogo_impuesto, float cantidad, String codigo_contribucion, String concepto_contribucion, int id_tipo_pago, String tipo_pago, int id_descripcion, String descripcion,int nivelContribucion) {
-        super(codigo_contribucion, concepto_contribucion, id_tipo_pago, tipo_pago, id_descripcion, descripcion,nivelContribucion);
+    public ImpuestoDTO(String id_impuesto, int catalogo_impuesto,String scatalogo_impuesto, float cantidad, String codigo_contribucion, String concepto_contribucion, int id_tipo_pago, String tipo_pago, int id_descripcion, String descripcion,int nivelContribucion,String nivelContribucionS) {
+        super(codigo_contribucion, concepto_contribucion, id_tipo_pago, tipo_pago, id_descripcion, descripcion,nivelContribucion,nivelContribucionS);
         this.id_impuesto = id_impuesto;
         this.catalogo_impuesto = catalogo_impuesto;
         this.scatalogo_impuesto=scatalogo_impuesto;

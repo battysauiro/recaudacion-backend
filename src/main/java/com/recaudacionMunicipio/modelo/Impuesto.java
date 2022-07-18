@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Impuesto.findByIdContribucionImpuesto", query = "SELECT i FROM Impuesto i WHERE i.idContribucionImpuesto = :idContribucionImpuesto"),
     @NamedQuery(name = "Impuesto.findByCantidad", query = "SELECT i FROM Impuesto i WHERE i.cantidad = :cantidad")})
 public class Impuesto implements Serializable {
-
+        //SELECT i FROM Impuesto i join fetch i.contribucion where UPPER(i.idContribucionImpuesto)  = :idContribucionImpuesto or UPPER(i.contribucion.conceptoContribucion)=:idContribucionImpuesto
     private static final long serialVersionUID = 1L;
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)

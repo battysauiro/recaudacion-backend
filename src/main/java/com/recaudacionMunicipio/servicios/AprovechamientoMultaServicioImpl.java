@@ -60,7 +60,8 @@ public class AprovechamientoMultaServicioImpl implements Servicios<Aprovechamien
         //Contribucion contribucion=contribucionDao.findById(id).orElse(null);
         Aprovechamientomulta aprovechamientoMulta= aprovechamientoMultaDao.findById(id).orElse(null);
         //contribucion.getAprovechamiento().getAprovechamientomulta().getCantidad() 
-        AprovechamientoMultaDTO aprovechamientoMultaDTO = new AprovechamientoMultaDTO(aprovechamientoMulta.getIdContribucionMulta(),aprovechamientoMulta.getCantidad() , aprovechamientoMulta.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getConceptoContribucion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago() ,aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getNivelContribucion());
+        AprovechamientoMultaDTO aprovechamientoMultaDTO = new AprovechamientoMultaDTO(aprovechamientoMulta.getIdContribucionMulta(),aprovechamientoMulta.getCantidad() , aprovechamientoMulta.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getConceptoContribucion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago() ,aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getNivelContribucion(),
+        obtenerTipoContribucion(aprovechamientoMulta.getAprovechamiento().getContribucion().getNivelContribucion()));
         return aprovechamientoMultaDTO;
     }
 
@@ -69,7 +70,8 @@ public class AprovechamientoMultaServicioImpl implements Servicios<Aprovechamien
          List<Aprovechamientomulta> listaAprovechamientoMulta =aprovechamientoMultaDao.findByIdContribucionMultaStartingWith(idContribucionMulta);
         List<AprovechamientoMultaDTO> lista= new ArrayList<>(); 
         for(Aprovechamientomulta aprovechamientoMulta:listaAprovechamientoMulta){
-            lista.add(new AprovechamientoMultaDTO(aprovechamientoMulta.getIdContribucionMulta(),aprovechamientoMulta.getCantidad() , aprovechamientoMulta.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getConceptoContribucion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago() ,aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getNivelContribucion()));
+            lista.add(new AprovechamientoMultaDTO(aprovechamientoMulta.getIdContribucionMulta(),aprovechamientoMulta.getCantidad() , aprovechamientoMulta.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getConceptoContribucion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago() ,aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getNivelContribucion(),
+            obtenerTipoContribucion(aprovechamientoMulta.getAprovechamiento().getContribucion().getNivelContribucion())));
         } 
         return lista;
     }
@@ -119,6 +121,7 @@ public class AprovechamientoMultaServicioImpl implements Servicios<Aprovechamien
         contribucion.setIdTipoPago(tipoPago);
         CatalogoDescripcion catalogoDescripcion= catalogoDescripcionDao.findById(aprovechamientoMultaDTO.getId_descripcion()).orElse(null);
         contribucion.setIdDescripcion(catalogoDescripcion);
+        contribucion.setNivelContribucion(4);
         contribucionDao.save(contribucion);
         //Contribucion newContribucion=contribucionDao.findById(aprovechamientoMultaDTO.getCodigo_contribucion()).orElse(null);
         Aprovechamiento aprovechamiento= new Aprovechamiento();
@@ -147,7 +150,8 @@ public class AprovechamientoMultaServicioImpl implements Servicios<Aprovechamien
         List<Aprovechamientomulta> listaContribuciones =aprovechamientoMultaP.getContent();
         List<AprovechamientoMultaDTO> lista= new ArrayList<>();
         for(Aprovechamientomulta aprovechamientoMulta:listaContribuciones ){
-          lista.add(new AprovechamientoMultaDTO(aprovechamientoMulta.getIdContribucionMulta(),aprovechamientoMulta.getCantidad() , aprovechamientoMulta.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getConceptoContribucion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago() ,aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getNivelContribucion()));
+          lista.add(new AprovechamientoMultaDTO(aprovechamientoMulta.getIdContribucionMulta(),aprovechamientoMulta.getCantidad() , aprovechamientoMulta.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getConceptoContribucion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago() ,aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getNivelContribucion(),
+          obtenerTipoContribucion(aprovechamientoMulta.getAprovechamiento().getContribucion().getNivelContribucion())));
         }
         entidadRespuesta entidadrespuesta=new entidadRespuesta();
         entidadrespuesta.setContenido(lista);
@@ -160,6 +164,23 @@ public class AprovechamientoMultaServicioImpl implements Servicios<Aprovechamien
         
         return entidadrespuesta;
         //return lista;
+    }
+    
+    public String obtenerTipoContribucion(int number){
+        if(number==1)
+            return "impuestos" ;
+        if(number==2)
+            return "Derechos Generales";
+        if(number==3)
+            return "Derechos Licencias";
+        if(number==4)
+            return "Multas";
+        if(number==5)
+            return "Multa Ebriedad";
+        if(number==6)
+            return "Multa Vehicular";
+        else
+            return "Otros Productos";
     }
 
     public entidadRespuesta<AprovechamientoMultaCompletaDTO> findAllC(int numeroDePagina,int MedidaDePagina) {
@@ -200,6 +221,7 @@ public class AprovechamientoMultaServicioImpl implements Servicios<Aprovechamien
         contribucion.setIdTipoPago(tipoPago);
         CatalogoDescripcion catalogoDescripcion= catalogoDescripcionDao.findById(aprovechamientoMultaDTO.getId_descripcion()).orElse(null);
         contribucion.setIdDescripcion(catalogoDescripcion);
+        contribucion.setNivelContribucion(4);
         contribucionDao.save(contribucion);
         Aprovechamiento aprovechamiento= aprovechamientoDao.findById(id).orElse(null);
         CatalogoAprovechamiento catalogo= catalogoAprovechamientoDao.findById(aprovechamientoMultaDTO.getId_catalogo()).orElse(null);
@@ -242,7 +264,8 @@ public class AprovechamientoMultaServicioImpl implements Servicios<Aprovechamien
         Page<Aprovechamientomulta> listaContribuciones =aprovechamientoMultaDao.findAll(pageable);
         List<AprovechamientoMultaDTO> lista= new ArrayList<>();
         for(Aprovechamientomulta aprovechamientoMulta:listaContribuciones ){
-          lista.add(new AprovechamientoMultaDTO(aprovechamientoMulta.getIdContribucionMulta(),aprovechamientoMulta.getCantidad() , aprovechamientoMulta.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getConceptoContribucion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago() ,aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getNivelContribucion()));
+          lista.add(new AprovechamientoMultaDTO(aprovechamientoMulta.getIdContribucionMulta(),aprovechamientoMulta.getCantidad() , aprovechamientoMulta.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getConceptoContribucion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago() ,aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getNivelContribucion(),
+          obtenerTipoContribucion(aprovechamientoMulta.getAprovechamiento().getContribucion().getNivelContribucion())));
 }
         return (Page<AprovechamientoMultaDTO>) lista;
     }
@@ -251,7 +274,8 @@ public class AprovechamientoMultaServicioImpl implements Servicios<Aprovechamien
         List<Aprovechamientomulta> listaContribuciones =aprovechamientoMultaDao.findAll();
         List<AprovechamientoMultaDTO> lista= new ArrayList<>();
         for(Aprovechamientomulta aprovechamientoMulta:listaContribuciones ){
-          lista.add(new AprovechamientoMultaDTO(aprovechamientoMulta.getIdContribucionMulta(),aprovechamientoMulta.getCantidad() , aprovechamientoMulta.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getConceptoContribucion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago() ,aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getNivelContribucion()));
+          lista.add(new AprovechamientoMultaDTO(aprovechamientoMulta.getIdContribucionMulta(),aprovechamientoMulta.getCantidad() , aprovechamientoMulta.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(),aprovechamientoMulta.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMulta.getAprovechamiento().getContribucion().getConceptoContribucion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago() ,aprovechamientoMulta.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMulta.getAprovechamiento().getContribucion().getNivelContribucion(),
+          obtenerTipoContribucion(aprovechamientoMulta.getAprovechamiento().getContribucion().getNivelContribucion())));
 }
         return lista;
     }

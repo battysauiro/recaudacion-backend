@@ -55,11 +55,11 @@ public class ContribuyenteFisicaControlador {
     public ResponseEntity<ContribuyenteFisicaDTO> obtenerContribuyenteFisica(@PathVariable(name = "id") String id){
         return ResponseEntity.ok(contribuyenteFisicaImplSer.findById(id));
     }
-    
+     
     @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO","ROLE_CONTADOR"})
-    @GetMapping("/filtrar/{term}")
-    public List<ContribuyenteFisicaDTO> contribuyenteByTermino(@PathVariable String term){
-        return contribuyenteFisicaImplSer.findByTermino(term);
+    @GetMapping("/filtrar/{page}/{term}")
+    public entidadRespuesta<ContribuyenteFisicaDTO> contribuyenteByTermino(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "10",required = false)int cantidadPagina,@PathVariable(name = "term") String term){
+        return contribuyenteFisicaImplSer.findByTermino(page,cantidadPagina,term);
     }
     
     @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE","ROLE_TESORERO"})

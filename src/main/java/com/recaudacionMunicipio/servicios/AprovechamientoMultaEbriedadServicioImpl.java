@@ -56,7 +56,8 @@ public class AprovechamientoMultaEbriedadServicioImpl implements Servicios<Aprov
     @Override
     public AprovechamientoMultaEbriedadDTO findById(String id) {
         Multaebriedad aprovechamientoMultaEbriedad = aprovechamientoMultaEbriedadDao.findById(id).orElse(null);
-        AprovechamientoMultaEbriedadDTO aprovechamientoMultaEbriedadDTO = new AprovechamientoMultaEbriedadDTO(aprovechamientoMultaEbriedad.getIdContribucionMultaEbriedad(), aprovechamientoMultaEbriedad.getUmaMin(), aprovechamientoMultaEbriedad.getUmaMax(), aprovechamientoMultaEbriedad.getCantidadAlcohol(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getNivelContribucion());
+        AprovechamientoMultaEbriedadDTO aprovechamientoMultaEbriedadDTO = new AprovechamientoMultaEbriedadDTO(aprovechamientoMultaEbriedad.getIdContribucionMultaEbriedad(), aprovechamientoMultaEbriedad.getUmaMin(), aprovechamientoMultaEbriedad.getUmaMax(), aprovechamientoMultaEbriedad.getCantidadAlcohol(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getNivelContribucion(),
+        obtenerTipoContribucion(aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getNivelContribucion()));
         return aprovechamientoMultaEbriedadDTO;
     }
 
@@ -104,6 +105,7 @@ public class AprovechamientoMultaEbriedadServicioImpl implements Servicios<Aprov
             contribucion.setIdTipoPago(tipoPago);
             CatalogoDescripcion catalogoDescripcion = catalogoDescripcionDao.findById(aprovechamientoMultaEbriedadDTO.getId_descripcion()).orElse(null);
             contribucion.setIdDescripcion(catalogoDescripcion);
+            contribucion.setNivelContribucion(5);
             contribucionDao.save(contribucion);
             Aprovechamiento aprovechamiento = new Aprovechamiento();
             aprovechamiento.setIdContribucionAprovechamiento(aprovechamientoMultaEbriedadDTO.getCodigo_contribucion());
@@ -130,7 +132,8 @@ public class AprovechamientoMultaEbriedadServicioImpl implements Servicios<Aprov
         List<Multaebriedad> listaMultaEbriedad = multaEbriedad.getContent();
         List<AprovechamientoMultaEbriedadDTO> lista = new ArrayList<>();
         for (Multaebriedad aprovechamientoMultaEbriedad : listaMultaEbriedad) {
-            lista.add(new AprovechamientoMultaEbriedadDTO(aprovechamientoMultaEbriedad.getIdContribucionMultaEbriedad(), aprovechamientoMultaEbriedad.getUmaMin(), aprovechamientoMultaEbriedad.getUmaMax(), aprovechamientoMultaEbriedad.getCantidadAlcohol(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getNivelContribucion()));
+            lista.add(new AprovechamientoMultaEbriedadDTO(aprovechamientoMultaEbriedad.getIdContribucionMultaEbriedad(), aprovechamientoMultaEbriedad.getUmaMin(), aprovechamientoMultaEbriedad.getUmaMax(), aprovechamientoMultaEbriedad.getCantidadAlcohol(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getNivelContribucion(),
+            obtenerTipoContribucion(aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getNivelContribucion())));
         }
 
         entidadRespuesta entidadrespuesta = new entidadRespuesta();
@@ -144,6 +147,24 @@ public class AprovechamientoMultaEbriedadServicioImpl implements Servicios<Aprov
 
         return entidadrespuesta;
         //return lista;
+    }
+    
+    //regresa el nombre del tipo de contribucion
+    public String obtenerTipoContribucion(int number){
+        if(number==1)
+            return "impuestos" ;
+        if(number==2)
+            return "Derechos Generales";
+        if(number==3)
+            return "Derechos Licencias";
+        if(number==4)
+            return "Multas";
+        if(number==5)
+            return "Multa Ebriedad";
+        if(number==6)
+            return "Multa Vehicular";
+        else
+            return "Otros Productos";
     }
 
     public entidadRespuesta<AprovechamientoMultaEbriedadCompletaDTO> findAllC(int numeroDePagina, int MedidaDePagina) {
@@ -183,6 +204,7 @@ public class AprovechamientoMultaEbriedadServicioImpl implements Servicios<Aprov
         contribucion.setIdTipoPago(tipoPago);
         CatalogoDescripcion catalogoDescripcion = catalogoDescripcionDao.findById(aprovechamientoMultaEbriedadDTO.getId_descripcion()).orElse(null);
         contribucion.setIdDescripcion(catalogoDescripcion);
+        contribucion.setNivelContribucion(5);
         contribucionDao.save(contribucion);
         Aprovechamiento aprovechamiento = aprovechamientoDao.findById(id).orElse(null);
         CatalogoAprovechamiento catalogo = catalogoAprovechamientoDao.findById(aprovechamientoMultaEbriedadDTO.getId_catalogo()).orElse(null);
@@ -229,7 +251,8 @@ public class AprovechamientoMultaEbriedadServicioImpl implements Servicios<Aprov
         Page<Multaebriedad> listaMultaEbriedad = aprovechamientoMultaEbriedadDao.findAll(pageable);
         List<AprovechamientoMultaEbriedadDTO> lista = new ArrayList<>();
         for (Multaebriedad aprovechamientoMultaEbriedad : listaMultaEbriedad) {
-            lista.add(new AprovechamientoMultaEbriedadDTO(aprovechamientoMultaEbriedad.getIdContribucionMultaEbriedad(), aprovechamientoMultaEbriedad.getUmaMin(), aprovechamientoMultaEbriedad.getUmaMax(), aprovechamientoMultaEbriedad.getCantidadAlcohol(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getNivelContribucion()));
+            lista.add(new AprovechamientoMultaEbriedadDTO(aprovechamientoMultaEbriedad.getIdContribucionMultaEbriedad(), aprovechamientoMultaEbriedad.getUmaMin(), aprovechamientoMultaEbriedad.getUmaMax(), aprovechamientoMultaEbriedad.getCantidadAlcohol(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getNivelContribucion(),
+            obtenerTipoContribucion(aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getNivelContribucion())));
         }
         return (Page<AprovechamientoMultaEbriedadDTO>) lista;
     }
@@ -238,7 +261,8 @@ public class AprovechamientoMultaEbriedadServicioImpl implements Servicios<Aprov
         List<Multaebriedad> listaMultaEbriedad = aprovechamientoMultaEbriedadDao.findAll();
         List<AprovechamientoMultaEbriedadDTO> lista = new ArrayList<>();
         for (Multaebriedad aprovechamientoMultaEbriedad : listaMultaEbriedad) {
-            lista.add(new AprovechamientoMultaEbriedadDTO(aprovechamientoMultaEbriedad.getIdContribucionMultaEbriedad(), aprovechamientoMultaEbriedad.getUmaMin(), aprovechamientoMultaEbriedad.getUmaMax(), aprovechamientoMultaEbriedad.getCantidadAlcohol(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getNivelContribucion()));
+            lista.add(new AprovechamientoMultaEbriedadDTO(aprovechamientoMultaEbriedad.getIdContribucionMultaEbriedad(), aprovechamientoMultaEbriedad.getUmaMin(), aprovechamientoMultaEbriedad.getUmaMax(), aprovechamientoMultaEbriedad.getCantidadAlcohol(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaEbriedad.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getNivelContribucion(),
+            obtenerTipoContribucion(aprovechamientoMultaEbriedad.getAprovechamiento().getContribucion().getNivelContribucion())));
         }
         return lista;
     }

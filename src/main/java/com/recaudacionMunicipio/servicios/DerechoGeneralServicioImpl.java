@@ -63,7 +63,8 @@ public class DerechoGeneralServicioImpl implements Servicios<DerechosGeneralDTO>
     @Override
     public DerechosGeneralDTO findById(String id) {
         Derechogeneral derechoGeneral=derechoGeneralDAO.findById(id).orElse(null);
-        DerechosGeneralDTO derechoGeneralDTO = new DerechosGeneralDTO(derechoGeneral.getIdContribucionDerechosLicencias(), derechoGeneral.getCantidad(), derechoGeneral.getIdPeriodicidad().getIdPeriodicidad(),derechoGeneral.getIdPeriodicidad().getNombrePeriodicidad(), derechoGeneral.getDerechos().getIdContribucionDerechos(), derechoGeneral.getDerechos().getIdTipoDerecho().getIdTipoDerecho(),derechoGeneral.getDerechos().getIdTipoDerecho().getDescripcion(), derechoGeneral.getDerechos().getContribucion().getCodigoContribucion(), derechoGeneral.getDerechos().getContribucion().getConceptoContribucion(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getIdTipoPago(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getNombrePago(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getIdDescripcion(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getDescripcion(),derechoGeneral.getDerechos().getContribucion().getNivelContribucion());
+        DerechosGeneralDTO derechoGeneralDTO = new DerechosGeneralDTO(derechoGeneral.getIdContribucionDerechosLicencias(), derechoGeneral.getCantidad(), derechoGeneral.getIdPeriodicidad().getIdPeriodicidad(),derechoGeneral.getIdPeriodicidad().getNombrePeriodicidad(), derechoGeneral.getDerechos().getIdContribucionDerechos(), derechoGeneral.getDerechos().getIdTipoDerecho().getIdTipoDerecho(),derechoGeneral.getDerechos().getIdTipoDerecho().getDescripcion(), derechoGeneral.getDerechos().getContribucion().getCodigoContribucion(), derechoGeneral.getDerechos().getContribucion().getConceptoContribucion(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getIdTipoPago(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getNombrePago(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getIdDescripcion(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getDescripcion(),derechoGeneral.getDerechos().getContribucion().getNivelContribucion(),
+        obtenerTipoContribucion(derechoGeneral.getDerechos().getContribucion().getNivelContribucion()));
         return derechoGeneralDTO;
     }
     
@@ -111,6 +112,7 @@ public class DerechoGeneralServicioImpl implements Servicios<DerechosGeneralDTO>
         contribucion.setIdTipoPago(tipoPago);
         CatalogoDescripcion catalogoDescripcion= catalogoDescripcionDao.findById(derechosGeneralDTO.getId_descripcion()).orElse(null);
         contribucion.setIdDescripcion(catalogoDescripcion);
+        contribucion.setNivelContribucion(2);
         contribucionDao.save(contribucion);
         Derechos derecho= new Derechos();
         derecho.setIdContribucionDerechos(derechosGeneralDTO.getCodigo_contribucion());
@@ -137,7 +139,8 @@ public class DerechoGeneralServicioImpl implements Servicios<DerechosGeneralDTO>
         List<Derechogeneral> listaDerechoGeneral =derechoGeneralP.getContent();
         List<DerechosGeneralDTO> lista= new ArrayList<>();
         for(Derechogeneral derechoGeneral:listaDerechoGeneral){
-            lista.add(new DerechosGeneralDTO(derechoGeneral.getIdContribucionDerechosLicencias(), derechoGeneral.getCantidad(), derechoGeneral.getIdPeriodicidad().getIdPeriodicidad(),derechoGeneral.getIdPeriodicidad().getNombrePeriodicidad(), derechoGeneral.getDerechos().getIdContribucionDerechos(), derechoGeneral.getDerechos().getIdTipoDerecho().getIdTipoDerecho(),derechoGeneral.getDerechos().getIdTipoDerecho().getDescripcion(), derechoGeneral.getDerechos().getContribucion().getCodigoContribucion(), derechoGeneral.getDerechos().getContribucion().getConceptoContribucion(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getIdTipoPago(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getNombrePago(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getIdDescripcion(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getDescripcion(),derechoGeneral.getDerechos().getContribucion().getNivelContribucion()));
+            lista.add(new DerechosGeneralDTO(derechoGeneral.getIdContribucionDerechosLicencias(), derechoGeneral.getCantidad(), derechoGeneral.getIdPeriodicidad().getIdPeriodicidad(),derechoGeneral.getIdPeriodicidad().getNombrePeriodicidad(), derechoGeneral.getDerechos().getIdContribucionDerechos(), derechoGeneral.getDerechos().getIdTipoDerecho().getIdTipoDerecho(),derechoGeneral.getDerechos().getIdTipoDerecho().getDescripcion(), derechoGeneral.getDerechos().getContribucion().getCodigoContribucion(), derechoGeneral.getDerechos().getContribucion().getConceptoContribucion(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getIdTipoPago(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getNombrePago(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getIdDescripcion(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getDescripcion(),derechoGeneral.getDerechos().getContribucion().getNivelContribucion(),
+            obtenerTipoContribucion(derechoGeneral.getDerechos().getContribucion().getNivelContribucion())));
         }
         entidadRespuesta entidadrespuesta=new entidadRespuesta();
         entidadrespuesta.setContenido(lista);
@@ -150,6 +153,24 @@ public class DerechoGeneralServicioImpl implements Servicios<DerechosGeneralDTO>
         
         return entidadrespuesta;
         //return lista;
+    }
+    
+    //regresa el nombre del tipo de contribucion
+    public String obtenerTipoContribucion(int number){
+        if(number==1)
+            return "impuestos" ;
+        if(number==2)
+            return "Derechos Generales";
+        if(number==3)
+            return "Derechos Licencias";
+        if(number==4)
+            return "Multas";
+        if(number==5)
+            return "Multa Ebriedad";
+        if(number==6)
+            return "Multa Vehicular";
+        else
+            return "Otros Productos";
     }
 
     public entidadRespuesta<DerechosGeneralCompletoDTO> findAllC(int numeroDePagina,int MedidaDePagina) {
@@ -190,6 +211,7 @@ public class DerechoGeneralServicioImpl implements Servicios<DerechosGeneralDTO>
         contribucion.setIdTipoPago(tipoPago);
         CatalogoDescripcion catalogoDescripcion= catalogoDescripcionDao.findById(derechosGeneralDTO.getId_descripcion()).orElse(null);
         contribucion.setIdDescripcion(catalogoDescripcion);
+        contribucion.setNivelContribucion(2);
         contribucionDao.save(contribucion);
         Derechos derecho= derechosDAO.findById(id).orElse(null);
         CatalogoDerecho catalogo= catalogoDao.findById(derechosGeneralDTO.getCatalogo_derechos()).orElse(null);
@@ -239,7 +261,8 @@ public class DerechoGeneralServicioImpl implements Servicios<DerechosGeneralDTO>
         Page<Derechogeneral> listaDerechoGeneral =derechoGeneralDAO.findAll(pageable);
         List<DerechosGeneralDTO> lista= new ArrayList<>();
         for(Derechogeneral derechoGeneral:listaDerechoGeneral){
-            lista.add(new DerechosGeneralDTO(derechoGeneral.getIdContribucionDerechosLicencias(), derechoGeneral.getCantidad(), derechoGeneral.getIdPeriodicidad().getIdPeriodicidad(),derechoGeneral.getIdPeriodicidad().getNombrePeriodicidad(), derechoGeneral.getDerechos().getIdContribucionDerechos(), derechoGeneral.getDerechos().getIdTipoDerecho().getIdTipoDerecho(),derechoGeneral.getDerechos().getIdTipoDerecho().getDescripcion(), derechoGeneral.getDerechos().getContribucion().getCodigoContribucion(), derechoGeneral.getDerechos().getContribucion().getConceptoContribucion(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getIdTipoPago(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getNombrePago(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getIdDescripcion(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getDescripcion(),derechoGeneral.getDerechos().getContribucion().getNivelContribucion()));
+            lista.add(new DerechosGeneralDTO(derechoGeneral.getIdContribucionDerechosLicencias(), derechoGeneral.getCantidad(), derechoGeneral.getIdPeriodicidad().getIdPeriodicidad(),derechoGeneral.getIdPeriodicidad().getNombrePeriodicidad(), derechoGeneral.getDerechos().getIdContribucionDerechos(), derechoGeneral.getDerechos().getIdTipoDerecho().getIdTipoDerecho(),derechoGeneral.getDerechos().getIdTipoDerecho().getDescripcion(), derechoGeneral.getDerechos().getContribucion().getCodigoContribucion(), derechoGeneral.getDerechos().getContribucion().getConceptoContribucion(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getIdTipoPago(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getNombrePago(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getIdDescripcion(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getDescripcion(),derechoGeneral.getDerechos().getContribucion().getNivelContribucion(),
+            obtenerTipoContribucion(derechoGeneral.getDerechos().getContribucion().getNivelContribucion())));
 }
         return (Page<DerechosGeneralDTO>) lista;
     }
@@ -248,7 +271,8 @@ public class DerechoGeneralServicioImpl implements Servicios<DerechosGeneralDTO>
         List<Derechogeneral> listaDerechoGeneral =derechoGeneralDAO.findAll();
         List<DerechosGeneralDTO> lista= new ArrayList<>();
         for(Derechogeneral derechoGeneral:listaDerechoGeneral){
-            lista.add(new DerechosGeneralDTO(derechoGeneral.getIdContribucionDerechosLicencias(), derechoGeneral.getCantidad(), derechoGeneral.getIdPeriodicidad().getIdPeriodicidad(),derechoGeneral.getIdPeriodicidad().getNombrePeriodicidad(), derechoGeneral.getDerechos().getIdContribucionDerechos(), derechoGeneral.getDerechos().getIdTipoDerecho().getIdTipoDerecho(),derechoGeneral.getDerechos().getIdTipoDerecho().getDescripcion(), derechoGeneral.getDerechos().getContribucion().getCodigoContribucion(), derechoGeneral.getDerechos().getContribucion().getConceptoContribucion(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getIdTipoPago(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getNombrePago(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getIdDescripcion(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getDescripcion(),derechoGeneral.getDerechos().getContribucion().getNivelContribucion()));
+            lista.add(new DerechosGeneralDTO(derechoGeneral.getIdContribucionDerechosLicencias(), derechoGeneral.getCantidad(), derechoGeneral.getIdPeriodicidad().getIdPeriodicidad(),derechoGeneral.getIdPeriodicidad().getNombrePeriodicidad(), derechoGeneral.getDerechos().getIdContribucionDerechos(), derechoGeneral.getDerechos().getIdTipoDerecho().getIdTipoDerecho(),derechoGeneral.getDerechos().getIdTipoDerecho().getDescripcion(), derechoGeneral.getDerechos().getContribucion().getCodigoContribucion(), derechoGeneral.getDerechos().getContribucion().getConceptoContribucion(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getIdTipoPago(), derechoGeneral.getDerechos().getContribucion().getIdTipoPago().getNombrePago(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getIdDescripcion(), derechoGeneral.getDerechos().getContribucion().getIdDescripcion().getDescripcion(),derechoGeneral.getDerechos().getContribucion().getNivelContribucion(),
+            obtenerTipoContribucion(derechoGeneral.getDerechos().getContribucion().getNivelContribucion())));
         }
         return lista;
     }

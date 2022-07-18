@@ -62,7 +62,8 @@ public class AprovechamientoMultaVehicularImpl implements Servicios<Aprovechamie
     @Override
     public AprovechamientoMultaVehicularDTO findById(String id) {
         Multavehicular aprovechamientoMultaVehicular = aprovechamientoMultaVehicularDao.findById(id).orElse(null);
-        AprovechamientoMultaVehicularDTO aprovechamientoMultaVehicularDTO = new AprovechamientoMultaVehicularDTO(aprovechamientoMultaVehicular.getIdContribucionMultaVehicular(), aprovechamientoMultaVehicular.getDescripcionArticulo(), aprovechamientoMultaVehicular.getUmaMin(), aprovechamientoMultaVehicular.getUmaMax(), aprovechamientoMultaVehicular.getIdTipoVehiculo().getIdTipoVehiculo(), aprovechamientoMultaVehicular.getIdTipoVehiculo().getNombreVehiculo(), aprovechamientoMultaVehicular.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaVehicular.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaVehicular.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getNivelContribucion());
+        AprovechamientoMultaVehicularDTO aprovechamientoMultaVehicularDTO = new AprovechamientoMultaVehicularDTO(aprovechamientoMultaVehicular.getIdContribucionMultaVehicular(), aprovechamientoMultaVehicular.getDescripcionArticulo(), aprovechamientoMultaVehicular.getUmaMin(), aprovechamientoMultaVehicular.getUmaMax(), aprovechamientoMultaVehicular.getIdTipoVehiculo().getIdTipoVehiculo(), aprovechamientoMultaVehicular.getIdTipoVehiculo().getNombreVehiculo(), aprovechamientoMultaVehicular.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaVehicular.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaVehicular.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getNivelContribucion(),
+        obtenerTipoContribucion(aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getNivelContribucion()));
         return aprovechamientoMultaVehicularDTO;
     }
 
@@ -111,6 +112,7 @@ public class AprovechamientoMultaVehicularImpl implements Servicios<Aprovechamie
             contribucion.setIdTipoPago(tipoPago);
             CatalogoDescripcion catalogoDescripcion = catalogoDescripcionDao.findById(aprovechamientoMultaVehicularDTO.getId_descripcion()).orElse(null);
             contribucion.setIdDescripcion(catalogoDescripcion);
+            contribucion.setNivelContribucion(6);
             contribucionDao.save(contribucion);
             Aprovechamiento aprovechamiento = new Aprovechamiento();
             aprovechamiento.setIdContribucionAprovechamiento(aprovechamientoMultaVehicularDTO.getCodigo_contribucion());
@@ -137,7 +139,8 @@ public class AprovechamientoMultaVehicularImpl implements Servicios<Aprovechamie
         List<Multavehicular> listaMultaVehicular = multaVehicularP.getContent();
         List<AprovechamientoMultaVehicularDTO> lista = new ArrayList<>();
         for (Multavehicular aprovechamientoMultaVehicular : listaMultaVehicular) {
-            lista.add(new AprovechamientoMultaVehicularDTO(aprovechamientoMultaVehicular.getIdContribucionMultaVehicular(), aprovechamientoMultaVehicular.getDescripcionArticulo(), aprovechamientoMultaVehicular.getUmaMin(), aprovechamientoMultaVehicular.getUmaMax(), aprovechamientoMultaVehicular.getIdTipoVehiculo().getIdTipoVehiculo(), aprovechamientoMultaVehicular.getIdTipoVehiculo().getNombreVehiculo(), aprovechamientoMultaVehicular.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaVehicular.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaVehicular.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getNivelContribucion()));
+            lista.add(new AprovechamientoMultaVehicularDTO(aprovechamientoMultaVehicular.getIdContribucionMultaVehicular(), aprovechamientoMultaVehicular.getDescripcionArticulo(), aprovechamientoMultaVehicular.getUmaMin(), aprovechamientoMultaVehicular.getUmaMax(), aprovechamientoMultaVehicular.getIdTipoVehiculo().getIdTipoVehiculo(), aprovechamientoMultaVehicular.getIdTipoVehiculo().getNombreVehiculo(), aprovechamientoMultaVehicular.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaVehicular.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaVehicular.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getNivelContribucion(),
+            obtenerTipoContribucion(aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getNivelContribucion())));
         }
         entidadRespuesta entidadrespuesta = new entidadRespuesta();
         entidadrespuesta.setContenido(lista);
@@ -150,6 +153,24 @@ public class AprovechamientoMultaVehicularImpl implements Servicios<Aprovechamie
 
         return entidadrespuesta;
         //return lista;
+    }
+    
+    //regresa el nombre del tipo de contribucion
+    public String obtenerTipoContribucion(int number){
+        if(number==1)
+            return "impuestos" ;
+        if(number==2)
+            return "Derechos Generales";
+        if(number==3)
+            return "Derechos Licencias";
+        if(number==4)
+            return "Multas";
+        if(number==5)
+            return "Multa Ebriedad";
+        if(number==6)
+            return "Multa Vehicular";
+        else
+            return "Otros Productos";
     }
 
     public entidadRespuesta<AprovechamientoMultaVehicularCompletaDTO> findAllC(int numeroDePagina, int MedidaDePagina) {
@@ -190,6 +211,7 @@ public class AprovechamientoMultaVehicularImpl implements Servicios<Aprovechamie
         contribucion.setIdTipoPago(tipoPago);
         CatalogoDescripcion catalogoDescripcion = catalogoDescripcionDao.findById(aprovechamientoMultaVehicularDTO.getId_descripcion()).orElse(null);
         contribucion.setIdDescripcion(catalogoDescripcion);
+        contribucion.setNivelContribucion(6);
         contribucionDao.save(contribucion);
         Aprovechamiento aprovechamiento = aprovechamientoDao.findById(id).orElse(null);
         CatalogoAprovechamiento catalogo = catalogoAprovechamientoDao.findById(aprovechamientoMultaVehicularDTO.getId_catalogo()).orElse(null);
@@ -242,7 +264,8 @@ public class AprovechamientoMultaVehicularImpl implements Servicios<Aprovechamie
         Page<Multavehicular> listaMultaVehicular = aprovechamientoMultaVehicularDao.findAll(pageable);
         List<AprovechamientoMultaVehicularDTO> lista = new ArrayList<>();
         for (Multavehicular aprovechamientoMultaVehicular : listaMultaVehicular) {
-            lista.add(new AprovechamientoMultaVehicularDTO(aprovechamientoMultaVehicular.getIdContribucionMultaVehicular(), aprovechamientoMultaVehicular.getDescripcionArticulo(), aprovechamientoMultaVehicular.getUmaMin(), aprovechamientoMultaVehicular.getUmaMax(), aprovechamientoMultaVehicular.getIdTipoVehiculo().getIdTipoVehiculo(), aprovechamientoMultaVehicular.getIdTipoVehiculo().getNombreVehiculo(), aprovechamientoMultaVehicular.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaVehicular.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaVehicular.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getNivelContribucion()));
+            lista.add(new AprovechamientoMultaVehicularDTO(aprovechamientoMultaVehicular.getIdContribucionMultaVehicular(), aprovechamientoMultaVehicular.getDescripcionArticulo(), aprovechamientoMultaVehicular.getUmaMin(), aprovechamientoMultaVehicular.getUmaMax(), aprovechamientoMultaVehicular.getIdTipoVehiculo().getIdTipoVehiculo(), aprovechamientoMultaVehicular.getIdTipoVehiculo().getNombreVehiculo(), aprovechamientoMultaVehicular.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaVehicular.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaVehicular.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getNivelContribucion(),
+            obtenerTipoContribucion(aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getNivelContribucion())));
         }
         return (Page<AprovechamientoMultaVehicularDTO>) lista;
     }
@@ -260,7 +283,8 @@ public class AprovechamientoMultaVehicularImpl implements Servicios<Aprovechamie
         List<Multavehicular> listaMultaVehicular = aprovechamientoMultaVehicularDao.findAll();
         List<AprovechamientoMultaVehicularDTO> lista = new ArrayList<>();
         for (Multavehicular aprovechamientoMultaVehicular : listaMultaVehicular) {
-            lista.add(new AprovechamientoMultaVehicularDTO(aprovechamientoMultaVehicular.getIdContribucionMultaVehicular(), aprovechamientoMultaVehicular.getDescripcionArticulo(), aprovechamientoMultaVehicular.getUmaMin(), aprovechamientoMultaVehicular.getUmaMax(), aprovechamientoMultaVehicular.getIdTipoVehiculo().getIdTipoVehiculo(), aprovechamientoMultaVehicular.getIdTipoVehiculo().getNombreVehiculo(), aprovechamientoMultaVehicular.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaVehicular.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaVehicular.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getNivelContribucion()));
+            lista.add(new AprovechamientoMultaVehicularDTO(aprovechamientoMultaVehicular.getIdContribucionMultaVehicular(), aprovechamientoMultaVehicular.getDescripcionArticulo(), aprovechamientoMultaVehicular.getUmaMin(), aprovechamientoMultaVehicular.getUmaMax(), aprovechamientoMultaVehicular.getIdTipoVehiculo().getIdTipoVehiculo(), aprovechamientoMultaVehicular.getIdTipoVehiculo().getNombreVehiculo(), aprovechamientoMultaVehicular.getAprovechamiento().getIdContribucionAprovechamiento(), aprovechamientoMultaVehicular.getAprovechamiento().getIdTipoAprovechamiento().getIdTipoAprovechamiento(), aprovechamientoMultaVehicular.getAprovechamiento().getIdTipoAprovechamiento().getDescripcion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getCodigoContribucion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getConceptoContribucion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdTipoPago().getIdTipoPago(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdTipoPago().getNombrePago(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdDescripcion().getIdDescripcion(), aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getIdDescripcion().getDescripcion(),aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getNivelContribucion(),
+            obtenerTipoContribucion(aprovechamientoMultaVehicular.getAprovechamiento().getContribucion().getNivelContribucion())));
         }
         return lista;
     }

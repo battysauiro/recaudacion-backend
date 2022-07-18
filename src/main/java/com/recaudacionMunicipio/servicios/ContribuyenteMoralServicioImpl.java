@@ -53,11 +53,13 @@ public class ContribuyenteMoralServicioImpl implements Servicios<ContribuyenteMo
         return contribuyenteMoralDTO;
     }
     
-    public List<ContribuyenteMoralDTO> findByTermino(String term) {
-        List<ContribuyenteMoral> listaContribuyente = contribuyenteMoralDao.findByIdContribuyenteMoralStartingWithIgnoreCaseOrRazonSocialContribuyenteMoralStartingWithIgnoreCase(term, term);
+    public entidadRespuesta<ContribuyenteMoralDTO> findByTermino(int numeroDePagina, int MedidaDePagina,String term) {
+        Pageable pageable = PageRequest.of(numeroDePagina, MedidaDePagina);
+        Page<ContribuyenteMoral> contribuyenteMoralP = contribuyenteMoralDao.findByIdContribuyenteMoralStartingWithIgnoreCaseOrRazonSocialContribuyenteMoralStartingWithIgnoreCase(pageable,term, term);
+        List<ContribuyenteMoral> listaContribuyenteMoral = contribuyenteMoralP.getContent();
         List<ContribuyenteMoralDTO> lista = new ArrayList<>();
-        for (ContribuyenteMoral contribuyente : listaContribuyente) {
-            List<Factura> f = contribuyente.getContribuyente().getFacturaList();
+        for (ContribuyenteMoral contribuyenteMoral : listaContribuyenteMoral) {
+            List<Factura> f = contribuyenteMoral.getContribuyente().getFacturaList();
             List<FacturaDTO> facturaDTO = new ArrayList<>();
             List<ContribucionFacturaDTO> CfacturaDTO = new ArrayList<>();
             for (Factura factura : f) {
@@ -65,11 +67,20 @@ public class ContribuyenteMoralServicioImpl implements Servicios<ContribuyenteMo
                 for (Contribucionfactura contribucionf : contribucionfactura) {
                     CfacturaDTO.add(new ContribucionFacturaDTO(contribucionf.getIdcontribucionFactura(), contribucionf.getContribucionId().getCodigoContribucion(), contribucionf.getFacturaId().getFolio(), contribucionf.getCantidad()));
                 }
-                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO, factura.getEstadoPago()));
+                facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO,factura.getEstadoPago()));
             }
-            lista.add(new ContribuyenteMoralDTO(contribuyente.getIdContribuyenteMoral(), contribuyente.getRazonSocialContribuyenteMoral(), contribuyente.getContribuyente().getRfcContribuyente(), contribuyente.getContribuyente().getCalle(), contribuyente.getContribuyente().getNumero(), contribuyente.getContribuyente().getColonia(), contribuyente.getContribuyente().getCp(), facturaDTO));
+            lista.add(new ContribuyenteMoralDTO(contribuyenteMoral.getIdContribuyenteMoral(), contribuyenteMoral.getRazonSocialContribuyenteMoral(), contribuyenteMoral.getContribuyente().getRfcContribuyente(), contribuyenteMoral.getContribuyente().getCalle(), contribuyenteMoral.getContribuyente().getNumero(), contribuyenteMoral.getContribuyente().getColonia(), contribuyenteMoral.getContribuyente().getCp(),facturaDTO));
         }
-        return lista;
+        entidadRespuesta entidadrespuesta = new entidadRespuesta();
+        entidadrespuesta.setContenido(lista);
+        entidadrespuesta.setNumeroPagina(contribuyenteMoralP.getNumber());
+        entidadrespuesta.setMedidaPagina(contribuyenteMoralP.getSize());
+        entidadrespuesta.setTotalElementos(contribuyenteMoralP.getTotalElements());
+        entidadrespuesta.setTotalPaginas(contribuyenteMoralP.getTotalPages());
+        entidadrespuesta.setUltima(contribuyenteMoralP.isLast());
+        entidadrespuesta.setPrimera(contribuyenteMoralP.isFirst());
+
+        return entidadrespuesta;
     }
     
     public List<ContribuyenteMoralDTO> listarContribuentesMorales() {

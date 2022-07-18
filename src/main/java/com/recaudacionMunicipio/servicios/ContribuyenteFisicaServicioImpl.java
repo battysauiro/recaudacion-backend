@@ -55,6 +55,7 @@ public class ContribuyenteFisicaServicioImpl implements Servicios<ContribuyenteF
         return contribuyenteFisicaDTO;
     }
     
+    
     @Override
     public ContribuyenteFisicaDTO save(ContribuyenteFisicaDTO contribuyenteFisicaDTO) {
         System.out.println(contribuyenteDao.existsById(contribuyenteFisicaDTO.getRfc_contribuyente()) + "existeeeeeeeeeeeeee " + contribuyenteFisicaDTO.getRfc_contribuyente());
@@ -103,7 +104,6 @@ public class ContribuyenteFisicaServicioImpl implements Servicios<ContribuyenteF
             //contribuyenteFisica.setIdContribuyenteFisica(contribuyente.getRfcContribuyente());
             ContribuyenteFisica newContribuyenteFisica = contribuyenteFisicaDao.save(contribuyenteFisica);
             ContribuyenteFisicaDTO contribuyenteFisicaRespuesta = mapearDTO(newContribuyenteFisica);
-            System.out.println("entro en creaaaaaaaar");
             return contribuyenteFisicaRespuesta;
         }
         return null;
@@ -177,11 +177,14 @@ public class ContribuyenteFisicaServicioImpl implements Servicios<ContribuyenteF
         return mapearDTO(contribuyenteFisicaActualizado);
     }
 
-    public List<ContribuyenteFisicaDTO> findByTermino(String term) {
-        List<ContribuyenteFisica> listaContribuyente = contribuyenteFisicaDao.findByCurpContribuyenteFisicaStartingWithIgnoreCaseOrIdContribuyenteFisicaStartingWithIgnoreCaseOrNombreContribuyenteFisicaStartingWithIgnoreCaseOrApellidoPContribuyenteFisicaStartingWithIgnoreCaseOrApellidoMContribuyenteFisicaStartingWithIgnoreCase(term, term, term, term, term);
+    public entidadRespuesta<ContribuyenteFisicaDTO> findByTermino(int numeroDePagina, int MedidaDePagina,String term) {
+        Pageable pageable = PageRequest.of(numeroDePagina, MedidaDePagina); 
+        Page<ContribuyenteFisica> contribuyenteFisicaP = contribuyenteFisicaDao.findByCurpContribuyenteFisicaStartingWithIgnoreCaseOrIdContribuyenteFisicaStartingWithIgnoreCaseOrNombreContribuyenteFisicaStartingWithIgnoreCaseOrApellidoPContribuyenteFisicaStartingWithIgnoreCaseOrApellidoMContribuyenteFisicaStartingWithIgnoreCase(pageable,term, term, term, term, term);
+        List<ContribuyenteFisica> listaContribuyenteFisica = contribuyenteFisicaP.getContent();
         List<ContribuyenteFisicaDTO> lista = new ArrayList<>();
-        for (ContribuyenteFisica contribuyente : listaContribuyente) {
-            List<Factura> f = contribuyente.getContribuyente().getFacturaList();
+
+        for (ContribuyenteFisica contribuyenteFisica : listaContribuyenteFisica) {
+            List<Factura> f = contribuyenteFisica.getContribuyente().getFacturaList();
             List<FacturaDTO> facturaDTO = new ArrayList<>();
             List<ContribucionFacturaDTO> CfacturaDTO = new ArrayList<>();
             for (Factura factura : f) {
@@ -191,9 +194,19 @@ public class ContribuyenteFisicaServicioImpl implements Servicios<ContribuyenteF
                 }
                 facturaDTO.add(new FacturaDTO(factura.getFolio(), factura.getUsuarioId().getUsername(), factura.getContribuyenteId().getRfcContribuyente(), factura.getFecha(), factura.getDescuento(), factura.getTotal(), CfacturaDTO, factura.getEstadoPago()));
             }
-            lista.add(new ContribuyenteFisicaDTO(contribuyente.getIdContribuyenteFisica(), contribuyente.getCurpContribuyenteFisica(), contribuyente.getNombreContribuyenteFisica(), contribuyente.getApellidoPContribuyenteFisica(), contribuyente.getApellidoMContribuyenteFisica(), contribuyente.getFechaNacimiento(), contribuyente.getContribuyente().getRfcContribuyente(), contribuyente.getContribuyente().getCalle(), contribuyente.getContribuyente().getNumero(), contribuyente.getContribuyente().getColonia(), contribuyente.getContribuyente().getCp(), facturaDTO));
+            lista.add(new ContribuyenteFisicaDTO(contribuyenteFisica.getIdContribuyenteFisica(), contribuyenteFisica.getCurpContribuyenteFisica(), contribuyenteFisica.getNombreContribuyenteFisica(), contribuyenteFisica.getApellidoPContribuyenteFisica(), contribuyenteFisica.getApellidoMContribuyenteFisica(), contribuyenteFisica.getFechaNacimiento(), contribuyenteFisica.getContribuyente().getRfcContribuyente(), contribuyenteFisica.getContribuyente().getCalle(), contribuyenteFisica.getContribuyente().getNumero(), contribuyenteFisica.getContribuyente().getColonia(), contribuyenteFisica.getContribuyente().getCp(), facturaDTO));
         }
-        return lista;
+
+        entidadRespuesta entidadrespuesta = new entidadRespuesta();
+        entidadrespuesta.setContenido(lista);
+        entidadrespuesta.setNumeroPagina(contribuyenteFisicaP.getNumber());
+        entidadrespuesta.setMedidaPagina(contribuyenteFisicaP.getSize());
+        entidadrespuesta.setTotalElementos(contribuyenteFisicaP.getTotalElements());
+        entidadrespuesta.setTotalPaginas(contribuyenteFisicaP.getTotalPages());
+        entidadrespuesta.setUltima(contribuyenteFisicaP.isLast());
+        entidadrespuesta.setPrimera(contribuyenteFisicaP.isFirst());
+
+        return entidadrespuesta;
     }
     
     //lista los contribuyentes

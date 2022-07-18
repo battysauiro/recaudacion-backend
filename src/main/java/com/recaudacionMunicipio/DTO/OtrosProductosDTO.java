@@ -23,8 +23,8 @@ public class OtrosProductosDTO extends ContribucionDTO{
 
  
     
-    public OtrosProductosDTO(String id_otros_productos, float cantidad, int periodicidad,String speriodicidad, int catalogo_otros_productos, String scatalogo_otros_productos,String codigo_contribucion, String concepto_contribucion, int id_tipo_pago,String tipo_pago, int id_descripcion, String descripcion,int nivelContribucion) {
-        super(codigo_contribucion, concepto_contribucion, id_tipo_pago,tipo_pago, id_descripcion,descripcion,nivelContribucion);
+    public OtrosProductosDTO(String id_otros_productos, float cantidad, int periodicidad,String speriodicidad, int catalogo_otros_productos, String scatalogo_otros_productos,String codigo_contribucion, String concepto_contribucion, int id_tipo_pago,String tipo_pago, int id_descripcion, String descripcion,int nivelContribucion,String nivelContribucionS) {
+        super(codigo_contribucion, concepto_contribucion, id_tipo_pago,tipo_pago, id_descripcion,descripcion,nivelContribucion,nivelContribucionS);
         this.id_otros_productos = id_otros_productos;
         this.cantidad = cantidad;
         this.periodicidad = periodicidad;

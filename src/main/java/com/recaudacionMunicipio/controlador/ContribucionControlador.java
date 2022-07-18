@@ -6,11 +6,14 @@
 package com.recaudacionMunicipio.controlador;
 
 import com.recaudacionMunicipio.DTO.ContribucionDTO;
+import com.recaudacionMunicipio.DTO.ImpuestoDTO;
 import com.recaudacionMunicipio.DTO.entidades.ContribucionCompletaDTO;
 import com.recaudacionMunicipio.DTO.entidades.ContribucionesDTO;
 import com.recaudacionMunicipio.DTO.entidadesRespuesta.entidadRespuesta;
 import com.recaudacionMunicipio.servicios.ContribucionServicioImpl;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,15 +42,21 @@ public class ContribucionControlador {
     private ContribucionServicioImpl contribucionImplSer;
     
     @Secured({"ROLE_ADMIN"})
-    @GetMapping()
-    public entidadRespuesta<ContribucionDTO> listarContribucion(@RequestParam(value="pageNo",defaultValue = "0",required = false)int numeroDePagina,@RequestParam(value = "pageSize",defaultValue = "10",required = false)int cantidadPagina){
-        return contribucionImplSer.findAll(numeroDePagina,cantidadPagina);
+    @GetMapping("/page/{page}")
+    public entidadRespuesta<ContribucionDTO> listarContribucion(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "10",required = false)int cantidadPagina){
+        return contribucionImplSer.findAll(page,cantidadPagina);
     } 
     
     @Secured({"ROLE_ADMIN"})
-    @GetMapping("filtrar/{term}")
-    public List<ContribucionDTO> findByCodigoOrConcepto(@PathVariable String term){
-        return contribucionImplSer.findByCodigoOrConcepto(term,term);
+    @GetMapping("filtrar/{page}/{term}")
+    public entidadRespuesta<ContribucionDTO> findByTermino(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "10",required = false)int cantidadPagina,@PathVariable String term){
+        return contribucionImplSer.findByTermino(page,cantidadPagina,term);
+    }
+    
+    @Secured({"ROLE_ADMIN"})
+    @GetMapping("filtrar/impuestos/{page}/{term}")
+    public entidadRespuesta<ImpuestoDTO> findByTerminoImpuesto(@PathVariable Integer page,@RequestParam(value = "pageSize",defaultValue = "10",required = false)int cantidadPagina,@PathVariable String term){
+        return contribucionImplSer.findByTerminoImpuestos(page,cantidadPagina,term);
     }
     
     @Secured({"ROLE_ADMIN"})
@@ -63,7 +72,7 @@ public class ContribucionControlador {
     }
     
     @Secured({"ROLE_ADMIN"})
-    @GetMapping("/page/{page}")
+    @GetMapping("/pageee/{page}")
     public Page<ContribucionDTO> listarContribucion(@PathVariable Integer page){
         return contribucionImplSer.findAll(PageRequest.of(page,10));
     }
@@ -99,10 +108,13 @@ public class ContribucionControlador {
         return new ResponseEntity<>(contribucionRespuesta, HttpStatus.OK);
     }
     
+
     @Secured({"ROLE_ADMIN"})
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarContribucion(@PathVariable(name = "id") String id) {
-        contribucionImplSer.delete(id);
-        return new ResponseEntity<>("contribucion eliminada con exito", HttpStatus.OK);
+    @DeleteMapping("/{id}") 
+	public ResponseEntity<Map<String,Boolean>> eliminarContribucion(@PathVariable(name = "id") String id){
+		contribucionImplSer.delete(id);
+		Map<String, Boolean> respuesta = new HashMap<>();
+		respuesta.put("eliminar",Boolean.TRUE);
+		return ResponseEntity.ok(respuesta);
     }
 }

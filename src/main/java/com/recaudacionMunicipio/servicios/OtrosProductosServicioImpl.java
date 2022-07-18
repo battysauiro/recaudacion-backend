@@ -56,7 +56,8 @@ public class OtrosProductosServicioImpl implements Servicios<OtrosProductosDTO> 
     @Override
     public OtrosProductosDTO findById(String id) {
         Otrosproductos otrosProductos = otrosProductosDao.findById(id).orElse(null);
-        OtrosProductosDTO otrosProductosDTO = new OtrosProductosDTO(otrosProductos.getIdContribucionProductos(), otrosProductos.getCantidad(), otrosProductos.getPeriodicidad().getIdPeriodicidad(), otrosProductos.getPeriodicidad().getNombrePeriodicidad(), otrosProductos.getIdOtrosProductos().getIdOtrosProductos(), otrosProductos.getIdOtrosProductos().getDescripcion(), otrosProductos.getContribucion().getCodigoContribucion(), otrosProductos.getContribucion().getConceptoContribucion(), otrosProductos.getContribucion().getIdTipoPago().getIdTipoPago(), otrosProductos.getContribucion().getIdTipoPago().getNombrePago(), otrosProductos.getContribucion().getIdDescripcion().getIdDescripcion(), otrosProductos.getContribucion().getIdDescripcion().getDescripcion(),otrosProductos.getContribucion().getNivelContribucion());
+        OtrosProductosDTO otrosProductosDTO = new OtrosProductosDTO(otrosProductos.getIdContribucionProductos(), otrosProductos.getCantidad(), otrosProductos.getPeriodicidad().getIdPeriodicidad(), otrosProductos.getPeriodicidad().getNombrePeriodicidad(), otrosProductos.getIdOtrosProductos().getIdOtrosProductos(), otrosProductos.getIdOtrosProductos().getDescripcion(), otrosProductos.getContribucion().getCodigoContribucion(), otrosProductos.getContribucion().getConceptoContribucion(), otrosProductos.getContribucion().getIdTipoPago().getIdTipoPago(), otrosProductos.getContribucion().getIdTipoPago().getNombrePago(), otrosProductos.getContribucion().getIdDescripcion().getIdDescripcion(), otrosProductos.getContribucion().getIdDescripcion().getDescripcion(),otrosProductos.getContribucion().getNivelContribucion(),
+        obtenerTipoContribucion(otrosProductos.getContribucion().getNivelContribucion()));
         return otrosProductosDTO;
     }
 
@@ -99,6 +100,7 @@ public class OtrosProductosServicioImpl implements Servicios<OtrosProductosDTO> 
             contribucion.setIdTipoPago(tipoPago);
             CatalogoDescripcion catalogoDescripcion = catalogoDescripcionDao.findById(otrosProductosDTO.getId_descripcion()).orElse(null);
             contribucion.setIdDescripcion(catalogoDescripcion);
+            contribucion.setNivelContribucion(7);
 
             //Contribucion newContribucion=
             //contribucionDao.save(contribucion); ESTO AL PARECER SE PUEDE ELIMINAR
@@ -120,7 +122,8 @@ public class OtrosProductosServicioImpl implements Servicios<OtrosProductosDTO> 
         List<Otrosproductos> listaOtrosProductos = otrosProductosP.getContent();
         List<OtrosProductosDTO> lista = new ArrayList<>();
         for (Otrosproductos otrosProductos : listaOtrosProductos) {
-            lista.add(new OtrosProductosDTO(otrosProductos.getIdContribucionProductos(), otrosProductos.getCantidad(), otrosProductos.getPeriodicidad().getIdPeriodicidad(), otrosProductos.getPeriodicidad().getNombrePeriodicidad(), otrosProductos.getIdOtrosProductos().getIdOtrosProductos(), otrosProductos.getIdOtrosProductos().getDescripcion(), otrosProductos.getContribucion().getCodigoContribucion(), otrosProductos.getContribucion().getConceptoContribucion(), otrosProductos.getContribucion().getIdTipoPago().getIdTipoPago(), otrosProductos.getContribucion().getIdTipoPago().getNombrePago(), otrosProductos.getContribucion().getIdDescripcion().getIdDescripcion(), otrosProductos.getContribucion().getIdDescripcion().getDescripcion(),otrosProductos.getContribucion().getNivelContribucion()));
+            lista.add(new OtrosProductosDTO(otrosProductos.getIdContribucionProductos(), otrosProductos.getCantidad(), otrosProductos.getPeriodicidad().getIdPeriodicidad(), otrosProductos.getPeriodicidad().getNombrePeriodicidad(), otrosProductos.getIdOtrosProductos().getIdOtrosProductos(), otrosProductos.getIdOtrosProductos().getDescripcion(), otrosProductos.getContribucion().getCodigoContribucion(), otrosProductos.getContribucion().getConceptoContribucion(), otrosProductos.getContribucion().getIdTipoPago().getIdTipoPago(), otrosProductos.getContribucion().getIdTipoPago().getNombrePago(), otrosProductos.getContribucion().getIdDescripcion().getIdDescripcion(), otrosProductos.getContribucion().getIdDescripcion().getDescripcion(),otrosProductos.getContribucion().getNivelContribucion(),
+            obtenerTipoContribucion(otrosProductos.getContribucion().getNivelContribucion())));
         }
         entidadRespuesta entidadrespuesta = new entidadRespuesta();
         entidadrespuesta.setContenido(lista);
@@ -133,6 +136,24 @@ public class OtrosProductosServicioImpl implements Servicios<OtrosProductosDTO> 
 
         return entidadrespuesta;
         //return lista;
+    }
+    
+    //regresa el nombre del tipo de contribucion
+    public String obtenerTipoContribucion(int number){
+        if(number==1)
+            return "impuestos" ;
+        if(number==2)
+            return "Derechos Generales";
+        if(number==3)
+            return "Derechos Licencias";
+        if(number==4)
+            return "Multas";
+        if(number==5)
+            return "Multa Ebriedad";
+        if(number==6)
+            return "Multa Vehicular";
+        else
+            return "Otros Productos";
     }
 
     public entidadRespuesta<OtrosProductosCompletoDTO> findAllC(int numeroDePagina, int MedidaDePagina) {
@@ -172,6 +193,7 @@ public class OtrosProductosServicioImpl implements Servicios<OtrosProductosDTO> 
         contribucion.setIdTipoPago(tipoPago);
         CatalogoDescripcion catalogoDescripcion = catalogoDescripcionDao.findById(otrosProductosDTO.getId_descripcion()).orElse(null);
         contribucion.setIdDescripcion(catalogoDescripcion);
+        contribucion.setNivelContribucion(7);
         contribucionDao.save(contribucion);
 
         Otrosproductos otrosProductos = otrosProductosDao
@@ -222,7 +244,8 @@ public class OtrosProductosServicioImpl implements Servicios<OtrosProductosDTO> 
         Page<Otrosproductos> listaOtrosProductos = otrosProductosDao.findAll(pageable);
         List<OtrosProductosDTO> lista = new ArrayList<>();
         for (Otrosproductos otrosProductos : listaOtrosProductos) {
-            lista.add(new OtrosProductosDTO(otrosProductos.getIdContribucionProductos(), otrosProductos.getCantidad(), otrosProductos.getPeriodicidad().getIdPeriodicidad(), otrosProductos.getPeriodicidad().getNombrePeriodicidad(), otrosProductos.getIdOtrosProductos().getIdOtrosProductos(), otrosProductos.getIdOtrosProductos().getDescripcion(), otrosProductos.getContribucion().getCodigoContribucion(), otrosProductos.getContribucion().getConceptoContribucion(), otrosProductos.getContribucion().getIdTipoPago().getIdTipoPago(), otrosProductos.getContribucion().getIdTipoPago().getNombrePago(), otrosProductos.getContribucion().getIdDescripcion().getIdDescripcion(), otrosProductos.getContribucion().getIdDescripcion().getDescripcion(),otrosProductos.getContribucion().getNivelContribucion()));
+            lista.add(new OtrosProductosDTO(otrosProductos.getIdContribucionProductos(), otrosProductos.getCantidad(), otrosProductos.getPeriodicidad().getIdPeriodicidad(), otrosProductos.getPeriodicidad().getNombrePeriodicidad(), otrosProductos.getIdOtrosProductos().getIdOtrosProductos(), otrosProductos.getIdOtrosProductos().getDescripcion(), otrosProductos.getContribucion().getCodigoContribucion(), otrosProductos.getContribucion().getConceptoContribucion(), otrosProductos.getContribucion().getIdTipoPago().getIdTipoPago(), otrosProductos.getContribucion().getIdTipoPago().getNombrePago(), otrosProductos.getContribucion().getIdDescripcion().getIdDescripcion(), otrosProductos.getContribucion().getIdDescripcion().getDescripcion(),otrosProductos.getContribucion().getNivelContribucion(),
+            obtenerTipoContribucion(otrosProductos.getContribucion().getNivelContribucion())));
         }
         return (Page<OtrosProductosDTO>) lista;
     }
@@ -231,7 +254,8 @@ public class OtrosProductosServicioImpl implements Servicios<OtrosProductosDTO> 
         List<Otrosproductos> listaOtrosProductos = otrosProductosDao.findAll();
         List<OtrosProductosDTO> lista = new ArrayList<>();
         for (Otrosproductos otrosProductos : listaOtrosProductos) {
-            lista.add(new OtrosProductosDTO(otrosProductos.getIdContribucionProductos(), otrosProductos.getCantidad(), otrosProductos.getPeriodicidad().getIdPeriodicidad(), otrosProductos.getPeriodicidad().getNombrePeriodicidad(), otrosProductos.getIdOtrosProductos().getIdOtrosProductos(), otrosProductos.getIdOtrosProductos().getDescripcion(), otrosProductos.getContribucion().getCodigoContribucion(), otrosProductos.getContribucion().getConceptoContribucion(), otrosProductos.getContribucion().getIdTipoPago().getIdTipoPago(), otrosProductos.getContribucion().getIdTipoPago().getNombrePago(), otrosProductos.getContribucion().getIdDescripcion().getIdDescripcion(), otrosProductos.getContribucion().getIdDescripcion().getDescripcion(),otrosProductos.getContribucion().getNivelContribucion()));
+            lista.add(new OtrosProductosDTO(otrosProductos.getIdContribucionProductos(), otrosProductos.getCantidad(), otrosProductos.getPeriodicidad().getIdPeriodicidad(), otrosProductos.getPeriodicidad().getNombrePeriodicidad(), otrosProductos.getIdOtrosProductos().getIdOtrosProductos(), otrosProductos.getIdOtrosProductos().getDescripcion(), otrosProductos.getContribucion().getCodigoContribucion(), otrosProductos.getContribucion().getConceptoContribucion(), otrosProductos.getContribucion().getIdTipoPago().getIdTipoPago(), otrosProductos.getContribucion().getIdTipoPago().getNombrePago(), otrosProductos.getContribucion().getIdDescripcion().getIdDescripcion(), otrosProductos.getContribucion().getIdDescripcion().getDescripcion(),otrosProductos.getContribucion().getNivelContribucion(),
+            obtenerTipoContribucion(otrosProductos.getContribucion().getNivelContribucion())));
         }
         return lista;
     }

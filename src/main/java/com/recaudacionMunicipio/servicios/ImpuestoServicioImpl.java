@@ -52,7 +52,8 @@ public class ImpuestoServicioImpl implements Servicios<ImpuestoDTO> {
     public ImpuestoDTO findById(String id) {
         Impuesto impuestos = impuestoDao.findById(id).orElse(null);
         ImpuestoDTO impuestoDTO = new ImpuestoDTO(impuestos.getIdContribucionImpuesto(), impuestos.getIdTipoImpuesto().getIdTipoImpuesto(), impuestos.getIdTipoImpuesto().getDescripcion(), impuestos.getCantidad(), impuestos.getContribucion().getCodigoContribucion(), impuestos.getContribucion().getConceptoContribucion(), impuestos.getContribucion().getIdTipoPago().getIdTipoPago(), impuestos.getContribucion().getIdTipoPago().getNombrePago(), impuestos.getContribucion().getIdDescripcion().getIdDescripcion(),
-                impuestos.getContribucion().getIdDescripcion().getDescripcion(),impuestos.getContribucion().getNivelContribucion());
+                impuestos.getContribucion().getIdDescripcion().getDescripcion(),impuestos.getContribucion().getNivelContribucion(),
+                obtenerTipoContribucion(impuestos.getContribucion().getNivelContribucion()));
         return impuestoDTO;
     }
 
@@ -98,6 +99,7 @@ public class ImpuestoServicioImpl implements Servicios<ImpuestoDTO> {
             contribucion.setIdTipoPago(tipoPago);
             CatalogoDescripcion catalogoDescripcion = catalogoDescripcionDao.findById(impuestoDTO.getId_descripcion()).orElse(null);
             contribucion.setIdDescripcion(catalogoDescripcion);
+            contribucion.setNivelContribucion(1);
 
             //Contribucion newContribucion=
             contribucionDao.save(contribucion);
@@ -122,7 +124,8 @@ public class ImpuestoServicioImpl implements Servicios<ImpuestoDTO> {
         List<ImpuestoDTO> lista = new ArrayList<>();
         for (Impuesto impuestos : listaImpuestos) {
             lista.add(new ImpuestoDTO(impuestos.getIdContribucionImpuesto(), impuestos.getIdTipoImpuesto().getIdTipoImpuesto(), impuestos.getIdTipoImpuesto().getDescripcion(), impuestos.getCantidad(), impuestos.getContribucion().getCodigoContribucion(), impuestos.getContribucion().getConceptoContribucion(), impuestos.getContribucion().getIdTipoPago().getIdTipoPago(), impuestos.getContribucion().getIdTipoPago().getNombrePago(), impuestos.getContribucion().getIdDescripcion().getIdDescripcion(),
-                    impuestos.getContribucion().getIdDescripcion().getDescripcion(),impuestos.getContribucion().getNivelContribucion()));
+                    impuestos.getContribucion().getIdDescripcion().getDescripcion(),impuestos.getContribucion().getNivelContribucion(),
+                    obtenerTipoContribucion(impuestos.getContribucion().getNivelContribucion())));
         }
         entidadRespuesta entidadrespuesta = new entidadRespuesta();
         entidadrespuesta.setContenido(lista);
@@ -135,6 +138,24 @@ public class ImpuestoServicioImpl implements Servicios<ImpuestoDTO> {
 
         return entidadrespuesta;
         //return lista;
+    }
+    
+    //regresa el nombre del tipo de contribucion
+    public String obtenerTipoContribucion(int number){
+        if(number==1)
+            return "impuestos" ;
+        if(number==2)
+            return "Derechos Generales";
+        if(number==3)
+            return "Derechos Licencias";
+        if(number==4)
+            return "Multas";
+        if(number==5)
+            return "Multa Ebriedad";
+        if(number==6)
+            return "Multa Vehicular";
+        else
+            return "Otros Productos";
     }
 
     public entidadRespuesta<ImpuestoCompletoDTO> findAllC(int numeroDePagina, int MedidaDePagina) {
@@ -178,6 +199,7 @@ public class ImpuestoServicioImpl implements Servicios<ImpuestoDTO> {
         contribucion.setIdTipoPago(tipoPago);
         CatalogoDescripcion catalogoDescripcion = catalogoDescripcionDao.findById(impuestoDTO.getId_descripcion()).orElse(null);
         contribucion.setIdDescripcion(catalogoDescripcion);
+        contribucion.setNivelContribucion(1);
 
         //impuesto.setIdContribucionImpuesto(impuestoDTO.getId_impuesto());
         CatalogoImpuesto catalogoImpuesto = catalogoImpuestoDao.findById(impuestoDTO.getCatalogo_impuesto()).orElse(null);
@@ -198,6 +220,7 @@ public class ImpuestoServicioImpl implements Servicios<ImpuestoDTO> {
         impuestoDTO.setId_impuesto(impuesto.getIdContribucionImpuesto());
         impuestoDTO.setCatalogo_impuesto(impuesto.getIdTipoImpuesto().getIdTipoImpuesto());
         impuestoDTO.setCantidad(impuesto.getCantidad());
+        
 
         return impuestoDTO;
     }
@@ -221,7 +244,8 @@ public class ImpuestoServicioImpl implements Servicios<ImpuestoDTO> {
         List<ImpuestoDTO> lista = new ArrayList<>();
         for (Impuesto impuestos : listaImpuestos) {
             lista.add(new ImpuestoDTO(impuestos.getIdContribucionImpuesto(), impuestos.getIdTipoImpuesto().getIdTipoImpuesto(), impuestos.getIdTipoImpuesto().getDescripcion(), impuestos.getCantidad(), impuestos.getContribucion().getCodigoContribucion(), impuestos.getContribucion().getConceptoContribucion(), impuestos.getContribucion().getIdTipoPago().getIdTipoPago(), impuestos.getContribucion().getIdTipoPago().getNombrePago(), impuestos.getContribucion().getIdDescripcion().getIdDescripcion(),
-                    impuestos.getContribucion().getIdDescripcion().getDescripcion(),impuestos.getContribucion().getNivelContribucion()));
+                    impuestos.getContribucion().getIdDescripcion().getDescripcion(),impuestos.getContribucion().getNivelContribucion(),
+                    obtenerTipoContribucion(impuestos.getContribucion().getNivelContribucion())));
         }
         return (Page<ImpuestoDTO>) lista;
     }
@@ -231,7 +255,8 @@ public class ImpuestoServicioImpl implements Servicios<ImpuestoDTO> {
         List<ImpuestoDTO> lista = new ArrayList<>();
         for (Impuesto impuestos : listaImpuestos) {
             lista.add(new ImpuestoDTO(impuestos.getIdContribucionImpuesto(), impuestos.getIdTipoImpuesto().getIdTipoImpuesto(), impuestos.getIdTipoImpuesto().getDescripcion(), impuestos.getCantidad(), impuestos.getContribucion().getCodigoContribucion(), impuestos.getContribucion().getConceptoContribucion(), impuestos.getContribucion().getIdTipoPago().getIdTipoPago(), impuestos.getContribucion().getIdTipoPago().getNombrePago(), impuestos.getContribucion().getIdDescripcion().getIdDescripcion(),
-                    impuestos.getContribucion().getIdDescripcion().getDescripcion(),impuestos.getContribucion().getNivelContribucion()));
+                    impuestos.getContribucion().getIdDescripcion().getDescripcion(),impuestos.getContribucion().getNivelContribucion(),
+                    obtenerTipoContribucion(impuestos.getContribucion().getNivelContribucion())));
         }
         return lista;
     }

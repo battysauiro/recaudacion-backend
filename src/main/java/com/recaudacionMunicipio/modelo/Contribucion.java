@@ -35,7 +35,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "Contribucion.findAll", query = "SELECT c FROM Contribucion c"),
     @NamedQuery(name = "Contribucion.findByCodigoContribucion", query = "SELECT c FROM Contribucion c WHERE c.codigoContribucion = :codigoContribucion"),
-    @NamedQuery(name = "Contribucion.findByConceptoContribucion", query = "SELECT c FROM Contribucion c WHERE c.conceptoContribucion = :conceptoContribucion")})
+    @NamedQuery(name = "Contribucion.findByConceptoContribucion", query = "SELECT c FROM Contribucion c WHERE c.conceptoContribucion = :conceptoContribucion"),
+    @NamedQuery(name = "Contribucion.findByNivelContribucion", query = "SELECT c FROM Contribucion c WHERE c.nivelContribucion = :nivelContribucion")})
 public class Contribucion implements Serializable {
 
     
