@@ -55,7 +55,7 @@ public class FacturaControlador {
         return contribuyenteImplSer.findFacturaById(id);
     }
     
-    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"})
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE", "ROLE_CONTADOR"})
     @GetMapping("facturas/no-pagadas")
     public List<FacturasNoPagadasDTO> listarEmpleado(){
         return facturaImplSer.facturasNoPagadas(false);
@@ -73,7 +73,7 @@ public class FacturaControlador {
         return contribuyenteImplSer.lineaCapturaPendiente(id,contribucion);
     }
     
-    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE"}) 
+    @Secured({"ROLE_ADMIN","ROLE_PRESIDENTE", "ROLE_TESORERO"}) 
     @PutMapping("/facturas/actualizarPago/{id}")   
     public ResponseEntity<FacturaDTO> actualizarPago(@PathVariable(name = "id") int id) {
             FacturaDTO facturanewDTO= contribuyenteImplSer.actualizarPagoFactura(id);
